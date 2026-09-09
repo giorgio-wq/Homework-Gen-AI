@@ -47,7 +47,7 @@ export function Header() {
                   <Link
                     to={item.to}
                     aria-current={active ? "page" : undefined}
-                    className={`relative py-2 text-sm transition-colors hover:text-foreground ${
+                    className={`relative py-2 text-base font-semibold transition-colors hover:text-foreground ${
                       active ? "text-foreground" : "text-muted-foreground"
                     }`}
                   >
@@ -63,12 +63,6 @@ export function Header() {
               );
             })}
           </ul>
-          <Link
-            to={c.nav.cta.to}
-            className="inline-flex h-11 items-center rounded-sm bg-primary px-5 text-sm text-primary-foreground transition-colors hover:bg-accent"
-          >
-            {c.nav.cta.label}
-          </Link>
         </nav>
 
         <button

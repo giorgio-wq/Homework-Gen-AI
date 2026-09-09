@@ -1,8 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { c } from "@/content/site";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
+import { PracticeAreaSlide } from "@/components/PracticeAreaSlide";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/services")({
 });
 
 function Services() {
-  const { hero, provisionalNote, longDescriptionPlaceholder, cta } = c.services;
+  const { hero, provisionalNote } = c.services;
 
   return (
     <>
@@ -31,38 +31,8 @@ function Services() {
         </p>
       </PageHero>
 
-      {c.practiceAreas.map((area) => (
-        <section
-          key={area.id}
-          id={area.id}
-          aria-labelledby={`${area.id}-heading`}
-          className="border-b border-hairline"
-        >
-          <div className="container-editorial grid gap-8 py-16 md:grid-cols-12 md:py-24">
-            <div className="md:col-span-4">
-              <span className="font-display text-5xl text-accent md:text-6xl">{area.number}</span>
-              <h2 id={`${area.id}-heading`} className="mt-4 text-3xl md:text-4xl">
-                {area.title}
-              </h2>
-            </div>
-            <div className="md:col-span-8">
-              <p className="max-w-2xl text-base leading-relaxed md:text-lg">{area.summary}</p>
-              <p className="mt-6 max-w-2xl border-t border-hairline pt-6 text-sm leading-relaxed text-muted-foreground">
-                {longDescriptionPlaceholder}
-              </p>
-              <Link
-                to={cta.to}
-                className="group mt-8 inline-flex items-center gap-3 text-sm text-accent"
-              >
-                <span className="link-underline">{cta.label}</span>
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-          </div>
-        </section>
+      {c.practiceAreas.map((area, i) => (
+        <PracticeAreaSlide key={area.id} area={area} index={i} />
       ))}
 
       <CTASection

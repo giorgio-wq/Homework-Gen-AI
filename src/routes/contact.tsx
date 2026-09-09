@@ -29,8 +29,9 @@ function Contact() {
     <>
       <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph} />
 
-      <section className="container-editorial grid gap-14 py-16 md:py-24 lg:grid-cols-12">
-        <div className="lg:col-span-5">
+      {/* Firm details + map, side by side (map drops below the details on mobile) */}
+      <section className="container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16">
+        <div>
           <h2 className="text-2xl md:text-3xl">{details.heading}</h2>
           <dl className="mt-8">
             {rows.map((row) => (
@@ -40,32 +41,6 @@ function Contact() {
               </div>
             ))}
           </dl>
-
-          {/* Simple visual map placeholder — no third-party embed */}
-          <div
-            role="img"
-            aria-label={`${map.label}. ${map.note}`}
-            className="relative mt-10 flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-sm border border-hairline bg-secondary"
-          >
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, var(--hairline) 1px, transparent 1px), linear-gradient(to bottom, var(--hairline) 1px, transparent 1px)",
-                backgroundSize: "3rem 3rem",
-                opacity: 0.7,
-              }}
-            />
-            <div aria-hidden="true" className="absolute h-4 w-4 rounded-full bg-accent" />
-            <div
-              aria-hidden="true"
-              className="absolute h-16 w-16 rounded-full border border-accent/40"
-            />
-            <p className="absolute bottom-4 left-4 right-4 text-xs text-muted-foreground">
-              {map.note}
-            </p>
-          </div>
 
           <nav aria-label="Related pages" className="mt-10">
             <h3 className="eyebrow">{links.heading}</h3>
@@ -85,8 +60,39 @@ function Contact() {
           </nav>
         </div>
 
-        <div className="lg:col-span-7">
-          <ContactForm />
+        {/* Simple visual map placeholder — no third-party embed */}
+        <div
+          role="img"
+          aria-label={`${map.label}. ${map.note}`}
+          className="relative flex aspect-[16/11] w-full items-center justify-center overflow-hidden rounded-sm border border-hairline bg-secondary lg:aspect-[4/5]"
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, var(--hairline) 1px, transparent 1px), linear-gradient(to bottom, var(--hairline) 1px, transparent 1px)",
+              backgroundSize: "3rem 3rem",
+              opacity: 0.7,
+            }}
+          />
+          <div aria-hidden="true" className="absolute h-4 w-4 rounded-full bg-accent" />
+          <div
+            aria-hidden="true"
+            className="absolute h-16 w-16 rounded-full border border-accent/40"
+          />
+          <p className="absolute bottom-4 left-4 right-4 text-xs text-muted-foreground">
+            {map.note}
+          </p>
+        </div>
+      </section>
+
+      {/* Send a message — full-width box below */}
+      <section className="border-t border-hairline bg-secondary/40">
+        <div className="container-editorial py-16 md:py-24">
+          <div className="mx-auto max-w-3xl">
+            <ContactForm />
+          </div>
         </div>
       </section>
     </>

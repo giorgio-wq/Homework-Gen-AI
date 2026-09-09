@@ -166,6 +166,9 @@ export const content = {
     },
 
     // Shared across home preview and services page.
+    // `detail` and `image` are used by the full-screen slides on the Services page.
+    // Leave `image` as "" to show the styled placeholder; set it to a file in
+    // public/ (e.g. "/services/civil.jpg") to use a real photo.
     practiceAreas: [
       {
         id: "civil",
@@ -173,6 +176,9 @@ export const content = {
         title: "Civil Law",
         summary:
           "Advice and representation on civil matters, including obligations, contracts, property and liability.",
+        detail:
+          "From drafting and negotiating agreements to disputes over property, obligations and non-contractual liability, the firm supports clients through advisory work, pre-litigation and proceedings before the courts.",
+        image: "",
       },
       {
         id: "agricultural",
@@ -180,6 +186,9 @@ export const content = {
         title: "Agricultural Law",
         summary:
           "Legal questions connected with agricultural activity, land and rural undertakings.",
+        detail:
+          "Support for farms and rural businesses on land use, agricultural leases, supply and cooperative arrangements, and the rules specific to the agri-food sector.",
+        image: "",
       },
       {
         id: "insurance",
@@ -187,6 +196,9 @@ export const content = {
         title: "Insurance Law",
         summary:
           "Matters arising from insurance relationships, policies and related disputes.",
+        detail:
+          "Assistance to policyholders and insurers on the interpretation of policies, the handling of claims and the resolution of disputes arising from insurance relationships.",
+        image: "",
       },
       {
         id: "banking",
@@ -194,6 +206,9 @@ export const content = {
         title: "Banking Law",
         summary:
           "Questions concerning banking relationships, credit and financial services.",
+        detail:
+          "Advice on banking and credit relationships, financing arrangements and financial services, including the review of contractual terms and related disputes.",
+        image: "",
       },
     ],
 

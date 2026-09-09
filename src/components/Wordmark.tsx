@@ -11,14 +11,14 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
     >
       <span
         className={`font-display leading-none tracking-tight ${
-          compact ? "text-[1.05rem]" : "text-lg md:text-xl"
+          compact ? "text-lg" : "text-2xl md:text-3xl"
         }`}
       >
         Studio Legale
       </span>
       <span
         className={`font-display italic leading-none text-accent ${
-          compact ? "text-[1.05rem]" : "text-lg md:text-xl"
+          compact ? "text-lg" : "text-2xl md:text-3xl"
         }`}
       >
         Caso

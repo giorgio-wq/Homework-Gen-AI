@@ -38,10 +38,17 @@ function Home() {
             opacity: 0.7,
           }}
         />
+        {/* LOGO PLACEHOLDER (hero) — replace the "SLC" box with the real logo,
+            e.g. <img src="/logo.svg" alt="Studio Legale Caso" className="h-64 w-64 xl:h-80 xl:w-80" />,
+            once the logo file is added to public/. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-1/3 hidden h-72 w-72 rounded-full border border-accent/25 lg:block"
-        />
+          className="pointer-events-none absolute right-[6%] top-1/2 hidden -translate-y-1/2 lg:block"
+        >
+          <div className="grid h-64 w-64 place-items-center rounded-xl border border-accent/30 bg-background/60 font-display text-7xl tracking-tight text-primary shadow-sm backdrop-blur-sm xl:h-80 xl:w-80 xl:text-8xl">
+            SLC
+          </div>
+        </div>
         <div className="container-editorial relative py-20 md:py-28 lg:py-36">
           <p className="eyebrow fade-up">{hero.eyebrow}</p>
           <h1 className="fade-up mt-6 max-w-5xl text-[2.75rem] leading-[0.98] sm:text-7xl lg:text-[5.75rem]">
