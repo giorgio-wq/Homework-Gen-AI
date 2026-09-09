@@ -1,0 +1,142 @@
+import { useEffect, useRef, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
+import { c } from "@/content/site";
+import { Wordmark } from "@/components/Wordmark";
+
+export function Header() {
+  const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <>
+    <header className="sticky top-0 z-50 w-full border-b border-hairline bg-background/85 backdrop-blur-md">
+      <div className="container-editorial grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:h-20">
+        <div className="min-w-0">
+          <Wordmark />
+        </div>
+
+        <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          <ul className="flex items-center gap-8">
+            {c.nav.items.map((item) => {
+              const active = pathname === item.to;
+              return (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    aria-current={active ? "page" : undefined}
+                    className={`relative py-2 text-sm transition-colors hover:text-foreground ${
+                      active ? "text-foreground" : "text-muted-foreground"
+                    }`}
+                  >
+                    {item.label}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent transition-transform duration-300 ${
+                        active ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <Link
+            to={c.nav.cta.to}
+            className="inline-flex h-11 items-center rounded-sm bg-primary px-5 text-sm text-primary-foreground transition-colors hover:bg-accent"
+          >
+            {c.nav.cta.label}
+          </Link>
+        </nav>
+
+        <button
+          ref={triggerRef}
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline lg:hidden"
+        >
+          <Menu className="h-5 w-5" aria-hidden="true" />
+          <span className="sr-only">{c.nav.openMenu}</span>
+        </button>
+      </div>
+
+    </header>
+
+    {/* Mobile navigation — rendered outside the blurred header, which would
+        otherwise clip this fixed panel to the header's height */}
+    {open && (
+      <div
+        id="mobile-nav"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        className="fixed inset-0 z-[60] flex flex-col bg-background lg:hidden"
+      >
+        <div className="container-editorial flex h-16 items-center justify-between border-b border-hairline">
+          <Wordmark compact />
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              triggerRef.current?.focus();
+            }}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline"
+          >
+            <X className="h-5 w-5" aria-hidden="true" />
+            <span className="sr-only">{c.nav.closeMenu}</span>
+          </button>
+        </div>
+        <nav aria-label="Mobile" className="container-editorial flex-1 overflow-y-auto py-6">
+          <ul className="flex flex-col">
+            {c.nav.items.map((item, i) => {
+              const active = pathname === item.to;
+              return (
+                <li key={item.to} className="border-b border-hairline">
+                  <Link
+                    to={item.to}
+                    aria-current={active ? "page" : undefined}
+                    className="flex items-baseline gap-4 py-5"
+                  >
+                    <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                    <span
+                      className={`font-display text-3xl ${
+                        active ? "text-accent" : "text-foreground"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+    )}
+    </>
+  );
+}
