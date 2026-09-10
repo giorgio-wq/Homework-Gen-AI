@@ -118,7 +118,13 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
 
     const clamp = (v: number, mn: number, mx: number) => Math.min(mx, Math.max(mn, v));
     const lerp = (x: number, y: number, t: number) => x + (y - x) * t;
-    const seg = (p: number, s: number, e: number) => clamp((p - s) / (e - s), 0, 1);
+    // Eased 0→1 ramp. Without this every move runs at a constant rate, which
+    // makes the long entrances read as a sprint next to the first partner's
+    // short shift; easing in and out evens out how fast they *feel*.
+    const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+    const seg = (p: number, s: number, e: number) => easeInOut(clamp((p - s) / (e - s), 0, 1));
+    // Linear variant, for fades where easing is not wanted.
+    const segLinear = (p: number, s: number, e: number) => clamp((p - s) / (e - s), 0, 1);
     const set = (el: HTMLElement | null, x: number, opacity: number, scale = 1) => {
       if (!el) return;
       el.style.transform = `translate3d(${x}vw, 0, 0) scale(${scale})`;
@@ -156,7 +162,10 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
         const aEnd = aStart + slot;
         const flip = i % 2 === 1; // alternate: photo left, then right, then left…
         const focusX = flip ? 27 : -27;
-        const offX = flip ? 80 : -80;
+        // Just off the edge rather than far outside it: a shorter run-in keeps
+        // the entrances at a similar apparent speed to the first partner's
+        // short shift out of the intro formation.
+        const offX = flip ? 58 : -58;
         const textX = flip ? -23 : 23;
         const iX = introX(i);
 
@@ -193,8 +202,8 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
         set(photoRefs.current[i] ?? null, x, opacity, scale);
 
         // Biography: in near the end of the transition, static through the hold.
-        const tIn = seg(p, aStart + slot * TRANS * 0.45, aTransEnd);
-        const tOut = i < n - 1 ? seg(p, aEnd, aEnd + slot * TRANS * 0.6) : 0;
+        const tIn = segLinear(p, aStart + slot * TRANS * 0.45, aTransEnd);
+        const tOut = i < n - 1 ? segLinear(p, aEnd, aEnd + slot * TRANS * 0.6) : 0;
         const slide = lerp(flip ? -4 : 4, 0, tIn);
         set(textRefs.current[i] ?? null, textX + slide, tIn * (1 - tOut));
 
