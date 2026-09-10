@@ -61,30 +61,24 @@ function Contact() {
           </nav>
         </div>
 
-        {/* Simple visual map placeholder — no third-party embed */}
-        <div
-          role="img"
-          aria-label={`${map.label}. ${map.note}`}
-          className="relative flex aspect-[16/11] w-full items-center justify-center overflow-hidden rounded-sm border border-hairline bg-secondary lg:aspect-[4/5]"
-        >
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, var(--hairline) 1px, transparent 1px), linear-gradient(to bottom, var(--hairline) 1px, transparent 1px)",
-              backgroundSize: "3rem 3rem",
-              opacity: 0.7,
-            }}
+        {/* Google Maps embed (no API key needed) centred on the firm address */}
+        <div>
+          <iframe
+            title={map.label}
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(map.query)}&z=16&output=embed`}
+            className="aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/5]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
           />
-          <div aria-hidden="true" className="absolute h-4 w-4 rounded-full bg-accent" />
-          <div
-            aria-hidden="true"
-            className="absolute h-16 w-16 rounded-full border border-accent/40"
-          />
-          <p className="absolute bottom-4 left-4 right-4 text-xs text-muted-foreground">
-            {map.note}
-          </p>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(map.query)}`}
+            target="_blank"
+            rel="noreferrer"
+            className="link-underline mt-3 inline-block text-sm text-accent"
+          >
+            {map.linkLabel}
+          </a>
         </div>
       </section>
 

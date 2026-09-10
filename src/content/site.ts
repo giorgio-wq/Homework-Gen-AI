@@ -252,15 +252,16 @@ export const content = {
       },
       details: {
         heading: "Dati dello studio",
-        location: { label: "Sede", value: "Altamura, Puglia, Italia" },
-        address: { label: "Indirizzo", value: "[INDIRIZZO COMPLETO DA CONFERMARE]" },
+        location: { label: "Sede", value: "Altamura (BA), Puglia, Italia" },
+        address: { label: "Indirizzo", value: "Via Giuseppe Giusti, 16 — 70022 Altamura (BA)" },
         phone: { label: "Telefono", value: "[NUMERO DI TELEFONO DA CONFERMARE]" },
         email: { label: "Email", value: "[INDIRIZZO EMAIL DA CONFERMARE]" },
         hours: { label: "Orari", value: "[ORARI DA CONFERMARE]" },
       },
       map: {
-        label: "Mappa segnaposto",
-        note: "Altamura, Puglia — la mappa sarà aggiunta una volta confermato l'indirizzo.",
+        label: "Mappa dello studio",
+        query: "Via Giuseppe Giusti 16, 70022 Altamura BA, Italia",
+        linkLabel: "Apri in Google Maps",
       },
       links: {
         heading: "Continua a leggere",
@@ -536,15 +537,16 @@ export const content = {
       },
       details: {
         heading: "Firm details",
-        location: { label: "Location", value: "Altamura, Puglia, Italy" },
-        address: { label: "Address", value: "[FULL ADDRESS TO BE CONFIRMED]" },
+        location: { label: "Location", value: "Altamura (BA), Puglia, Italy" },
+        address: { label: "Address", value: "Via Giuseppe Giusti, 16 — 70022 Altamura (BA)" },
         phone: { label: "Telephone", value: "[PHONE NUMBER TO BE CONFIRMED]" },
         email: { label: "Email", value: "[EMAIL ADDRESS TO BE CONFIRMED]" },
         hours: { label: "Office hours", value: "[OFFICE HOURS TO BE CONFIRMED]" },
       },
       map: {
-        label: "Map placeholder",
-        note: "Altamura, Puglia — a map will be added once the address is confirmed.",
+        label: "Firm location",
+        query: "Via Giuseppe Giusti 16, 70022 Altamura BA, Italy",
+        linkLabel: "Open in Google Maps",
       },
       links: {
         heading: "Continue reading",
