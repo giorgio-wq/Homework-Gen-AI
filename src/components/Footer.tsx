@@ -55,6 +55,19 @@ export function Footer() {
               </li>
             ))}
             <li className="pt-2">
+              {c.contact.details.phone.numbers.map((number, i) => (
+                <span key={number}>
+                  {i > 0 ? <span> / </span> : null}
+                  <a
+                    href={`tel:+39${number.replace(/\s/g, "")}`}
+                    className="link-underline text-accent"
+                  >
+                    {number}
+                  </a>
+                </span>
+              ))}
+            </li>
+            <li>
               <a href={`mailto:${c.firm.email}`} className="link-underline text-accent">
                 {c.firm.email}
               </a>

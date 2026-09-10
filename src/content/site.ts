@@ -255,7 +255,7 @@ export const content = {
         name: "Pasquale Caso",
         role: "Partner",
         initials: "PC",
-        image: "",
+        image: "/partners/pasquale-caso.webp",
         profile: [
           "Pasquale Caso esercita la professione forense dal 1978. Laureato in Giurisprudenza presso l'Università di Bari, è iscritto all'Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo, assistendo privati, imprese, istituzioni finanziarie, compagnie assicurative ed enti pubblici.",
         ],
@@ -265,7 +265,7 @@ export const content = {
         name: "Girolamo Giancaspro",
         role: "Partner",
         initials: "GG",
-        image: "",
+        image: "/partners/girolamo-giancaspro.webp",
         profile: [
           "Girolamo Giancaspro esercita la professione forense dal 1996. Laureato in Giurisprudenza presso l'Università di Bari, è iscritto all'Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo per clienti privati e pubblici.",
           "Accanto all'attività professionale, è stato componente del Consiglio dell'Ordine degli Avvocati di Bari nel quadriennio 2019–2022, coordinando il gruppo dedicato alla pratica forense. È inoltre indicato tra i componenti del Consiglio Distrettuale di Disciplina di Bari per il quadriennio 2023–2026.",
@@ -276,7 +276,7 @@ export const content = {
         name: "Giovanni Battista Riviello",
         role: "Partner",
         initials: "GR",
-        image: "",
+        image: "/partners/giovanni-battista-riviello.webp",
         profile: [
           "Giovanni Battista Riviello esercita la professione forense dal 1996. Laureato in Giurisprudenza presso l'Università di Bari, è iscritto all'Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo, affiancando clienti privati e pubblici nella consulenza, nella negoziazione e nel contenzioso.",
         ],
@@ -316,6 +316,7 @@ export const content = {
             mapQuery: "Via Avellino 3, Santeramo in Colle BA, Italia",
           },
         ],
+        phone: { label: "Tel. / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Ricevimento", value: "Esclusivamente su appuntamento" },
         ctaLabel: "Scrivi allo studio",
@@ -600,7 +601,7 @@ export const content = {
         name: "Pasquale Caso",
         role: "Partner",
         initials: "PC",
-        image: "",
+        image: "/partners/pasquale-caso.webp",
         profile: [
           "Pasquale Caso has practised law since 1978. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law, assisting private clients, businesses, financial institutions, insurance companies and public bodies.",
         ],
@@ -610,7 +611,7 @@ export const content = {
         name: "Girolamo Giancaspro",
         role: "Partner",
         initials: "GG",
-        image: "",
+        image: "/partners/girolamo-giancaspro.webp",
         profile: [
           "Girolamo Giancaspro has practised law since 1996. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law for private and public-sector clients.",
           "Alongside his work for clients, he served as a member of the Council of the Bari Bar Association for the 2019–2022 term, coordinating its work on legal traineeship matters. He is also listed as a member of the Bari District Disciplinary Council for the 2023–2026 term.",
@@ -621,7 +622,7 @@ export const content = {
         name: "Giovanni Battista Riviello",
         role: "Partner",
         initials: "GR",
-        image: "",
+        image: "/partners/giovanni-battista-riviello.webp",
         profile: [
           "Giovanni Battista Riviello has practised law since 1996. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law, combining advisory work, negotiation and representation in litigation for private and public clients.",
         ],
@@ -661,6 +662,7 @@ export const content = {
             mapQuery: "Via Avellino 3, Santeramo in Colle BA, Italy",
           },
         ],
+        phone: { label: "Telephone / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Appointments", value: "By appointment only" },
         ctaLabel: "Email the firm",

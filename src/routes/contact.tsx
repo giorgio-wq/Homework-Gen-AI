@@ -65,6 +65,23 @@ function Contact() {
           {/* Contact methods */}
           <dl className="mt-2">
             <div className="border-t border-hairline py-5">
+              <dt className="eyebrow">{details.phone.label}</dt>
+              <dd className="mt-2 text-base">
+                {details.phone.numbers.map((number, i) => (
+                  <span key={number}>
+                    {i > 0 ? <span className="text-muted-foreground"> / </span> : null}
+                    {/* Italian landline: the leading 0 is kept after the +39 code */}
+                    <a
+                      href={`tel:+39${number.replace(/\s/g, "")}`}
+                      className="link-underline text-accent"
+                    >
+                      {number}
+                    </a>
+                  </span>
+                ))}
+              </dd>
+            </div>
+            <div className="border-t border-hairline py-5">
               <dt className="eyebrow">{details.email.label}</dt>
               <dd className="mt-2 text-base">
                 <a href={mailto} className="link-underline text-accent">
