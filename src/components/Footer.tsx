@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { Wordmark } from "@/components/Wordmark";
 import { AcademicDisclaimer } from "@/components/AcademicDisclaimer";
 
 export function Footer() {
+  const c = useContent();
   return (
     <footer className="mt-24 border-t border-hairline bg-secondary/60">
       <div className="container-editorial grid gap-10 py-14 md:grid-cols-3 md:py-16">

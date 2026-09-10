@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 
 type Errors = Partial<Record<"name" | "email" | "subject" | "message" | "privacy", string>>;
 
@@ -7,6 +7,7 @@ const inputClass =
   "mt-2 h-12 w-full rounded-sm border border-input bg-card px-4 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
 
 export function ContactForm() {
+  const c = useContent();
   const f = c.contact.form;
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);

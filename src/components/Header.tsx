@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { Wordmark } from "@/components/Wordmark";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export function Header() {
+  const c = useContent();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const panelRef = useRef<HTMLDivElement>(null);
@@ -63,19 +65,23 @@ export function Header() {
                 );
               })}
             </ul>
+            <LanguageSwitcher />
           </nav>
 
-          <button
-            ref={triggerRef}
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline lg:hidden"
-          >
-            <Menu className="h-5 w-5" aria-hidden="true" />
-            <span className="sr-only">{c.nav.openMenu}</span>
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher />
+            <button
+              ref={triggerRef}
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline"
+            >
+              <Menu className="h-5 w-5" aria-hidden="true" />
+              <span className="sr-only">{c.nav.openMenu}</span>
+            </button>
+          </div>
         </div>
       </header>
 

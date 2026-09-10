@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 
 type Area = {
   id: string;
@@ -36,6 +36,7 @@ const placeholderBackgrounds = [
 ];
 
 export function PracticeAreaSlide({ area, index }: { area: Area; index: number }) {
+  const c = useContent();
   const flip = index % 2 === 1;
   const { cta } = c.services;
 

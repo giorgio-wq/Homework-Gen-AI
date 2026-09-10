@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 
 /** Typographic wordmark. Replace the inner markup with an SVG logo later. */
 export function Wordmark({ compact = false }: { compact?: boolean }) {
+  const c = useContent();
   return (
     <Link
       to="/"

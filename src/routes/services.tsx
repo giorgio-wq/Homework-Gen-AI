@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { PracticeAreaSlide } from "@/components/PracticeAreaSlide";
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/services")({
 });
 
 function Services() {
+  const c = useContent();
   const { hero, provisionalNote } = c.services;
 
   return (

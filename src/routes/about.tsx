@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { PageHero } from "@/components/PageHero";
 import { PartnersShowcase } from "@/components/PartnersShowcase";
 import { CTASection } from "@/components/CTASection";
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
+  const c = useContent();
   const { hero, history, approach, team } = c.about;
 
   return (

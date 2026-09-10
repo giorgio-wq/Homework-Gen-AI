@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 
@@ -22,14 +22,9 @@ export const Route = createFileRoute("/contact")({
 });
 
 function Contact() {
+  const c = useContent();
   const { hero, details, map, links } = c.contact;
-  const [rows] = useState(() => [
-    details.location,
-    details.address,
-    details.phone,
-    details.email,
-    details.hours,
-  ]);
+  const rows = [details.location, details.address, details.phone, details.email, details.hours];
 
   return (
     <>

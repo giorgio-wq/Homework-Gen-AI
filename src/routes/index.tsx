@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
+import { useContent } from "@/i18n/locale";
 import { CTASection } from "@/components/CTASection";
 import { ServicePreview } from "@/components/ServicePreview";
 import { PartnerCard } from "@/components/PartnerCard";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const c = useContent();
   const { hero, intro, clients, servicesPreview, approach, team, finalCta } = c.home;
 
   return (
@@ -51,9 +53,9 @@ function Home() {
         <div className="container-editorial relative py-20 md:py-28 lg:py-36">
           <p className="eyebrow fade-up">{hero.eyebrow}</p>
           <h1 className="fade-up mt-6 max-w-5xl text-[2.75rem] leading-[0.98] sm:text-7xl lg:text-[5.75rem]">
-            Legal expertise.
+            {hero.headlineLead}
             <br />
-            <span className="italic text-accent">Clear direction.</span>
+            <span className="italic text-accent">{hero.headlineAccent}</span>
           </h1>
           <p className="fade-up mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             {hero.paragraph}
