@@ -40,7 +40,7 @@ export function Header() {
             <Wordmark />
           </div>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          <nav aria-label={c.ui.primaryNav} className="hidden items-center gap-8 lg:flex">
             <ul className="flex items-center gap-8">
               {c.nav.items.map((item) => {
                 const active = pathname === item.to;
@@ -109,7 +109,10 @@ export function Header() {
               <span className="sr-only">{c.nav.closeMenu}</span>
             </button>
           </div>
-          <nav aria-label="Mobile" className="container-editorial flex-1 overflow-y-auto py-6">
+          <nav
+            aria-label={c.ui.mobileNav}
+            className="container-editorial flex-1 overflow-y-auto py-6"
+          >
             <ul className="flex flex-col">
               {c.nav.items.map((item, i) => {
                 const active = pathname === item.to;

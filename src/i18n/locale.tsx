@@ -53,8 +53,14 @@ export function useLocale(): LocaleContextValue {
   return ctx;
 }
 
-/** Content for the currently selected locale. */
+/**
+ * Content for the currently selected locale.
+ *
+ * Falls back to the default locale when no provider is above it, so screens
+ * rendered outside the normal tree (not-found and error boundaries) still get
+ * real copy instead of crashing.
+ */
 export function useContent() {
-  const { locale } = useLocale();
-  return getContent(locale);
+  const ctx = useContext(LocaleContext);
+  return getContent(ctx?.locale ?? defaultLocale);
 }

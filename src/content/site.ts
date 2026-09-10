@@ -40,6 +40,27 @@ export const content = {
       closeMenu: "Chiudi il menu",
     },
 
+    // Interface strings outside the page copy: accessibility labels and the
+    // not-found / error screens.
+    ui: {
+      skipToContent: "Vai al contenuto",
+      primaryNav: "Navigazione principale",
+      mobileNav: "Navigazione mobile",
+      footerNav: "Navigazione a piè di pagina",
+      relatedPages: "Pagine correlate",
+      notFound: {
+        heading: "Pagina non trovata",
+        body: "La pagina che stai cercando non esiste o è stata spostata.",
+        cta: "Torna alla home",
+      },
+      error: {
+        heading: "Questa pagina non si è caricata",
+        body: "Si è verificato un problema. Puoi riprovare o tornare alla home.",
+        retry: "Riprova",
+        home: "Torna alla home",
+      },
+    },
+
     home: {
       meta: {
         title: "Studio Legale Caso — Studio legale dal 1990, Altamura",
@@ -383,6 +404,27 @@ export const content = {
       ],
       openMenu: "Open menu",
       closeMenu: "Close menu",
+    },
+
+    // Interface strings outside the page copy: accessibility labels and the
+    // not-found / error screens.
+    ui: {
+      skipToContent: "Skip to content",
+      primaryNav: "Primary navigation",
+      mobileNav: "Mobile navigation",
+      footerNav: "Footer navigation",
+      relatedPages: "Related pages",
+      notFound: {
+        heading: "Page not found",
+        body: "The page you are looking for does not exist or has been moved.",
+        cta: "Go home",
+      },
+      error: {
+        heading: "This page didn't load",
+        body: "Something went wrong. You can try again or head back home.",
+        retry: "Try again",
+        home: "Go home",
+      },
     },
 
     home: {

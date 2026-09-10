@@ -106,7 +106,7 @@ function Contact() {
             />
           </a>
 
-          <nav aria-label="Related pages" className="mt-10">
+          <nav aria-label={c.ui.relatedPages} className="mt-10">
             <h3 className="eyebrow">{links.heading}</h3>
             <ul className="mt-4 space-y-3">
               {links.items.map((item) => (

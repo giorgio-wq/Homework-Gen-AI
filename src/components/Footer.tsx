@@ -22,7 +22,7 @@ export function Footer() {
           />
         </div>
 
-        <nav aria-label="Footer">
+        <nav aria-label={c.ui.footerNav}>
           <h2 className="eyebrow">{c.footer.navHeading}</h2>
           <ul className="mt-4 space-y-2">
             {c.nav.items.map((item) => (
