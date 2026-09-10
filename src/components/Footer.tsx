@@ -17,7 +17,10 @@ export function Footer() {
           <ul className="mt-4 space-y-2">
             {c.nav.items.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="link-underline text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  to={item.to}
+                  className="link-underline text-sm text-muted-foreground hover:text-foreground"
+                >
                   {item.label}
                 </Link>
               </li>

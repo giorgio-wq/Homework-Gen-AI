@@ -32,8 +32,7 @@ function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 lg:block"
           style={{
-            backgroundImage:
-              "linear-gradient(to right, var(--hairline) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(to right, var(--hairline) 1px, transparent 1px)",
             backgroundSize: "8rem 100%",
             opacity: 0.7,
           }}
@@ -181,10 +180,7 @@ function Home() {
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground md:text-base">
               {team.body}
             </p>
-            <Link
-              to={team.cta.to}
-              className="link-underline mt-8 inline-block text-sm text-accent"
-            >
+            <Link to={team.cta.to} className="link-underline mt-8 inline-block text-sm text-accent">
               {team.cta.label}
             </Link>
           </div>

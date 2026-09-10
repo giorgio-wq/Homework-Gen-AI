@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
@@ -14,11 +15,15 @@ type Area = {
 /**
  * Full-screen practice-area "slide" for the Services page.
  *
- * Each area fills (almost) the whole viewport; the layout alternates left/right
- * as you scroll, over a background layer. Until real photography is available,
- * `area.image` stays "" and a themed gradient placeholder is shown. Drop a photo
- * in public/ and set `image` in src/content/site.ts to swap it in — the dark
- * overlay keeps the text legible over any picture.
+ * The effect is scroll-linked (scrubbed), not a one-shot reveal: as each slide
+ * travels through the viewport its content drifts vertically (parallax) and is
+ * brightest when the slide is centred, fading towards the edges, while the
+ * background gently zooms/pans with the scroll. The layout alternates left/right.
+ *
+ * Everything degrades gracefully: with reduced motion no scrubbing runs and the
+ * content stays fully visible and static. Until real photography is available
+ * `area.image` stays "" and a themed gradient placeholder is shown; the dark
+ * overlay keeps text legible over any picture.
  */
 
 // Themed placeholder backgrounds (deep navy + burgundy family), one per slide,
@@ -34,21 +39,63 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
   const flip = index % 2 === 1;
   const { cta } = c.services;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const clamp = (v: number, mn: number, mx: number) => Math.min(mx, Math.max(mn, v));
+    let raf = 0;
+
+    const frame = () => {
+      const section = sectionRef.current;
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const center = rect.top + rect.height / 2;
+        // q ≈ 1 while entering from the bottom, 0.5 when centred, ≈ 0 when leaving the top
+        const q = center / vh;
+        const dist = Math.abs(q - 0.5);
+
+        if (contentRef.current) {
+          const opacity = clamp((0.5 - dist) / 0.22, 0, 1);
+          const ty = (0.5 - q) * 60; // vertical parallax drift
+          contentRef.current.style.opacity = String(opacity);
+          contentRef.current.style.transform = `translate3d(0, ${ty}px, 0)`;
+        }
+        if (bgRef.current) {
+          const scale = 1.1 + clamp(1 - q, 0, 1) * 0.1;
+          const bty = (q - 0.5) * 40; // background drifts the opposite way for depth
+          bgRef.current.style.transform = `translate3d(0, ${bty}px, 0) scale(${scale})`;
+        }
+      }
+      raf = requestAnimationFrame(frame);
+    };
+
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id={area.id}
       aria-labelledby={`${area.id}-heading`}
       className="relative isolate flex min-h-[88vh] items-center overflow-hidden bg-primary py-24 text-primary-foreground md:min-h-screen"
     >
-      {/* Background: real photo when set, otherwise a themed gradient placeholder.
-          `md:bg-fixed` gives a subtle parallax as the content scrolls over it. */}
+      {/* Background: real photo or themed gradient placeholder; transform is driven
+          by scroll for the zoom/pan. */}
       <div
+        ref={bgRef}
         aria-hidden="true"
-        className="absolute inset-0 -z-20 bg-cover bg-center md:bg-fixed"
+        className="absolute inset-0 -z-20 bg-cover bg-center will-change-transform"
         style={{
           backgroundImage: area.image
             ? `url(${area.image})`
             : placeholderBackgrounds[index % placeholderBackgrounds.length],
+          transform: "scale(1.1)",
         }}
       />
       {/* Darkening overlay, heavier on the text side, for legibility over any image. */}
@@ -62,8 +109,11 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
       />
 
       <div className="container-editorial">
-        <div className={`max-w-xl ${flip ? "ml-auto text-right" : ""}`}>
-          <span className="font-display text-6xl text-accent md:text-7xl">{area.number}</span>
+        <div
+          ref={contentRef}
+          className={`max-w-xl will-change-transform ${flip ? "ml-auto text-right" : ""}`}
+        >
+          <span className="block font-display text-6xl text-accent md:text-7xl">{area.number}</span>
           <h2
             id={`${area.id}-heading`}
             className="mt-4 font-display text-4xl leading-[1.05] md:text-6xl"

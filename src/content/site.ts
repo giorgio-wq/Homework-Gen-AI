@@ -194,8 +194,7 @@ export const content = {
         id: "insurance",
         number: "03",
         title: "Insurance Law",
-        summary:
-          "Matters arising from insurance relationships, policies and related disputes.",
+        summary: "Matters arising from insurance relationships, policies and related disputes.",
         detail:
           "Assistance to policyholders and insurers on the interpretation of policies, the handling of claims and the resolution of disputes arising from insurance relationships.",
         image: "",
@@ -204,8 +203,7 @@ export const content = {
         id: "banking",
         number: "04",
         title: "Banking Law",
-        summary:
-          "Questions concerning banking relationships, credit and financial services.",
+        summary: "Questions concerning banking relationships, credit and financial services.",
         detail:
           "Advice on banking and credit relationships, financing arrangements and financial services, including the review of contractual terms and related disputes.",
         image: "",
@@ -280,8 +278,7 @@ export const content = {
       },
       form: {
         heading: "Send a message",
-        notice:
-          "This academic prototype does not transmit or store submitted information.",
+        notice: "This academic prototype does not transmit or store submitted information.",
         name: { label: "Name", placeholder: "Your full name" },
         email: { label: "Email", placeholder: "you@example.com" },
         phone: { label: "Telephone (optional)", placeholder: "+39 000 000 0000" },

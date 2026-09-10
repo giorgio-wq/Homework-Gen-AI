@@ -112,6 +112,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
+    if (!a || !b) return;
 
     const clamp = (v: number, mn: number, mx: number) => Math.min(mx, Math.max(mn, v));
     const lerp = (x: number, y: number, t: number) => x + (y - x) * t;
@@ -168,6 +169,8 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
     raf = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(raf);
   }, []);
+
+  if (!a || !b) return null;
 
   return (
     <div ref={wrapRef} className="relative" style={{ height: "420vh" }}>

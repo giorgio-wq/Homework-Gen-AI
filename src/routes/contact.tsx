@@ -23,7 +23,13 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const { hero, details, map, links } = c.contact;
-  const [rows] = useState(() => [details.location, details.address, details.phone, details.email, details.hours]);
+  const [rows] = useState(() => [
+    details.location,
+    details.address,
+    details.phone,
+    details.email,
+    details.hours,
+  ]);
 
   return (
     <>
