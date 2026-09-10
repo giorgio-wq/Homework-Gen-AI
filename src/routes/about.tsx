@@ -29,25 +29,28 @@ function About() {
     <>
       <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph} />
 
-      <section className="container-editorial grid gap-10 py-20 md:grid-cols-12 md:py-28">
-        <div className="md:col-span-4">
+      {/* History + timeline */}
+      <section className="container-editorial grid gap-12 py-20 md:grid-cols-12 md:py-28">
+        <div className="md:col-span-5">
           <p className="eyebrow">{history.eyebrow}</p>
-          <dl className="mt-8 border-t border-hairline pt-4">
-            <dt className="eyebrow">{history.foundedLabel}</dt>
-            <dd className="mt-1 font-display text-4xl">
-              {c.firm.foundedPlaceholder}
-              <span className="ml-3 align-middle text-xs uppercase tracking-widest text-muted-foreground">
-                {history.foundedNote}
-              </span>
-            </dd>
-          </dl>
+          <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-4xl">{history.heading}</h2>
+          <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+            {history.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+            ))}
+          </div>
         </div>
-        <div className="md:col-span-8">
-          <h2 className="max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">{history.heading}</h2>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            {history.body}
-          </p>
-        </div>
+        <ol className="md:col-span-7 md:pt-14">
+          {history.timeline.map((entry) => (
+            <li
+              key={entry.year}
+              className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-5 border-t border-hairline py-5 md:grid-cols-[6rem_minmax(0,1fr)] md:gap-8 md:py-6"
+            >
+              <span className="font-display text-lg text-accent md:text-xl">{entry.year}</span>
+              <p className="text-sm leading-relaxed md:text-base">{entry.text}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="border-y border-hairline bg-secondary/50">
@@ -55,33 +58,18 @@ function About() {
           <div className="md:col-span-5">
             <p className="eyebrow">{approach.eyebrow}</p>
             <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-4xl">{approach.heading}</h2>
-            <p className="mt-6 text-sm leading-relaxed text-muted-foreground md:text-base">
-              {approach.body}
-            </p>
           </div>
           <div className="md:col-span-7">
-            <blockquote className="border-l-2 border-accent pl-6">
-              <p className="font-display text-2xl leading-snug md:text-[2rem]">
-                {c.firm.valueStatement}
-              </p>
-            </blockquote>
+            <p className="max-w-2xl border-l-2 border-accent pl-6 text-base leading-relaxed md:text-lg">
+              {approach.body}
+            </p>
           </div>
         </div>
       </section>
 
       <section className="container-editorial py-20 md:py-28">
-        <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-          <div className="min-w-0">
-            <p className="eyebrow">{team.eyebrow}</p>
-            <h2 className="mt-5 max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">
-              {team.heading}
-            </h2>
-          </div>
-          <dl className="shrink-0 border-t border-hairline pt-4 md:text-right">
-            <dt className="eyebrow">{team.collaboratorsLabel}</dt>
-            <dd className="font-display text-3xl">{team.collaboratorsValue}</dd>
-          </dl>
-        </div>
+        <p className="eyebrow">{team.eyebrow}</p>
+        <h2 className="mt-5 max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">{team.heading}</h2>
         <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
           {team.body}
         </p>
@@ -92,8 +80,8 @@ function About() {
       <CTASection
         heading={c.home.finalCta.heading}
         body={c.home.finalCta.body}
-        ctaLabel={c.home.finalCta.cta.label}
-        ctaTo={c.home.finalCta.cta.to}
+        ctaLabel={c.home.finalCta.ctaLabel}
+        ctaHref={`mailto:${c.firm.email}`}
       />
     </>
   );

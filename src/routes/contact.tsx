@@ -24,7 +24,9 @@ export const Route = createFileRoute("/contact")({
 function Contact() {
   const c = useContent();
   const { hero, details, map, links } = c.contact;
-  const rows = [details.location, details.address, details.phone, details.email, details.hours];
+  const mailto = `mailto:${c.firm.email}`;
+  const mapsUrl = (query: string) =>
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
   return (
     <>
@@ -34,14 +36,58 @@ function Contact() {
       <section className="container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16">
         <div>
           <h2 className="text-2xl md:text-3xl">{details.heading}</h2>
-          <dl className="mt-8">
-            {rows.map((row) => (
-              <div key={row.label} className="border-t border-hairline py-5">
-                <dt className="eyebrow">{row.label}</dt>
-                <dd className="mt-2 text-base">{row.value}</dd>
-              </div>
+
+          {/* Locations */}
+          <h3 className="eyebrow mt-8">{details.locationsLabel}</h3>
+          <ul className="mt-2">
+            {details.locations.map((location) => (
+              <li key={location.name} className="border-t border-hairline py-5">
+                <p className="text-base font-medium">{location.name}</p>
+                <address className="mt-1 text-sm not-italic leading-relaxed text-muted-foreground">
+                  {location.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </address>
+                <a
+                  href={mapsUrl(location.mapQuery)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-underline mt-2 inline-block text-sm text-accent"
+                >
+                  {details.directionsLabel}
+                </a>
+              </li>
             ))}
+          </ul>
+
+          {/* Contact methods */}
+          <dl className="mt-2">
+            <div className="border-t border-hairline py-5">
+              <dt className="eyebrow">{details.email.label}</dt>
+              <dd className="mt-2 text-base">
+                <a href={mailto} className="link-underline text-accent">
+                  {c.firm.email}
+                </a>
+              </dd>
+            </div>
+            <div className="border-t border-hairline py-5">
+              <dt className="eyebrow">{details.appointments.label}</dt>
+              <dd className="mt-2 text-base">{details.appointments.value}</dd>
+            </div>
           </dl>
+
+          <a
+            href={mailto}
+            className="group mt-6 inline-flex h-14 items-center gap-3 rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent"
+          >
+            {details.ctaLabel}
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
 
           <nav aria-label="Related pages" className="mt-10">
             <h3 className="eyebrow">{links.heading}</h3>
@@ -61,18 +107,22 @@ function Contact() {
           </nav>
         </div>
 
-        {/* Google Maps embed (no API key needed) centred on the firm address */}
+        {/* Google Maps embed (no API key needed). It shows the Altamura location
+            only, so it is labelled as such; the other locations link out above. */}
         <div>
+          <h3 className="eyebrow">{map.label}</h3>
           <iframe
             title={map.label}
-            src={`https://maps.google.com/maps?q=${encodeURIComponent(map.query)}&z=16&output=embed`}
-            className="aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/5]"
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(
+              details.locations[0].mapQuery,
+            )}&z=16&output=embed`}
+            className="mt-3 aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/5]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
           />
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(map.query)}`}
+            href={mapsUrl(details.locations[0].mapQuery)}
             target="_blank"
             rel="noreferrer"
             className="link-underline mt-3 inline-block text-sm text-accent"

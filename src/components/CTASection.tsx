@@ -1,16 +1,16 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
+/** Closing call to action. `ctaHref` is an external target (currently a mailto:). */
 export function CTASection({
   heading,
   body,
   ctaLabel,
-  ctaTo,
+  ctaHref,
 }: {
   heading: string;
   body: string;
   ctaLabel: string;
-  ctaTo: "/" | "/about" | "/services" | "/contact";
+  ctaHref: string;
 }) {
   return (
     <section className="border-t border-hairline bg-primary text-primary-foreground">
@@ -21,16 +21,16 @@ export function CTASection({
           </h2>
           <p className="mt-5 max-w-xl text-sm leading-relaxed opacity-75 md:text-base">{body}</p>
         </div>
-        <Link
-          to={ctaTo}
-          className="group inline-flex h-14 shrink-0 items-center gap-3 rounded-sm border border-primary-foreground/30 px-7 text-sm transition-colors hover:bg-accent hover:border-accent"
+        <a
+          href={ctaHref}
+          className="group inline-flex h-14 shrink-0 items-center gap-3 rounded-sm border border-primary-foreground/30 px-7 text-sm transition-colors hover:border-accent hover:bg-accent"
         >
           {ctaLabel}
           <ArrowRight
             className="h-4 w-4 transition-transform group-hover:translate-x-1"
             aria-hidden="true"
           />
-        </Link>
+        </a>
       </div>
     </section>
   );

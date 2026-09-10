@@ -15,7 +15,9 @@ export function PageHero({
     <section className="border-b border-hairline">
       <div className="container-editorial py-16 md:py-24 lg:py-28">
         <p className="eyebrow fade-up">{eyebrow}</p>
-        <h1 className="fade-up mt-5 max-w-4xl text-[2.5rem] leading-[1.02] sm:text-6xl lg:text-7xl">
+        {/* Smaller base size + break-words: long Italian words (e.g.
+            "sull'esperienza") must not overflow at 320px. */}
+        <h1 className="fade-up mt-5 max-w-4xl break-words text-[2rem] leading-[1.05] sm:text-6xl lg:text-7xl">
           {headline}
         </h1>
         {paragraph ? (

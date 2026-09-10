@@ -5,7 +5,6 @@ type Partner = {
   id: string;
   name: string;
   role: string;
-  bio: string;
   initials: string;
   image: string;
   profile: readonly string[];
@@ -88,8 +87,7 @@ function TextBlock({ partner }: { partner: Partner }) {
     <div>
       <h3 className="font-display text-4xl md:text-5xl">{partner.name}</h3>
       <p className="eyebrow mt-3">{partner.role}</p>
-      <p className="mt-6 text-base leading-relaxed">{partner.bio}</p>
-      <div className="mt-5 space-y-4">
+      <div className="mt-6 space-y-4">
         {partner.profile.map((paragraph, i) => (
           <p key={i} className="text-sm leading-relaxed text-muted-foreground">
             {paragraph}
@@ -218,6 +216,14 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   const VH_PER_PARTNER = 200;
   const stageHeight = `${100 + n * VH_PER_PARTNER}vh`;
 
+  /* Lift the portraits and their captions off the bottom of the stage so the
+     "scroll" hint keeps clear air beneath them. STAGE_LIFT is applied as bottom
+     padding on the centring wrappers (shifting content up by half of it); the
+     captions then sit just under the portraits, wherever those end up. */
+  const STAGE_LIFT = 16; // vh of bottom padding
+  const photoBottomVh = 50 - STAGE_LIFT / 2 + (56 * introScale) / 2;
+  const captionBottomVh = Math.max(100 - (photoBottomVh + 7), 20);
+
   return (
     <div ref={wrapRef} className="relative" style={{ height: stageHeight }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden border-t border-hairline">
@@ -225,6 +231,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
           <div
             key={`photo-${partner.id}`}
             className="absolute inset-0 flex items-center justify-center"
+            style={{ paddingBottom: `${STAGE_LIFT}vh` }}
           >
             <div
               ref={(el) => {
@@ -247,6 +254,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
           <div
             key={`text-${partner.id}`}
             className="absolute inset-0 flex items-center justify-center"
+            style={{ paddingBottom: `${STAGE_LIFT}vh` }}
           >
             <div
               ref={(el) => {
@@ -266,7 +274,8 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
         {partners.map((partner, i) => (
           <div
             key={`cap-${partner.id}`}
-            className="pointer-events-none absolute inset-x-0 bottom-[10vh] flex justify-center"
+            className="pointer-events-none absolute inset-x-0 flex justify-center"
+            style={{ bottom: `${captionBottomVh}vh` }}
           >
             <div
               ref={(el) => {
@@ -318,8 +327,7 @@ function StackedPartners({ partners }: { partners: readonly Partner[] }) {
               <p className="eyebrow mt-2">{partner.role}</p>
             </div>
             <div className="max-w-2xl">
-              <p className="text-lg leading-relaxed md:text-xl">{partner.bio}</p>
-              <div className="mt-6 space-y-4 border-t border-hairline pt-6">
+              <div className="space-y-4">
                 {partner.profile.map((paragraph, i) => (
                   <p
                     key={i}

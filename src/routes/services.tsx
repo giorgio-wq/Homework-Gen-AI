@@ -23,25 +23,21 @@ export const Route = createFileRoute("/services")({
 
 function Services() {
   const c = useContent();
-  const { hero, provisionalNote } = c.services;
+  const { hero, finalCta } = c.services;
 
   return (
     <>
-      <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph}>
-        <p className="mt-8 max-w-xl text-xs leading-relaxed text-muted-foreground">
-          {provisionalNote}
-        </p>
-      </PageHero>
+      <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph} />
 
       {c.practiceAreas.map((area, i) => (
         <PracticeAreaSlide key={area.id} area={area} index={i} />
       ))}
 
       <CTASection
-        heading={c.home.finalCta.heading}
-        body={c.home.finalCta.body}
-        ctaLabel={c.home.finalCta.cta.label}
-        ctaTo={c.home.finalCta.cta.to}
+        heading={finalCta.heading}
+        body={finalCta.body}
+        ctaLabel={finalCta.ctaLabel}
+        ctaHref={`mailto:${c.firm.email}`}
       />
     </>
   );

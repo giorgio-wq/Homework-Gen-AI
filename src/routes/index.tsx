@@ -38,7 +38,7 @@ function Home() {
             {/* Message — above the rule */}
             <div className="fade-up mb-8 lg:col-start-1 lg:row-start-1 lg:mb-0 lg:self-end lg:pb-10">
               <p className="eyebrow">{hero.eyebrow}</p>
-              <h1 className="mt-6 text-[2.75rem] leading-[0.98] sm:text-5xl lg:text-6xl">
+              <h1 className="mt-6 break-words text-[2.5rem] leading-[0.98] sm:text-5xl lg:text-6xl">
                 {hero.headlineLead}
                 <br />
                 <span className="italic text-accent">{hero.headlineAccent}</span>
@@ -107,14 +107,13 @@ function Home() {
       <section className="container-editorial grid gap-10 py-20 md:grid-cols-12 md:py-28">
         <div className="md:col-span-4">
           <p className="eyebrow">{intro.eyebrow}</p>
-          <dl className="mt-8 border-t border-hairline pt-4">
-            <dt className="eyebrow">{intro.foundedLabel}</dt>
-            <dd className="mt-1 font-display text-4xl">
-              {c.firm.foundedPlaceholder}
-              <span className="ml-3 align-middle text-xs uppercase tracking-widest text-muted-foreground">
-                {intro.foundedNote}
-              </span>
-            </dd>
+          <dl className="mt-8">
+            {intro.facts.map((fact) => (
+              <div key={fact.label} className="border-t border-hairline py-4">
+                <dt className="eyebrow">{fact.label}</dt>
+                <dd className="mt-1 text-base leading-snug">{fact.value}</dd>
+              </div>
+            ))}
           </dl>
         </div>
         <div className="md:col-span-8">
@@ -132,14 +131,17 @@ function Home() {
           <h2 className="mt-5 max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">
             {clients.heading}
           </h2>
-          <ul className="mt-14 grid gap-px bg-hairline sm:grid-cols-2">
+          {/* Editorial index: each entry carries its own hairline rule instead of
+              sitting in a filled cell, so an odd number of entries simply leaves
+              white space rather than an empty box. */}
+          <ul className="mt-14 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
             {clients.items.map((item, i) => (
-              <li key={item.title} className="bg-background p-7 md:p-10">
+              <li key={item.title} className="border-t border-hairline pt-5">
                 <span className="font-display text-sm text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 text-xl md:text-2xl">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.note}</p>
+                <h3 className="mt-3 text-xl md:text-2xl">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.note}</p>
               </li>
             ))}
           </ul>
@@ -178,19 +180,15 @@ function Home() {
             <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-4xl">{approach.heading}</h2>
           </div>
           <div className="md:col-span-7">
-            <blockquote className="border-l-2 border-accent pl-6">
-              <p className="font-display text-2xl leading-snug md:text-[2rem]">
-                {c.firm.valueStatement}
-              </p>
-            </blockquote>
-            <dl className="mt-12 grid gap-8 sm:grid-cols-3">
-              {approach.principles.map((p) => (
-                <div key={p.title} className="border-t border-hairline pt-4">
-                  <dt className="text-lg">{p.title}</dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.note}</dd>
-                </div>
-              ))}
-            </dl>
+            <p className="max-w-2xl border-l-2 border-accent pl-6 text-base leading-relaxed md:text-lg">
+              {approach.body}
+            </p>
+            <Link
+              to={approach.link.to}
+              className="link-underline mt-8 inline-block text-sm text-accent"
+            >
+              {approach.link.label}
+            </Link>
           </div>
         </div>
       </section>
@@ -208,7 +206,7 @@ function Home() {
               {team.cta.label}
             </Link>
           </div>
-          <div className="grid gap-8 sm:grid-cols-2 md:col-span-7">
+          <div className="grid gap-8 sm:grid-cols-3 md:col-span-7">
             {c.partners.map((p) => (
               <PartnerCard key={p.id} partner={p} />
             ))}
@@ -219,8 +217,8 @@ function Home() {
       <CTASection
         heading={finalCta.heading}
         body={finalCta.body}
-        ctaLabel={finalCta.cta.label}
-        ctaTo={finalCta.cta.to}
+        ctaLabel={finalCta.ctaLabel}
+        ctaHref={`mailto:${c.firm.email}`}
       />
     </>
   );

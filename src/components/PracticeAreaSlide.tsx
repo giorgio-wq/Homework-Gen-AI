@@ -1,7 +1,4 @@
 import { useEffect, useRef } from "react";
-import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { useContent } from "@/i18n/locale";
 
 type Area = {
   id: string;
@@ -36,9 +33,7 @@ const placeholderBackgrounds = [
 ];
 
 export function PracticeAreaSlide({ area, index }: { area: Area; index: number }) {
-  const c = useContent();
   const flip = index % 2 === 1;
-  const { cta } = c.services;
 
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -126,24 +121,12 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
           </span>
           <h2
             id={`${area.id}-heading`}
-            className="mt-4 font-display text-4xl leading-[1.05] text-primary-foreground md:text-6xl"
+            className="mt-4 break-words font-display text-3xl leading-[1.05] text-primary-foreground sm:text-4xl md:text-6xl"
           >
             {area.title}
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-primary-foreground/90">{area.summary}</p>
           <p className="mt-4 text-sm leading-relaxed text-primary-foreground/70">{area.detail}</p>
-          <Link
-            to={cta.to}
-            className={`group mt-8 inline-flex items-center gap-3 text-sm text-primary-foreground ${
-              flip ? "flex-row-reverse" : ""
-            }`}
-          >
-            <span className="link-underline">{cta.label}</span>
-            <ArrowRight
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
         </div>
       </div>
     </section>

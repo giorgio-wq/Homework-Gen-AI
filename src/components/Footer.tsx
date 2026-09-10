@@ -5,6 +5,8 @@ import { AcademicDisclaimer } from "@/components/AcademicDisclaimer";
 
 export function Footer() {
   const c = useContent();
+  const mapsUrl = (query: string) =>
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   return (
     <footer className="mt-24 border-t border-hairline bg-secondary/60">
       <div className="container-editorial grid gap-10 py-14 md:grid-cols-3 md:py-16">
@@ -39,10 +41,24 @@ export function Footer() {
         <div>
           <h2 className="eyebrow">{c.footer.contactHeading}</h2>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li>{c.contact.details.location.value}</li>
-            <li>{c.contact.details.address.value}</li>
-            <li>{c.contact.details.phone.value}</li>
-            <li>{c.contact.details.email.value}</li>
+            {c.contact.details.locations.map((location) => (
+              <li key={location.name} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span>{location.name}</span>
+                <a
+                  href={mapsUrl(location.mapQuery)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-underline text-xs text-accent"
+                >
+                  {c.contact.details.directionsLabel}
+                </a>
+              </li>
+            ))}
+            <li className="pt-2">
+              <a href={`mailto:${c.firm.email}`} className="link-underline text-accent">
+                {c.firm.email}
+              </a>
+            </li>
           </ul>
         </div>
       </div>
