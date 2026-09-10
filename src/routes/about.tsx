@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { c } from "@/content/site";
 import { PageHero } from "@/components/PageHero";
-import { PartnerCard } from "@/components/PartnerCard";
+import { PartnersShowcase } from "@/components/PartnersShowcase";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/about")({
@@ -83,13 +83,9 @@ function About() {
         <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
           {team.body}
         </p>
-
-        <div className="mt-16 grid gap-14">
-          {c.partners.map((p) => (
-            <PartnerCard key={p.id} partner={p} large />
-          ))}
-        </div>
       </section>
+
+      <PartnersShowcase partners={c.partners} />
 
       <CTASection
         heading={c.home.finalCta.heading}

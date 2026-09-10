@@ -212,20 +212,38 @@ export const content = {
       },
     ],
 
+    // `bio` is the short line always shown; `profile` is the longer text that
+    // reveals as it scrolls into view on the About page. Both are PLACEHOLDER
+    // text to be replaced. Set `image` to a file in public/ (e.g.
+    // "/partners/girolamo.jpg") to swap the portrait placeholder for a photo.
     partners: [
       {
         id: "girolamo-giancaspro",
         name: "Girolamo Giancaspro",
         role: "Partner",
-        bio: "[PARTNER BIOGRAPHY TO BE CONFIRMED]",
         initials: "GG",
+        image: "",
+        bio: "Questa descrizione è per la programmazione del sito, va cambiata.",
+        profile: [
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+        ],
       },
       {
         id: "giovanni-riviello",
         name: "Giovanni Riviello",
         role: "Partner",
-        bio: "[PARTNER BIOGRAPHY TO BE CONFIRMED]",
         initials: "GR",
+        image: "",
+        bio: "Questa descrizione è per la programmazione del sito, va cambiata.",
+        profile: [
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+        ],
       },
     ],
 
