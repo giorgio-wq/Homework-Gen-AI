@@ -129,7 +129,10 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
        transition, part HOLD — so every partner settles into a stable, centred
        composition instead of the whole thing morphing continuously. */
     const INTRO = 0.1;
-    const TRANS = 0.45; // share of a slot spent moving; the rest is the hold
+    // Share of a slot spent moving; the rest is the hold. Keeping this low
+    // leaves a long settled stretch on each partner, so their text can be read
+    // without the composition drifting — in either scroll direction.
+    const TRANS = 0.36;
     const slot = (1 - INTRO) / n;
 
     let raf = 0;
@@ -213,7 +216,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   /* Scroll distance allotted to each partner (in viewport heights). Because the
      sequence is scrubbed by scroll, this is the pacing dial: a larger value
      spreads the same movement over more scrolling, i.e. slower animation. */
-  const VH_PER_PARTNER = 200;
+  const VH_PER_PARTNER = 320;
   const stageHeight = `${100 + n * VH_PER_PARTNER}vh`;
 
   /* Lift the portraits and their captions off the bottom of the stage so the
