@@ -16,7 +16,7 @@ export function CTASection({
     <section className="border-t border-hairline bg-primary text-primary-foreground">
       <div className="container-editorial grid gap-10 py-20 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:py-28">
         <div className="min-w-0">
-          <h2 className="max-w-2xl text-[2.25rem] leading-[1.05] sm:text-5xl lg:text-6xl">
+          <h2 className="max-w-2xl text-[2.25rem] leading-[1.05] text-primary-foreground sm:text-5xl lg:text-6xl">
             {heading}
           </h2>
           <p className="mt-5 max-w-xl text-sm leading-relaxed opacity-75 md:text-base">{body}</p>

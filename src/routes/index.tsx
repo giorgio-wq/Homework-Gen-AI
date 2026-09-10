@@ -28,55 +28,77 @@ function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-hairline">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 lg:block"
-          style={{
-            backgroundImage: "linear-gradient(to right, var(--hairline) 1px, transparent 1px)",
-            backgroundSize: "8rem 100%",
-            opacity: 0.7,
-          }}
-        />
-        {/* LOGO PLACEHOLDER (hero) — replace the "SLC" box with the real logo,
-            e.g. <img src="/logo.svg" alt="Studio Legale Caso" className="h-64 w-64 xl:h-80 xl:w-80" />,
-            once the logo file is added to public/. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[6%] top-1/2 hidden -translate-y-1/2 lg:block"
-        >
-          <div className="grid h-64 w-64 place-items-center rounded-xl border border-accent/30 bg-background/60 font-display text-7xl tracking-tight text-primary shadow-sm backdrop-blur-sm xl:h-80 xl:w-80 xl:text-8xl">
-            SLC
-          </div>
-        </div>
-        <div className="container-editorial relative py-20 md:py-28 lg:py-36">
-          <p className="eyebrow fade-up">{hero.eyebrow}</p>
-          <h1 className="fade-up mt-6 max-w-5xl text-[2.75rem] leading-[0.98] sm:text-7xl lg:text-[5.75rem]">
-            {hero.headlineLead}
-            <br />
-            <span className="italic text-accent">{hero.headlineAccent}</span>
-          </h1>
-          <p className="fade-up mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            {hero.paragraph}
-          </p>
-          <div className="fade-up mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to={hero.primaryCta.to}
-              className="group inline-flex h-14 items-center justify-center gap-3 rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent"
-            >
-              {hero.primaryCta.label}
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </Link>
-            <Link
-              to={hero.secondaryCta.to}
-              className="inline-flex h-14 items-center justify-center rounded-sm border border-hairline px-7 text-sm transition-colors hover:border-foreground"
-            >
-              {hero.secondaryCta.label}
-            </Link>
+      {/* Hero — the logo's own blue stripe is extended across the section as a
+          broken rule: message above it, calls to action below it. The logo is
+          split into mark + tagline so the CSS rule sits exactly where the
+          original stripe was. */}
+      <section className="overflow-hidden border-b border-hairline">
+        <div className="container-editorial py-16 md:py-24 lg:py-28">
+          <div className="grid gap-x-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-16">
+            {/* Message — above the rule */}
+            <div className="fade-up mb-8 lg:col-start-1 lg:row-start-1 lg:mb-0 lg:self-end lg:pb-10">
+              <p className="eyebrow">{hero.eyebrow}</p>
+              <h1 className="mt-6 text-[2.75rem] leading-[0.98] sm:text-5xl lg:text-6xl">
+                {hero.headlineLead}
+                <br />
+                <span className="italic text-accent">{hero.headlineAccent}</span>
+              </h1>
+              <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                {hero.paragraph}
+              </p>
+            </div>
+
+            {/* Calls to action — below the rule */}
+            <div className="fade-up mb-12 flex flex-col gap-3 sm:flex-row lg:col-start-1 lg:row-start-3 lg:mb-0 lg:self-start lg:pt-10">
+              <Link
+                to={hero.primaryCta.to}
+                className="group inline-flex h-14 items-center justify-center gap-3 rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent"
+              >
+                {hero.primaryCta.label}
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+              <Link
+                to={hero.secondaryCta.to}
+                className="inline-flex h-14 items-center justify-center rounded-sm border border-hairline px-7 text-sm transition-colors hover:border-foreground"
+              >
+                {hero.secondaryCta.label}
+              </Link>
+            </div>
+
+            {/* Logo mark — sits directly on the rule */}
+            <img
+              src="/brand/studio-legale-caso-logo-mark.webp"
+              alt="Studio Legale Caso – Associazione Professionale"
+              width={955}
+              height={568}
+              className="fade-up mx-auto h-auto w-full max-w-sm lg:col-start-2 lg:row-start-1 lg:mx-0 lg:w-[28rem] lg:max-w-none lg:self-end xl:w-[34rem]"
+            />
+
+            {/* The stripe, continuing the logo's own blue bar */}
+            <div
+              aria-hidden="true"
+              className="mx-auto h-2 w-full max-w-sm bg-accent lg:col-start-2 lg:row-start-2 lg:mx-0 lg:h-3 lg:w-[28rem] lg:max-w-none xl:h-4 xl:w-[34rem]"
+            />
+
+            {/* Logo tagline — sits directly under the rule */}
+            <img
+              src="/brand/studio-legale-caso-logo-tagline.webp"
+              alt=""
+              aria-hidden="true"
+              width={955}
+              height={72}
+              className="mx-auto h-auto w-full max-w-sm lg:col-start-2 lg:row-start-3 lg:mx-0 lg:w-[28rem] lg:max-w-none lg:self-start xl:w-[34rem]"
+            />
+
+            {/* Extended segment of the stripe across the text column (broken by
+                the column gap, which separates logo from copy) */}
+            <div
+              aria-hidden="true"
+              className="hidden bg-accent lg:col-start-1 lg:row-start-2 lg:block lg:h-3 lg:w-full xl:h-4"
+            />
           </div>
         </div>
       </section>

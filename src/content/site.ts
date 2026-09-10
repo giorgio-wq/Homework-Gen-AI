@@ -104,7 +104,7 @@ export const content = {
       },
       team: {
         eyebrow: "Professionisti",
-        heading: "Un gruppo multidisciplinare guidato da due soci.",
+        heading: "Un gruppo multidisciplinare guidato da tre soci.",
         body: "Studio Legale Caso riunisce circa dieci professionisti legali e collaboratori, che lavorano come un unico team nelle aree di attività dello studio.",
         cta: { label: "Conosci i professionisti", to: "/about" as const },
       },
@@ -119,7 +119,7 @@ export const content = {
       meta: {
         title: "Chi siamo — Studio Legale Caso",
         description:
-          "Uno studio legale indipendente ad Altamura, in Puglia: l'approccio dello studio, i due soci e un team di circa dieci professionisti legali.",
+          "Uno studio legale indipendente ad Altamura, in Puglia: l'approccio dello studio, i tre soci e un team di circa dieci professionisti legali.",
       },
       hero: {
         eyebrow: "Chi siamo",
@@ -141,10 +141,11 @@ export const content = {
       },
       team: {
         eyebrow: "Il team",
-        heading: "Due soci e un team più ampio.",
-        body: "Studio Legale Caso è guidato da due soci e comprende circa dieci professionisti legali e collaboratori. I dettagli del team saranno pubblicati una volta confermati.",
+        heading: "Tre soci e un team più ampio.",
+        body: "Studio Legale Caso è guidato da tre soci e comprende circa dieci professionisti legali e collaboratori. I dettagli del team saranno pubblicati una volta confermati.",
         collaboratorsLabel: "Professionisti legali e collaboratori",
         collaboratorsValue: "≈ 10",
+        scrollHint: "Scorri per conoscere i soci",
       },
     },
 
@@ -208,6 +209,20 @@ export const content = {
     ],
 
     partners: [
+      {
+        id: "pasquale-caso",
+        name: "Pasquale Caso",
+        role: "Socio",
+        initials: "PC",
+        image: "",
+        bio: "Questa descrizione è per la programmazione del sito, va cambiata.",
+        profile: [
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+          "Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata. Questa descrizione è per la programmazione del sito, va cambiata.",
+        ],
+      },
       {
         id: "girolamo-giancaspro",
         name: "Girolamo Giancaspro",
@@ -389,7 +404,7 @@ export const content = {
       },
       team: {
         eyebrow: "Professionals",
-        heading: "A multidisciplinary group led by two partners.",
+        heading: "A multidisciplinary group led by three partners.",
         body: "Studio Legale Caso brings together approximately ten legal professionals and collaborators, working as a single team across the firm's areas of practice.",
         cta: { label: "Meet the professionals", to: "/about" as const },
       },
@@ -404,7 +419,7 @@ export const content = {
       meta: {
         title: "About Us — Studio Legale Caso",
         description:
-          "An independent law firm in Altamura, Puglia: the firm's approach, its two partners and a team of approximately ten legal professionals.",
+          "An independent law firm in Altamura, Puglia: the firm's approach, its three partners and a team of approximately ten legal professionals.",
       },
       hero: {
         eyebrow: "About us",
@@ -426,10 +441,11 @@ export const content = {
       },
       team: {
         eyebrow: "The team",
-        heading: "Two partners and a wider team.",
-        body: "Studio Legale Caso is led by two partners and includes approximately ten legal professionals and collaborators. Details of the wider team will be published once confirmed.",
+        heading: "Three partners and a wider team.",
+        body: "Studio Legale Caso is led by three partners and includes approximately ten legal professionals and collaborators. Details of the wider team will be published once confirmed.",
         collaboratorsLabel: "Legal professionals and collaborators",
         collaboratorsValue: "≈ 10",
+        scrollHint: "Scroll to meet the partners",
       },
     },
 
@@ -493,6 +509,20 @@ export const content = {
     ],
 
     partners: [
+      {
+        id: "pasquale-caso",
+        name: "Pasquale Caso",
+        role: "Partner",
+        initials: "PC",
+        image: "",
+        bio: "This is placeholder text for the site build and will be replaced.",
+        profile: [
+          "This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced.",
+          "This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced.",
+          "This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced.",
+          "This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced. This is placeholder text for the site build and will be replaced.",
+        ],
+      },
       {
         id: "girolamo-giancaspro",
         name: "Girolamo Giancaspro",

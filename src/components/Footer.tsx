@@ -11,6 +11,13 @@ export function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">{c.footer.tagline}</p>
+          <img
+            src="/brand/studio-legale-caso-logo.webp"
+            alt="Studio Legale Caso – Associazione Professionale"
+            width={955}
+            height={667}
+            className="mt-6 h-auto w-40"
+          />
         </div>
 
         <nav aria-label="Footer">

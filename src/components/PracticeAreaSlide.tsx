@@ -26,13 +26,13 @@ type Area = {
  * overlay keeps text legible over any picture.
  */
 
-// Themed placeholder backgrounds (deep navy + burgundy family), one per slide,
+// Themed placeholder backgrounds (deep-navy brand family), one per slide,
 // used only while `area.image` is empty.
 const placeholderBackgrounds = [
-  "linear-gradient(135deg, oklch(0.20 0.03 264) 0%, oklch(0.30 0.08 22) 100%)",
-  "linear-gradient(135deg, oklch(0.24 0.04 170) 0%, oklch(0.20 0.03 264) 100%)",
-  "linear-gradient(135deg, oklch(0.20 0.03 264) 0%, oklch(0.30 0.06 50) 100%)",
-  "linear-gradient(135deg, oklch(0.22 0.05 290) 0%, oklch(0.29 0.09 16) 100%)",
+  "linear-gradient(135deg, #11152f 0%, #1b2148 100%)",
+  "linear-gradient(135deg, #141a3a 0%, #0e1128 100%)",
+  "linear-gradient(135deg, #11152f 0%, #232a55 100%)",
+  "linear-gradient(135deg, #171d40 0%, #0f1229 100%)",
 ];
 
 export function PracticeAreaSlide({ area, index }: { area: Area; index: number }) {
@@ -55,6 +55,13 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
       if (section) {
         const rect = section.getBoundingClientRect();
         const vh = window.innerHeight || 1;
+        // Only write styles while the slide is near the viewport: idle slides
+        // would otherwise cost a style recalculation every frame, which makes
+        // scrolling feel heavier on this page than on the others.
+        if (rect.bottom < -vh || rect.top > vh * 2) {
+          raf = requestAnimationFrame(frame);
+          return;
+        }
         const center = rect.top + rect.height / 2;
         // q ≈ 1 while entering from the bottom, 0.5 when centred, ≈ 0 when leaving the top
         const q = center / vh;
@@ -114,10 +121,12 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
           ref={contentRef}
           className={`max-w-xl will-change-transform ${flip ? "ml-auto text-right" : ""}`}
         >
-          <span className="block font-display text-6xl text-accent md:text-7xl">{area.number}</span>
+          <span className="block font-display text-6xl text-pale-blue md:text-7xl">
+            {area.number}
+          </span>
           <h2
             id={`${area.id}-heading`}
-            className="mt-4 font-display text-4xl leading-[1.05] md:text-6xl"
+            className="mt-4 font-display text-4xl leading-[1.05] text-primary-foreground md:text-6xl"
           >
             {area.title}
           </h2>

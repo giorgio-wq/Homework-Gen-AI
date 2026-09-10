@@ -38,6 +38,9 @@
   --color-ink: var(--ink);
   --color-ivory: var(--ivory);
   --color-ivory-deep: var(--ivory-deep);
+  --color-accent-hover: var(--accent-hover);
+  --color-pale-blue: var(--pale-blue);
+  --color-silver: var(--silver);
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
 }
@@ -45,34 +48,40 @@
 :root {
   --radius: 0.25rem;
 
-  --ivory: oklch(0.976 0.008 85);
-  --ivory-deep: oklch(0.945 0.012 84);
-  --ink: oklch(0.205 0.028 264);
+  /* Studio Legale Caso — brand palette (contemporary institutional) */
+  --ivory: #f8f7f3;
+  --ivory-deep: #f3f3f6;
+  --ink: #11152f; /* deep navy — headings & primary */
 
-  --background: var(--ivory);
-  --foreground: var(--ink);
-  --card: oklch(0.992 0.005 85);
-  --card-foreground: var(--ink);
-  --popover: oklch(0.992 0.005 85);
-  --popover-foreground: var(--ink);
+  --background: #f8f7f3;
+  --foreground: #22242b; /* main body text */
+  --card: #ffffff;
+  --card-foreground: #22242b;
+  --popover: #ffffff;
+  --popover-foreground: #22242b;
 
-  --primary: var(--ink);
-  --primary-foreground: oklch(0.98 0.008 85);
-  --secondary: var(--ivory-deep);
-  --secondary-foreground: var(--ink);
-  --muted: var(--ivory-deep);
-  --muted-foreground: oklch(0.46 0.018 265);
+  --primary: #11152f;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f3f6;
+  --secondary-foreground: #11152f;
+  --muted: #f3f3f6;
+  --muted-foreground: #5f626b; /* secondary text */
 
-  --accent: oklch(0.47 0.108 25);
-  --accent-foreground: oklch(0.98 0.008 85);
+  --accent: #00009f; /* brand blue — links, numbers, focus, fine details */
+  --accent-foreground: #ffffff;
 
-  --destructive: oklch(0.52 0.17 27);
-  --destructive-foreground: oklch(0.98 0.008 85);
+  --destructive: #c0362c;
+  --destructive-foreground: #ffffff;
 
-  --border: oklch(0.885 0.012 85);
-  --hairline: oklch(0.845 0.014 85);
-  --input: oklch(0.865 0.012 85);
-  --ring: oklch(0.47 0.108 25);
+  --border: #d7d8de;
+  --hairline: #d7d8de;
+  --input: #bfc1c9;
+  --ring: #00009f;
+
+  /* Brand extras */
+  --accent-hover: #000078; /* brand-blue hover */
+  --pale-blue: #eeeeff; /* pale highlight / numbers on dark */
+  --silver: #a0a0a0; /* logo / large decorative only — never small text */
 }
 
 @layer base {
@@ -99,6 +108,7 @@
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.02em;
+    color: var(--color-ink); /* deep navy headings; light on dark sections set locally */
   }
 
   :focus-visible {

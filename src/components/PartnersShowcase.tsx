@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useContent } from "@/i18n/locale";
 
 type Partner = {
   id: string;
@@ -13,15 +14,16 @@ type Partner = {
 /**
  * About-page partners section.
  *
- * On a capable desktop it plays a scroll-driven "scrollytelling" sequence:
- *   1. both portraits sit side by side (intro + a "scroll" hint);
- *   2. the first partner's photo slides to the left while their text appears;
- *   3. a fluid transition brings in the second partner (photo on the right).
+ * On a capable desktop it plays a scroll-driven sequence that works for any
+ * number of partners: all portraits sit side by side (intro), then each partner
+ * in turn takes the stage — photo on one side, biography on the other, with the
+ * sides alternating. Each state is *held* for part of the scroll so it settles
+ * and can be read, instead of morphing continuously.
  *
  * On mobile — and whenever the visitor prefers reduced motion — it falls back to
- * a simple, robust stacked layout where the bios reveal as they scroll in.
+ * a simple stacked layout where the bios reveal as they scroll in.
  * `enhanced` starts false so the server render and first client render match
- * (the stacked version); the effect upgrades to the cinematic version after mount.
+ * (the stacked version); the effect upgrades to the cinematic one after mount.
  */
 export function PartnersShowcase({ partners }: { partners: readonly Partner[] }) {
   const [enhanced, setEnhanced] = useState(false);
@@ -99,20 +101,22 @@ function TextBlock({ partner }: { partner: Partner }) {
 }
 
 function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
-  const [a, b] = partners;
+  const c = useContent();
+  const n = partners.length;
   const wrapRef = useRef<HTMLDivElement>(null);
-  const p1 = useRef<HTMLDivElement>(null);
-  const p2 = useRef<HTMLDivElement>(null);
-  const t1 = useRef<HTMLDivElement>(null);
-  const t2 = useRef<HTMLDivElement>(null);
-  const cap1 = useRef<HTMLDivElement>(null);
-  const cap2 = useRef<HTMLDivElement>(null);
-  const hint = useRef<HTMLDivElement>(null);
+  const photoRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const textRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const capRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const hintRef = useRef<HTMLDivElement>(null);
+
+  // Intro formation: portraits evenly spaced and scaled down to fit.
+  const introGap = n >= 3 ? 26 : 32;
+  const introScale = n >= 3 ? 0.62 : 0.82;
+  const introX = (i: number) => (i - (n - 1) / 2) * introGap;
 
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
-    if (!a || !b) return;
 
     const clamp = (v: number, mn: number, mx: number) => Math.min(mx, Math.max(mn, v));
     const lerp = (x: number, y: number, t: number) => x + (y - x) * t;
@@ -123,142 +127,165 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
       el.style.opacity = String(opacity);
     };
 
+    /* Timeline: an intro hold, then one slot per partner. Each slot is part
+       transition, part HOLD — so every partner settles into a stable, centred
+       composition instead of the whole thing morphing continuously. */
+    const INTRO = 0.1;
+    const TRANS = 0.45; // share of a slot spent moving; the rest is the hold
+    const slot = (1 - INTRO) / n;
+
     let raf = 0;
     const frame = () => {
       const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // Skip style writes while the section is off-screen, so this page scrolls
+      // with the same smoothness as the rest of the site.
+      if (rect.bottom < -vh || rect.top > vh * 2) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
       const total = wrap.offsetHeight - window.innerHeight;
       const p = total > 0 ? clamp(-rect.top / total, 0, 1) : 0;
 
-      const introFade = 1 - seg(p, 0.08, 0.22);
+      const introFade = 1 - seg(p, INTRO, INTRO + slot * TRANS * 0.5);
 
-      // Partner 1 photo: intro (centre-left) -> left focus -> off left
-      const moveB = seg(p, 0.14, 0.44);
-      const leave1 = seg(p, 0.52, 0.7);
-      let x1 = lerp(-16, -27, moveB);
-      x1 = lerp(x1, -80, leave1);
-      set(p1.current, x1, 1 - leave1, lerp(0.82, 1, moveB));
+      for (let i = 0; i < n; i++) {
+        const aStart = INTRO + i * slot;
+        const aTransEnd = aStart + slot * TRANS;
+        const aEnd = aStart + slot;
+        const flip = i % 2 === 1; // alternate: photo left, then right, then left…
+        const focusX = flip ? 27 : -27;
+        const offX = flip ? 80 : -80;
+        const textX = flip ? -23 : 23;
+        const iX = introX(i);
 
-      // Partner 1 text (right side)
-      const in1 = seg(p, 0.3, 0.48);
-      const out1 = seg(p, 0.54, 0.68);
-      let sl1 = lerp(4, 0, in1);
-      sl1 = lerp(sl1, -4, out1);
-      set(t1.current, 23 + sl1, in1 * (1 - out1));
+        let x: number;
+        let opacity: number;
+        let scale: number;
 
-      // Partner 2 photo: intro (centre-right) -> off right -> back in on the right
-      if (p < 0.5) {
-        const l2 = seg(p, 0.14, 0.3);
-        set(p2.current, lerp(16, 44, l2), 1 - l2, 0.82);
-      } else {
-        const e2 = seg(p, 0.6, 0.86);
-        set(p2.current, lerp(80, 27, e2), e2, lerp(0.82, 1, e2));
+        if (i === 0) {
+          // First partner grows out of the intro formation into focus.
+          const mv = seg(p, aStart, aTransEnd);
+          x = lerp(iX, focusX, mv);
+          scale = lerp(introScale, 1, mv);
+          opacity = 1;
+        } else if (p < aStart - slot * 0.25) {
+          // Still leaving the intro formation (invisible well before its slot).
+          const ex = seg(p, INTRO, INTRO + slot * TRANS * 0.6);
+          x = iX + ex * (iX >= 0 ? 30 : -30);
+          opacity = 1 - ex;
+          scale = introScale;
+        } else {
+          // Enters from off-screen for its own slot.
+          const en = seg(p, aStart, aTransEnd);
+          x = lerp(offX, focusX, en);
+          opacity = en;
+          scale = lerp(introScale, 1, en);
+        }
+
+        // Every partner but the last leaves as the next one arrives.
+        if (i < n - 1) {
+          const lv = seg(p, aEnd, aEnd + slot * TRANS * 0.7);
+          x = lerp(x, offX, lv);
+          opacity *= 1 - lv;
+        }
+        set(photoRefs.current[i] ?? null, x, opacity, scale);
+
+        // Biography: in near the end of the transition, static through the hold.
+        const tIn = seg(p, aStart + slot * TRANS * 0.45, aTransEnd);
+        const tOut = i < n - 1 ? seg(p, aEnd, aEnd + slot * TRANS * 0.6) : 0;
+        const slide = lerp(flip ? -4 : 4, 0, tIn);
+        set(textRefs.current[i] ?? null, textX + slide, tIn * (1 - tOut));
+
+        // Intro captions
+        set(capRefs.current[i] ?? null, iX, introFade);
       }
 
-      // Partner 2 text (left side)
-      const in2 = seg(p, 0.7, 0.9);
-      set(t2.current, -23 + lerp(-4, 0, in2), in2);
-
-      // Intro captions + scroll hint
-      set(cap1.current, -16, introFade);
-      set(cap2.current, 16, introFade);
-      if (hint.current) hint.current.style.opacity = String(introFade);
+      if (hintRef.current) hintRef.current.style.opacity = String(introFade);
 
       raf = requestAnimationFrame(frame);
     };
 
     raf = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [n, introGap, introScale]);
 
-  if (!a || !b) return null;
+  if (n < 2) return null;
+
+  /* Scroll distance allotted to each partner (in viewport heights). Because the
+     sequence is scrubbed by scroll, this is the pacing dial: a larger value
+     spreads the same movement over more scrolling, i.e. slower animation. */
+  const VH_PER_PARTNER = 200;
+  const stageHeight = `${100 + n * VH_PER_PARTNER}vh`;
 
   return (
-    <div ref={wrapRef} className="relative" style={{ height: "420vh" }}>
+    <div ref={wrapRef} className="relative" style={{ height: stageHeight }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden border-t border-hairline">
-        {/* Partner 1 photo */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {partners.map((partner, i) => (
           <div
-            ref={p1}
-            className="will-change-transform"
-            style={{ transform: "translate3d(-16vw, 0, 0) scale(0.82)" }}
+            key={`photo-${partner.id}`}
+            className="absolute inset-0 flex items-center justify-center"
           >
-            <Portrait
-              image={a.image}
-              initials={a.initials}
-              name={a.name}
-              className="h-[56vh] aspect-[4/5]"
-            />
+            <div
+              ref={(el) => {
+                photoRefs.current[i] = el;
+              }}
+              className="will-change-transform"
+              style={{ transform: `translate3d(${introX(i)}vw, 0, 0) scale(${introScale})` }}
+            >
+              <Portrait
+                image={partner.image}
+                initials={partner.initials}
+                name={partner.name}
+                className="h-[56vh] aspect-[4/5]"
+              />
+            </div>
           </div>
-        </div>
+        ))}
 
-        {/* Partner 2 photo */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {partners.map((partner, i) => (
           <div
-            ref={p2}
-            className="will-change-transform"
-            style={{ transform: "translate3d(16vw, 0, 0) scale(0.82)" }}
+            key={`text-${partner.id}`}
+            className="absolute inset-0 flex items-center justify-center"
           >
-            <Portrait
-              image={b.image}
-              initials={b.initials}
-              name={b.name}
-              className="h-[56vh] aspect-[4/5]"
-            />
+            <div
+              ref={(el) => {
+                textRefs.current[i] = el;
+              }}
+              className="w-[38vw] max-w-md will-change-transform"
+              style={{
+                transform: `translate3d(${i % 2 === 1 ? -23 : 23}vw, 0, 0)`,
+                opacity: 0,
+              }}
+            >
+              <TextBlock partner={partner} />
+            </div>
           </div>
-        </div>
+        ))}
 
-        {/* Partner 1 text (right) */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {partners.map((partner, i) => (
           <div
-            ref={t1}
-            className="w-[38vw] max-w-md will-change-transform"
-            style={{ transform: "translate3d(23vw, 0, 0)", opacity: 0 }}
+            key={`cap-${partner.id}`}
+            className="pointer-events-none absolute inset-x-0 bottom-[10vh] flex justify-center"
           >
-            <TextBlock partner={a} />
+            <div
+              ref={(el) => {
+                capRefs.current[i] = el;
+              }}
+              className="text-center will-change-transform"
+              style={{ transform: `translate3d(${introX(i)}vw, 0, 0)` }}
+            >
+              <p className={`font-display ${n >= 3 ? "text-lg" : "text-2xl"}`}>{partner.name}</p>
+              <p className="eyebrow mt-1">{partner.role}</p>
+            </div>
           </div>
-        </div>
+        ))}
 
-        {/* Partner 2 text (left) */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            ref={t2}
-            className="w-[38vw] max-w-md will-change-transform"
-            style={{ transform: "translate3d(-23vw, 0, 0)", opacity: 0 }}
-          >
-            <TextBlock partner={b} />
-          </div>
-        </div>
-
-        {/* Intro caption 1 */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-[10vh] flex justify-center">
-          <div
-            ref={cap1}
-            className="text-center will-change-transform"
-            style={{ transform: "translate3d(-16vw, 0, 0)" }}
-          >
-            <p className="font-display text-2xl">{a.name}</p>
-            <p className="eyebrow mt-1">{a.role}</p>
-          </div>
-        </div>
-
-        {/* Intro caption 2 */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-[10vh] flex justify-center">
-          <div
-            ref={cap2}
-            className="text-center will-change-transform"
-            style={{ transform: "translate3d(16vw, 0, 0)" }}
-          >
-            <p className="font-display text-2xl">{b.name}</p>
-            <p className="eyebrow mt-1">{b.role}</p>
-          </div>
-        </div>
-
-        {/* Scroll hint */}
         <div
-          ref={hint}
+          ref={hintRef}
           className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-muted-foreground"
         >
-          <span className="eyebrow">Scroll to meet the partners</span>
+          <span className="eyebrow">{c.about.team.scrollHint}</span>
           <span aria-hidden="true" className="animate-bounce text-lg">
             ↓
           </span>
