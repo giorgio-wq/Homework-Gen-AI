@@ -24,7 +24,14 @@ type Partner = {
  * `enhanced` starts false so the server render and first client render match
  * (the stacked version); the effect upgrades to the cinematic one after mount.
  */
-export function PartnersShowcase({ partners }: { partners: readonly Partner[] }) {
+export function PartnersShowcase({
+  partners,
+  heading,
+}: {
+  partners: readonly Partner[];
+  /** Section title, shown above the portraits in both layouts. */
+  heading?: string | undefined;
+}) {
   const [enhanced, setEnhanced] = useState(false);
 
   useEffect(() => {
@@ -39,9 +46,9 @@ export function PartnersShowcase({ partners }: { partners: readonly Partner[] })
   }, []);
 
   if (enhanced && partners.length >= 2) {
-    return <CinematicPartners partners={partners} />;
+    return <CinematicPartners partners={partners} heading={heading} />;
   }
-  return <StackedPartners partners={partners} />;
+  return <StackedPartners partners={partners} heading={heading} />;
 }
 
 function Portrait({
@@ -85,11 +92,11 @@ function Portrait({
 function TextBlock({ partner }: { partner: Partner }) {
   return (
     <div>
-      <h3 className="font-display text-4xl md:text-5xl">{partner.name}</h3>
+      <h3 className="font-display text-4xl leading-tight xl:text-5xl">{partner.name}</h3>
       <p className="eyebrow mt-3">{partner.role}</p>
       <div className="mt-6 space-y-4">
         {partner.profile.map((paragraph, i) => (
-          <p key={i} className="text-sm leading-relaxed text-muted-foreground">
+          <p key={i} className="text-base leading-relaxed text-muted-foreground xl:text-lg">
             {paragraph}
           </p>
         ))}
@@ -98,7 +105,22 @@ function TextBlock({ partner }: { partner: Partner }) {
   );
 }
 
-function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
+// Focused partner: portrait size and the horizontal positions of the portrait
+// and its biography (vw from the centre). The pair is balanced about the middle
+// of the screen, with the biography on the side opposite the photo.
+const FOCUS_SCALE = 1.1;
+const FOCUS_PHOTO_X = 21;
+const FOCUS_TEXT_X = 17;
+// How far (vw) a portrait drifts while fading in or out between partners.
+const SWAP_DRIFT = 10;
+
+function CinematicPartners({
+  partners,
+  heading,
+}: {
+  partners: readonly Partner[];
+  heading?: string | undefined;
+}) {
   const c = useContent();
   const n = partners.length;
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -106,6 +128,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
   const capRefs = useRef<Array<HTMLDivElement | null>>([]);
   const hintRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   // Intro formation: portraits evenly spaced and scaled down to fit.
   const introGap = n >= 3 ? 26 : 32;
@@ -161,12 +184,16 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
         const aTransEnd = aStart + slot * TRANS;
         const aEnd = aStart + slot;
         const flip = i % 2 === 1; // alternate: photo left, then right, then left…
-        const focusX = flip ? 27 : -27;
-        // Just off the edge rather than far outside it: a shorter run-in keeps
-        // the entrances at a similar apparent speed to the first partner's
-        // short shift out of the intro formation.
-        const offX = flip ? 58 : -58;
-        const textX = flip ? -23 : 23;
+        const focusX = flip ? FOCUS_PHOTO_X : -FOCUS_PHOTO_X;
+        /* Every partner-to-partner change is a crossfade with a short outward
+           drift, not a slide in from off-screen. Long slides made the later
+           partners cover ~7x the distance of the first one in the same scroll,
+           so the sequence felt as if it sped up. With the same small motion on
+           every change, each step feels equally paced. Because the timeline is
+           scrubbed by scroll position, the same applies scrolling back up. */
+        const outward = flip ? 1 : -1;
+        const driftX = focusX + outward * SWAP_DRIFT;
+        const textX = flip ? -FOCUS_TEXT_X : FOCUS_TEXT_X;
         const iX = introX(i);
 
         let x: number;
@@ -177,26 +204,27 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
           // First partner grows out of the intro formation into focus.
           const mv = seg(p, aStart, aTransEnd);
           x = lerp(iX, focusX, mv);
-          scale = lerp(introScale, 1, mv);
+          scale = lerp(introScale, FOCUS_SCALE, mv);
           opacity = 1;
         } else if (p < aStart - slot * 0.25) {
           // Still leaving the intro formation (invisible well before its slot).
           const ex = seg(p, INTRO, INTRO + slot * TRANS * 0.6);
-          x = iX + ex * (iX >= 0 ? 30 : -30);
+          x = iX; // fades in place: no extra motion competing with the first partner
           opacity = 1 - ex;
           scale = introScale;
         } else {
-          // Enters from off-screen for its own slot.
+          // Fades in at its own place, drifting in slightly from outside.
           const en = seg(p, aStart, aTransEnd);
-          x = lerp(offX, focusX, en);
+          x = lerp(driftX, focusX, en);
           opacity = en;
-          scale = lerp(introScale, 1, en);
+          scale = lerp(FOCUS_SCALE * 0.9, FOCUS_SCALE, en);
         }
 
-        // Every partner but the last leaves as the next one arrives.
+        // Every partner but the last fades out, drifting slightly outward, as
+        // the next one arrives.
         if (i < n - 1) {
           const lv = seg(p, aEnd, aEnd + slot * TRANS * 0.7);
-          x = lerp(x, offX, lv);
+          x = lerp(x, driftX, lv);
           opacity *= 1 - lv;
         }
         set(photoRefs.current[i] ?? null, x, opacity, scale);
@@ -212,6 +240,7 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
       }
 
       if (hintRef.current) hintRef.current.style.opacity = String(introFade);
+      if (headingRef.current) headingRef.current.style.opacity = String(introFade);
 
       raf = requestAnimationFrame(frame);
     };
@@ -228,17 +257,34 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   const VH_PER_PARTNER = 320;
   const stageHeight = `${100 + n * VH_PER_PARTNER}vh`;
 
-  /* Lift the portraits and their captions off the bottom of the stage so the
-     "scroll" hint keeps clear air beneath them. STAGE_LIFT is applied as bottom
-     padding on the centring wrappers (shifting content up by half of it); the
-     captions then sit just under the portraits, wherever those end up. */
-  const STAGE_LIFT = 16; // vh of bottom padding
+  /* Vertical layout of the intro screen: section title at the top (below the
+     sticky header), portraits and their captions under it, "scroll" hint at the
+     bottom. STAGE_LIFT is bottom padding on the centring wrappers (it shifts
+     the portraits up by half of it); a small lift leaves room for the title
+     above. The captions then sit just under the portraits. */
+  const STAGE_LIFT = 4; // vh of bottom padding
   const photoBottomVh = 50 - STAGE_LIFT / 2 + (56 * introScale) / 2;
   const captionBottomVh = Math.max(100 - (photoBottomVh + 7), 20);
 
   return (
     <div ref={wrapRef} className="relative" style={{ height: stageHeight }}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden border-t border-hairline">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        {heading ? (
+          // Sized in viewport height so it keeps the same share of the screen
+          // whatever the window height, and never runs into the portraits.
+          <div
+            className="pointer-events-none absolute inset-x-0 flex justify-center px-8"
+            style={{ top: "calc(5rem + 4vh)" }}
+          >
+            <h2
+              ref={headingRef}
+              className="max-w-4xl text-center text-[clamp(2rem,5.2vh,3.25rem)] leading-[1.1]"
+            >
+              {heading}
+            </h2>
+          </div>
+        ) : null}
+
         {partners.map((partner, i) => (
           <div
             key={`photo-${partner.id}`}
@@ -272,9 +318,9 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
               ref={(el) => {
                 textRefs.current[i] = el;
               }}
-              className="w-[38vw] max-w-md will-change-transform"
+              className="w-[36vw] max-w-xl will-change-transform"
               style={{
-                transform: `translate3d(${i % 2 === 1 ? -23 : 23}vw, 0, 0)`,
+                transform: `translate3d(${i % 2 === 1 ? -FOCUS_TEXT_X : FOCUS_TEXT_X}vw, 0, 0)`,
                 opacity: 0,
               }}
             >
@@ -316,9 +362,20 @@ function CinematicPartners({ partners }: { partners: readonly Partner[] }) {
   );
 }
 
-function StackedPartners({ partners }: { partners: readonly Partner[] }) {
+function StackedPartners({
+  partners,
+  heading,
+}: {
+  partners: readonly Partner[];
+  heading?: string | undefined;
+}) {
   return (
     <>
+      {heading ? (
+        <div className="container-editorial pb-12 pt-16 md:pt-20">
+          <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{heading}</h2>
+        </div>
+      ) : null}
       {partners.map((partner) => (
         <section
           key={partner.id}
@@ -343,7 +400,7 @@ function StackedPartners({ partners }: { partners: readonly Partner[] }) {
                 {partner.profile.map((paragraph, i) => (
                   <p
                     key={i}
-                    className="reveal-on-scroll text-sm leading-relaxed text-muted-foreground md:text-base"
+                    className="reveal-on-scroll text-base leading-relaxed text-muted-foreground md:text-lg"
                   >
                     {paragraph}
                   </p>

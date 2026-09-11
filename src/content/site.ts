@@ -147,7 +147,6 @@ export const content = {
           "Fondato nel 1990, Studio Legale Caso è cresciuto attraverso la collaborazione di professionisti accomunati da un metodo rigoroso, diretto e orientato alle esigenze del cliente.",
       },
       history: {
-        eyebrow: "La nostra storia",
         heading: "Dalla fondazione a oggi.",
         body: [
           "Studio Legale Caso nasce ad Altamura nel 1990 per iniziativa di Raffaele Caso insieme al figlio Pasquale Caso. Nel 1995 entrano nello studio Giovanni Battista Riviello e Girolamo Giancaspro. Nel 2016 lo studio assume l'attuale struttura associativa.",
@@ -170,14 +169,11 @@ export const content = {
         ],
       },
       approach: {
-        eyebrow: "Il nostro metodo",
         heading: "Indicazioni chiare, preparazione rigorosa.",
         body: "Ogni questione viene esaminata nel proprio contesto giuridico e pratico. Lo studio individua le opzioni disponibili, ne illustra le implicazioni e affianca il cliente nella consulenza, nella negoziazione e nel contenzioso. Il rapporto diretto con i professionisti incaricati assicura continuità, chiarezza e attenzione durante l'intero incarico.",
       },
       team: {
-        eyebrow: "Il team",
         heading: "Un gruppo coordinato di professionisti e collaboratori.",
-        body: "L'attività dello studio è guidata da Pasquale Caso, Girolamo Giancaspro e Giovanni Battista Riviello, affiancati da un team di professionisti e collaboratori.",
         scrollHint: "Scorri per conoscere i professionisti",
       },
     },
@@ -355,6 +351,7 @@ export const content = {
         heading: "Modulo di contatto dimostrativo",
         notice:
           "Questo prototipo accademico non trasmette né conserva le informazioni inserite. Per contattare lo studio, utilizza l'indirizzo email indicato sopra.",
+        requiredNote: "I campi contrassegnati con * sono obbligatori.",
         name: { label: "Nome", placeholder: "Il tuo nome completo" },
         email: { label: "Email", placeholder: "tu@esempio.com" },
         phone: { label: "Telefono (facoltativo)", placeholder: "+39 000 000 0000" },
@@ -511,7 +508,6 @@ export const content = {
           "Founded in 1990, Studio Legale Caso has developed through the collaboration of professionals who share a rigorous, direct and client-focused approach.",
       },
       history: {
-        eyebrow: "Our history",
         heading: "From its foundation to today.",
         body: [
           "Studio Legale Caso was founded in Altamura in 1990 by Raffaele Caso together with his son Pasquale Caso. Giovanni Battista Riviello and Girolamo Giancaspro joined the firm in 1995. In 2016, the practice evolved into its current partnership structure.",
@@ -534,14 +530,11 @@ export const content = {
         ],
       },
       approach: {
-        eyebrow: "Our approach",
         heading: "Clear advice, rigorous preparation.",
         body: "Each matter is examined in its legal and practical context. The firm identifies the available options, explains their implications and supports the client through advisory work, negotiation and litigation. A direct relationship with the professionals handling the matter ensures continuity, clarity and close attention throughout the assignment.",
       },
       team: {
-        eyebrow: "The team",
         heading: "A coordinated team of legal professionals and collaborators.",
-        body: "The firm's work is led by Pasquale Caso, Girolamo Giancaspro and Giovanni Battista Riviello, supported by a wider team of legal professionals and collaborators.",
         scrollHint: "Scroll to meet the professionals",
       },
     },
@@ -720,6 +713,7 @@ export const content = {
         heading: "Demonstration contact form",
         notice:
           "This academic prototype does not transmit or store submitted information. To contact the firm, use the email address shown above.",
+        requiredNote: "Fields marked with * are required.",
         name: { label: "Name", placeholder: "Your full name" },
         email: { label: "Email", placeholder: "you@example.com" },
         phone: { label: "Telephone (optional)", placeholder: "+39 000 000 0000" },

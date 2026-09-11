@@ -37,28 +37,39 @@ export function ContactForm() {
     <div className="rounded-sm border border-hairline bg-card p-6 md:p-10">
       <h2 className="text-2xl md:text-3xl">{f.heading}</h2>
       <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{f.notice}</p>
+      <p className="mt-2 text-xs text-muted-foreground">
+        {/* Colour the "*" in the note to match the marks on the fields. */}
+        {f.requiredNote.split("*").map((part, i) => (
+          <span key={i}>
+            {i > 0 ? <span className="font-semibold text-destructive">*</span> : null}
+            {part}
+          </span>
+        ))}
+      </p>
 
       <form noValidate onSubmit={handleSubmit} className="mt-8 grid gap-6">
         <div className="grid gap-6 sm:grid-cols-2">
-          <Field id="name" label={f.name.label} error={errors.name}>
+          <Field id="name" label={f.name.label} error={errors.name} required>
             <input
               id="name"
               name="name"
               type="text"
               autoComplete="name"
               placeholder={f.name.placeholder}
+              aria-required="true"
               aria-invalid={!!errors.name}
               aria-describedby={errors.name ? "name-error" : undefined}
               className={inputClass}
             />
           </Field>
-          <Field id="email" label={f.email.label} error={errors.email}>
+          <Field id="email" label={f.email.label} error={errors.email} required>
             <input
               id="email"
               name="email"
               type="email"
               autoComplete="email"
               placeholder={f.email.placeholder}
+              aria-required="true"
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "email-error" : undefined}
               className={inputClass}
@@ -74,12 +85,13 @@ export function ContactForm() {
               className={inputClass}
             />
           </Field>
-          <Field id="subject" label={f.subject.label} error={errors.subject}>
+          <Field id="subject" label={f.subject.label} error={errors.subject} required>
             <input
               id="subject"
               name="subject"
               type="text"
               placeholder={f.subject.placeholder}
+              aria-required="true"
               aria-invalid={!!errors.subject}
               aria-describedby={errors.subject ? "subject-error" : undefined}
               className={inputClass}
@@ -87,12 +99,13 @@ export function ContactForm() {
           </Field>
         </div>
 
-        <Field id="message" label={f.message.label} error={errors.message}>
+        <Field id="message" label={f.message.label} error={errors.message} required>
           <textarea
             id="message"
             name="message"
             rows={6}
             placeholder={f.message.placeholder}
+            aria-required="true"
             aria-invalid={!!errors.message}
             aria-describedby={errors.message ? "message-error" : undefined}
             className="mt-2 w-full rounded-sm border border-input bg-card p-4 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent"
@@ -105,11 +118,15 @@ export function ContactForm() {
               id="privacy"
               name="privacy"
               type="checkbox"
+              aria-required="true"
               aria-invalid={!!errors.privacy}
               aria-describedby={errors.privacy ? "privacy-error" : undefined}
               className="mt-1 h-5 w-5 shrink-0 accent-[var(--accent)]"
             />
-            <span className="text-muted-foreground">{f.privacy}</span>
+            <span className="text-muted-foreground">
+              {f.privacy}
+              <RequiredMark />
+            </span>
           </label>
           {errors.privacy ? (
             <p id="privacy-error" className="mt-2 text-sm text-destructive">
@@ -138,21 +155,36 @@ export function ContactForm() {
   );
 }
 
+/**
+ * Visual marker for required fields. Hidden from screen readers, which get
+ * `aria-required` on the control itself instead of a bare "*".
+ */
+function RequiredMark() {
+  return (
+    <span aria-hidden="true" className="ml-1 font-semibold text-destructive">
+      *
+    </span>
+  );
+}
+
 function Field({
   id,
   label,
   error,
+  required = false,
   children,
 }: {
   id: string;
   label: string;
   error?: string | undefined;
+  required?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div>
       <label htmlFor={id} className="eyebrow">
         {label}
+        {required ? <RequiredMark /> : null}
       </label>
       {children}
       {error ? (
