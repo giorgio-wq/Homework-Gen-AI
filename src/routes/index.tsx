@@ -5,6 +5,8 @@ import { useContent } from "@/i18n/locale";
 import { CTASection } from "@/components/CTASection";
 import { ServicePreview } from "@/components/ServicePreview";
 import { PartnerCard } from "@/components/PartnerCard";
+import { SectionLink } from "@/components/SectionLink";
+import { revealItem, useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,6 +27,10 @@ export const Route = createFileRoute("/")({
 function Home() {
   const c = useContent();
   const { hero, intro, clients, servicesPreview, approach, team, finalCta } = c.home;
+  // Client groups rise in one by one (~0.35s apart); practice areas drop in
+  // like a roller blind, a little quicker since there are seven of them.
+  const [clientsRef, clientsState] = useRevealOnScroll<HTMLUListElement>();
+  const [areasRef, areasState] = useRevealOnScroll<HTMLDivElement>();
 
   return (
     <>
@@ -104,19 +110,21 @@ function Home() {
       </section>
 
       {/* Firm introduction */}
-      <section className="container-editorial grid gap-10 py-20 md:grid-cols-12 md:py-28">
-        <div className="md:col-span-4">
-          <p className="eyebrow">{intro.eyebrow}</p>
+      <section className="container-editorial grid gap-12 py-20 md:grid-cols-12 md:py-28">
+        <div className="md:col-span-5">
+          <p className="section-label">{intro.eyebrow}</p>
           <dl className="mt-8">
             {intro.facts.map((fact) => (
-              <div key={fact.label} className="border-t border-hairline py-4">
+              <div key={fact.label} className="border-t border-hairline py-5">
                 <dt className="eyebrow">{fact.label}</dt>
-                <dd className="mt-1 text-base leading-snug">{fact.value}</dd>
+                <dd className="mt-2 font-display text-xl leading-snug text-ink md:text-2xl">
+                  {fact.value}
+                </dd>
               </div>
             ))}
           </dl>
         </div>
-        <div className="md:col-span-8">
+        <div className="md:col-span-7">
           <h2 className="max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">{intro.heading}</h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
             {intro.body}
@@ -127,23 +135,32 @@ function Home() {
       {/* Client groups */}
       <section className="border-t border-hairline bg-secondary/50">
         <div className="container-editorial py-20 md:py-28">
-          <p className="eyebrow">{clients.eyebrow}</p>
-          <h2 className="mt-5 max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">
-            {clients.heading}
-          </h2>
+          <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{clients.heading}</h2>
           {/* Editorial index: each entry carries its own hairline rule instead of
               sitting in a filled cell, so an odd number of entries simply leaves
-              white space rather than an empty box. */}
-          <ul className="mt-14 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
-            {clients.items.map((item, i) => (
-              <li key={item.title} className="border-t border-hairline pt-5">
-                <span className="font-display text-sm text-accent">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-3 text-xl md:text-2xl">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.note}</p>
-              </li>
-            ))}
+              white space rather than an empty box. Entries appear in sequence. */}
+          <ul
+            ref={clientsRef}
+            className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14"
+          >
+            {clients.items.map((item, i) => {
+              const reveal = revealItem(clientsState, i, { stagger: 350 });
+              return (
+                <li
+                  key={item.title}
+                  className={`border-t border-hairline pt-6 ${reveal.className}`}
+                  style={reveal.style}
+                >
+                  <span className="font-display text-base text-accent md:text-lg">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-3 text-2xl leading-tight md:text-3xl">{item.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {item.note}
+                  </p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -151,23 +168,23 @@ function Home() {
       {/* Services preview */}
       <section className="container-editorial py-20 md:py-28">
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-          <div className="min-w-0">
-            <p className="eyebrow">{servicesPreview.eyebrow}</p>
-            <h2 className="mt-5 max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">
-              {servicesPreview.heading}
-            </h2>
-          </div>
-          <Link
-            to={servicesPreview.link.to}
-            className="link-underline shrink-0 self-start text-sm text-accent md:self-end"
-          >
+          <h2 className="min-w-0 max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">
+            {servicesPreview.heading}
+          </h2>
+          <SectionLink to={servicesPreview.link.to} className="shrink-0 self-start md:self-end">
             {servicesPreview.link.label}
-          </Link>
+          </SectionLink>
         </div>
-        <div className="mt-12">
-          {c.practiceAreas.map((area) => (
-            <ServicePreview key={area.id} area={area} />
-          ))}
+        {/* Practice areas cascade down one after another. */}
+        <div ref={areasRef} className="mt-12">
+          {c.practiceAreas.map((area, i) => {
+            const reveal = revealItem(areasState, i, { stagger: 220, from: "above" });
+            return (
+              <div key={area.id} className={reveal.className} style={reveal.style}>
+                <ServicePreview area={area} />
+              </div>
+            );
+          })}
           <div className="border-t border-hairline" />
         </div>
       </section>
@@ -176,19 +193,16 @@ function Home() {
       <section className="border-y border-hairline bg-secondary/50">
         <div className="container-editorial grid gap-12 py-20 md:grid-cols-12 md:py-28">
           <div className="md:col-span-5">
-            <p className="eyebrow">{approach.eyebrow}</p>
-            <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-4xl">{approach.heading}</h2>
+            <p className="section-label">{approach.eyebrow}</p>
+            <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-5xl">{approach.heading}</h2>
           </div>
           <div className="md:col-span-7">
             <p className="max-w-2xl border-l-2 border-accent pl-6 text-base leading-relaxed md:text-lg">
               {approach.body}
             </p>
-            <Link
-              to={approach.link.to}
-              className="link-underline mt-8 inline-block text-sm text-accent"
-            >
+            <SectionLink to={approach.link.to} className="mt-10">
               {approach.link.label}
-            </Link>
+            </SectionLink>
           </div>
         </div>
       </section>
@@ -197,14 +211,14 @@ function Home() {
       <section className="container-editorial py-20 md:py-28">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
-            <p className="eyebrow">{team.eyebrow}</p>
-            <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-4xl">{team.heading}</h2>
-            <p className="mt-6 text-sm leading-relaxed text-muted-foreground md:text-base">
+            <p className="section-label">{team.eyebrow}</p>
+            <h2 className="mt-5 text-[2rem] leading-[1.08] sm:text-5xl">{team.heading}</h2>
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
               {team.body}
             </p>
-            <Link to={team.cta.to} className="link-underline mt-8 inline-block text-sm text-accent">
+            <SectionLink to={team.cta.to} className="mt-10">
               {team.cta.label}
-            </Link>
+            </SectionLink>
           </div>
           <div className="grid gap-8 sm:grid-cols-3 md:col-span-7">
             {c.partners.map((p) => (

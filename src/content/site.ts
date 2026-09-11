@@ -87,7 +87,6 @@ export const content = {
         ],
       },
       clients: {
-        eyebrow: "Chi assistiamo",
         heading: "Assistenza legale per clienti privati e pubblici.",
         items: [
           {
@@ -113,7 +112,6 @@ export const content = {
         ],
       },
       servicesPreview: {
-        eyebrow: "Aree di attività",
         heading: "Competenze legali integrate.",
         link: { label: "Vedi tutte le competenze", to: "/services" as const },
       },
@@ -453,7 +451,6 @@ export const content = {
         ],
       },
       clients: {
-        eyebrow: "Who we assist",
         heading: "Legal assistance for private and public clients.",
         items: [
           {
@@ -479,7 +476,6 @@ export const content = {
         ],
       },
       servicesPreview: {
-        eyebrow: "Practice areas",
         heading: "An integrated legal practice.",
         link: { label: "View all services", to: "/services" as const },
       },

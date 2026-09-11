@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Studio Legale Caso — SLC monogram</title>
+  <rect width="512" height="512" fill="#F8F7F3"/>
+  <text
+    x="256"
+    y="346"
+    text-anchor="middle"
+    font-family="Bitstream Charter, Georgia, Times New Roman, serif"
+    font-size="260"
+    font-weight="700"
+    letter-spacing="-11"
+  ><tspan fill="#11152F">SL</tspan><tspan fill="#00009F">C</tspan></text>
+</svg>

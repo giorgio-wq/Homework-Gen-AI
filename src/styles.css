@@ -46,6 +46,11 @@
 }
 
 :root {
+  /* The brand palette is light-only. Declaring the scheme stops browsers from
+     auto-darkening the page (Chrome's automatic dark theme, in particular),
+     which would invert the ivory ground and wreck the logo's blue and silver. */
+  color-scheme: light;
+
   --radius: 0.25rem;
 
   /* Studio Legale Caso — brand palette (contemporary institutional) */
@@ -138,12 +143,27 @@
   }
 }
 
+/* Small data label (field names, roles, fact labels). */
 @utility eyebrow {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
   color: var(--color-muted-foreground);
+}
+
+/* Section title label: clearly above the data labels in the hierarchy, so a
+   section's name reads as a heading rather than as fine print. */
+@utility section-label {
+  font-size: 0.9375rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-foreground);
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 }
 
 @utility rule-top {

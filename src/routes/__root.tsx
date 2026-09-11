@@ -79,6 +79,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      // Light-only palette: keeps phones and browsers in dark mode from
+      // auto-inverting the site.
+      { name: "color-scheme", content: "light" },
       { title: "Studio Legale Caso" },
       { name: "description", content: "Independent law firm in Altamura, Puglia, Italy." },
       { property: "og:site_name", content: "Studio Legale Caso" },
@@ -96,7 +99,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // "SLC" monogram (public/brand/favicon/). The SVG in that folder is left
+      // unlinked on purpose: it draws live text in system fonts, so it would
+      // look different on every device. The PNGs are pre-rendered and stable.
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/brand/favicon/favicon-slc-16.png", type: "image/png", sizes: "16x16" },
+      { rel: "icon", href: "/brand/favicon/favicon-slc-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/brand/favicon/favicon-slc-48.png", type: "image/png", sizes: "48x48" },
+      {
+        rel: "icon",
+        href: "/brand/favicon/favicon-slc-192.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+      { rel: "apple-touch-icon", href: "/brand/favicon/apple-touch-icon.png", sizes: "180x180" },
     ],
   }),
   shellComponent: RootShell,
