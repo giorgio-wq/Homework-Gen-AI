@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 
 type Area = {
   id: string;
-  number: string;
   title: string;
   summary: string;
   detail: string;
@@ -116,12 +115,9 @@ export function PracticeAreaSlide({ area, index }: { area: Area; index: number }
           ref={contentRef}
           className={`max-w-xl will-change-transform ${flip ? "ml-auto text-right" : ""}`}
         >
-          <span className="block font-display text-6xl text-pale-blue md:text-7xl">
-            {area.number}
-          </span>
           <h2
             id={`${area.id}-heading`}
-            className="mt-4 break-words font-display text-3xl leading-[1.05] text-primary-foreground sm:text-4xl md:text-6xl"
+            className="break-words font-display text-4xl leading-[1.05] text-primary-foreground sm:text-5xl md:text-6xl"
           >
             {area.title}
           </h2>
