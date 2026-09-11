@@ -11,16 +11,20 @@ type Route = "/" | "/about" | "/services" | "/contact";
  */
 export function SectionLink({
   to,
+  hash,
   children,
   className = "",
 }: {
   to: Route;
+  /** Optional in-page anchor on the target page (without the "#"). */
+  hash?: string | undefined;
   children: ReactNode;
   className?: string;
 }) {
   return (
     <Link
       to={to}
+      {...(hash ? { hash } : {})}
       className={`group inline-flex items-center gap-3 border-b border-foreground/25 pb-1.5 text-base font-medium text-foreground transition-colors hover:border-accent hover:text-accent md:text-lg ${className}`}
     >
       {children}

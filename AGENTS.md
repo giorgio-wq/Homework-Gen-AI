@@ -44,8 +44,10 @@ Before committing, all three must pass: `npx eslint .` (0 errors),
 
 - **Never hardcode text in components.** Add or change copy in
   `src/content/site.ts`, in BOTH `it` and `en`.
-- Keep the site light-only: do not add a dark theme or remove
-  `color-scheme: light`.
+- Keep the site light-only: do not add a dark theme, and keep
+  `color-scheme: only light` (CSS in `src/styles.css` and the meta tag in
+  `src/routes/__root.tsx`). It must be `only light`: plain `light` does not stop
+  Chrome's automatic dark theme on phones.
 - Palette: deep navy `#11152F` for headings and primary buttons, brand blue
   `#00009F` for links, numbers and accents, silver `#A0A0A0` only for the logo
   (never for text). Use the existing tokens, not new hex values.

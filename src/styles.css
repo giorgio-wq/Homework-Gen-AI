@@ -46,10 +46,11 @@
 }
 
 :root {
-  /* The brand palette is light-only. Declaring the scheme stops browsers from
-     auto-darkening the page (Chrome's automatic dark theme, in particular),
-     which would invert the ivory ground and wreck the logo's blue and silver. */
-  color-scheme: light;
+  /* The brand palette is light-only. "only light" (not plain "light") is what
+     forbids the browser from overriding the scheme: Chrome's automatic dark
+     theme targets exactly the pages that declare themselves light, and would
+     invert the ivory ground and wreck the logo's blue and silver. */
+  color-scheme: only light;
 
   --radius: 0.25rem;
 
@@ -96,6 +97,9 @@
 
   html {
     -webkit-text-size-adjust: 100%;
+    /* Ivory behind the page too, so elastic overscroll on phones shows no
+       dark band above or below the content. */
+    background-color: var(--color-background);
   }
 
   body {

@@ -79,9 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      // Light-only palette: keeps phones and browsers in dark mode from
-      // auto-inverting the site.
-      { name: "color-scheme", content: "light" },
+      // Light-only palette. "only light" is the opt-out from Chrome's automatic
+      // dark theme; plain "light" does not prevent it.
+      { name: "color-scheme", content: "only light" },
+      // Browser UI (address bar on mobile) in the site's ivory.
+      { name: "theme-color", content: "#f8f7f3" },
       { title: "Studio Legale Caso" },
       { name: "description", content: "Independent law firm in Altamura, Puglia, Italy." },
       { property: "og:site_name", content: "Studio Legale Caso" },

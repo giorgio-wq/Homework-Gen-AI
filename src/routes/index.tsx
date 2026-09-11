@@ -7,6 +7,7 @@ import { ServicePreview } from "@/components/ServicePreview";
 import { PartnerCard } from "@/components/PartnerCard";
 import { SectionLink } from "@/components/SectionLink";
 import { revealItem, useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
+import { PARTNERS_ANCHOR } from "@/lib/anchors";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -216,7 +217,7 @@ function Home() {
             <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
               {team.body}
             </p>
-            <SectionLink to={team.cta.to} className="mt-10">
+            <SectionLink to={team.cta.to} hash={PARTNERS_ANCHOR} className="mt-10">
               {team.cta.label}
             </SectionLink>
           </div>

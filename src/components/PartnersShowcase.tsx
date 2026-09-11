@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useContent } from "@/i18n/locale";
+import { jumpTo } from "@/hooks/use-smooth-scroll";
+import { PARTNERS_ANCHOR } from "@/lib/anchors";
 
 type Partner = {
   id: string;
@@ -44,6 +46,19 @@ export function PartnersShowcase({
     window.addEventListener("resize", evaluate);
     return () => window.removeEventListener("resize", evaluate);
   }, []);
+
+  // Arriving via /about#team: the section swaps from the stacked layout to the
+  // much taller cinematic one after mounting, which moves it on the page. Jump
+  // to it again once the layout is settled, so the visitor lands on the intro
+  // with all the portraits rather than part-way through the sequence.
+  useEffect(() => {
+    if (window.location.hash !== `#${PARTNERS_ANCHOR}`) return;
+    const frame = requestAnimationFrame(() => {
+      const el = document.getElementById(PARTNERS_ANCHOR);
+      if (el) jumpTo(el);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [enhanced]);
 
   if (enhanced && partners.length >= 2) {
     return <CinematicPartners partners={partners} heading={heading} />;
@@ -267,7 +282,7 @@ function CinematicPartners({
   const captionBottomVh = Math.max(100 - (photoBottomVh + 7), 20);
 
   return (
-    <div ref={wrapRef} className="relative" style={{ height: stageHeight }}>
+    <div ref={wrapRef} id={PARTNERS_ANCHOR} className="relative" style={{ height: stageHeight }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         {heading ? (
           // Sized in viewport height so it keeps the same share of the screen
@@ -370,7 +385,7 @@ function StackedPartners({
   heading?: string | undefined;
 }) {
   return (
-    <>
+    <div id={PARTNERS_ANCHOR}>
       {heading ? (
         <div className="container-editorial pb-12 pt-16 md:pt-20">
           <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{heading}</h2>
@@ -410,6 +425,6 @@ function StackedPartners({
           </div>
         </section>
       ))}
-    </>
+    </div>
   );
 }
