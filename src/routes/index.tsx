@@ -137,9 +137,9 @@ function Home() {
       <section className="border-t border-hairline bg-secondary/50">
         <div className="container-editorial py-20 md:py-28">
           <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{clients.heading}</h2>
-          {/* Editorial index: each entry carries its own hairline rule instead of
-              sitting in a filled cell, so an odd number of entries simply leaves
-              white space rather than an empty box. Entries appear in sequence. */}
+          {/* Each entry carries its own hairline rule instead of sitting in a
+              filled cell, so an odd number of entries simply leaves white space
+              rather than an empty box. Entries appear in sequence. */}
           <ul
             ref={clientsRef}
             className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14"
@@ -152,10 +152,7 @@ function Home() {
                   className={`border-t border-hairline pt-6 ${reveal.className}`}
                   style={reveal.style}
                 >
-                  <span className="font-display text-base text-accent md:text-lg">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-3 text-2xl leading-tight md:text-3xl">{item.title}</h3>
+                  <h3 className="text-2xl leading-tight md:text-3xl">{item.title}</h3>
                   <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
                     {item.note}
                   </p>
