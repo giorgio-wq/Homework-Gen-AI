@@ -372,6 +372,7 @@ export const content = {
         errors: {
           name: "Inserisci il tuo nome.",
           email: "Inserisci un indirizzo email valido.",
+          phone: "Inserisci un numero di telefono valido, oppure lascia il campo vuoto.",
           subject: "Inserisci un oggetto.",
           message: "Inserisci un messaggio di almeno 10 caratteri.",
           privacy: "Conferma il consenso per inviare il messaggio.",
@@ -740,6 +741,7 @@ export const content = {
         errors: {
           name: "Please enter your name.",
           email: "Please enter a valid email address.",
+          phone: "Please enter a valid telephone number, or leave the field empty.",
           subject: "Please enter a subject.",
           message: "Please enter a message of at least 10 characters.",
           privacy: "Please confirm your consent so the message can be sent.",

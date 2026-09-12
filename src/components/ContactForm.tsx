@@ -1,8 +1,11 @@
 import { useRef, useState, type FormEvent } from "react";
 import { useContent, useLocale } from "@/i18n/locale";
+import { isValidPhone } from "@/lib/phone";
 import { sendContactMessage } from "@/lib/send-contact-message";
 
-type Errors = Partial<Record<"name" | "email" | "subject" | "message" | "privacy", string>>;
+type Errors = Partial<
+  Record<"name" | "email" | "phone" | "subject" | "message" | "privacy", string>
+>;
 
 /** idle → sending → sent (message delivered) or error (delivery refused). */
 type Status = "idle" | "sending" | "sent" | "error";
@@ -33,6 +36,7 @@ export function ContactForm() {
 
     if (!name) next.name = f.errors.name;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = f.errors.email;
+    if (!isValidPhone(phone)) next.phone = f.errors.phone;
     if (!subject) next.subject = f.errors.subject;
     if (message.length < 10) next.message = f.errors.message;
     if (!privacy) next.privacy = f.errors.privacy;
@@ -103,13 +107,16 @@ export function ContactForm() {
               className={inputClass}
             />
           </Field>
-          <Field id="phone" label={f.phone.label}>
+          <Field id="phone" label={f.phone.label} error={errors.phone}>
             <input
               id="phone"
               name="phone"
               type="tel"
+              inputMode="tel"
               autoComplete="tel"
               placeholder={f.phone.placeholder}
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? "phone-error" : undefined}
               className={inputClass}
             />
           </Field>
