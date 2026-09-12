@@ -190,6 +190,7 @@ export const content = {
         paragraph:
           "Studio Legale Caso opera nella consulenza, nella negoziazione e nel contenzioso in ambiti che spesso si intersecano tra loro. Lo studio assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici.",
       },
+      listHint: "Clicca su un’area per leggere la descrizione completa.",
       finalCta: {
         heading: "Parlaci delle tue esigenze legali.",
         body: "Contatta Studio Legale Caso per fissare un appuntamento o richiedere ulteriori informazioni.",
@@ -551,6 +552,7 @@ export const content = {
         paragraph:
           "Studio Legale Caso provides advisory, negotiation and litigation support across areas that frequently intersect. The firm assists private individuals, businesses, insurance companies, banks and financial institutions, and public bodies throughout Italy.",
       },
+      listHint: "Click an area to read its full description.",
       finalCta: {
         heading: "Discuss your legal needs with us.",
         body: "Contact Studio Legale Caso to arrange an appointment or request further information.",

@@ -3,7 +3,7 @@ import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
-import { PracticeAreaSlide } from "@/components/PracticeAreaSlide";
+import { PracticeAreaList } from "@/components/PracticeAreaList";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -23,15 +23,18 @@ export const Route = createFileRoute("/services")({
 
 function Services() {
   const c = useContent();
-  const { hero, finalCta } = c.services;
+  const { hero, listHint, finalCta } = c.services;
 
   return (
     <>
       <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph} />
 
-      {c.practiceAreas.map((area, i) => (
-        <PracticeAreaSlide key={area.id} area={area} index={i} />
-      ))}
+      <section className="container-editorial py-16 md:py-20">
+        <p className="eyebrow">{listHint}</p>
+        <div className="mt-8">
+          <PracticeAreaList areas={c.practiceAreas} />
+        </div>
+      </section>
 
       <CTASection
         heading={finalCta.heading}
