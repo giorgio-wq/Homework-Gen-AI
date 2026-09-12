@@ -378,13 +378,7 @@ function CinematicPartners({
   );
 }
 
-function MobilePartnerBiography({
-  partner,
-  index,
-}: {
-  partner: Partner;
-  index: number;
-}) {
+function MobilePartnerBiography({ partner, index }: { partner: Partner; index: number }) {
   const [bioRef, bioState] = useRevealOnScroll<HTMLDivElement>();
   const hiddenDirection = index % 2 === 0 ? "translate-x-6" : "-translate-x-6";
   let revealClass = "";
@@ -400,10 +394,7 @@ function MobilePartnerBiography({
       <div ref={bioRef} className={`will-change-transform ${revealClass}`}>
         <div className="space-y-4">
           {partner.profile.map((paragraph, i) => (
-            <p
-              key={i}
-              className="text-base leading-relaxed text-muted-foreground md:text-lg"
-            >
+            <p key={i} className="text-base leading-relaxed text-muted-foreground md:text-lg">
               {paragraph}
             </p>
           ))}
