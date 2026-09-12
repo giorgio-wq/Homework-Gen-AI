@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useContent } from "@/i18n/locale";
 import { jumpTo } from "@/hooks/use-smooth-scroll";
+import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 import { PARTNERS_ANCHOR } from "@/lib/anchors";
 
 type Partner = {
@@ -22,7 +23,7 @@ type Partner = {
  * and can be read, instead of morphing continuously.
  *
  * On mobile — and whenever the visitor prefers reduced motion — it falls back to
- * a simple stacked layout where the bios reveal as they scroll in.
+ * a simple stacked layout where each biography reveals from an alternating side.
  * `enhanced` starts false so the server render and first client render match
  * (the stacked version); the effect upgrades to the cinematic one after mount.
  */
@@ -377,6 +378,41 @@ function CinematicPartners({
   );
 }
 
+function MobilePartnerBiography({
+  partner,
+  index,
+}: {
+  partner: Partner;
+  index: number;
+}) {
+  const [bioRef, bioState] = useRevealOnScroll<HTMLDivElement>();
+  const hiddenDirection = index % 2 === 0 ? "translate-x-6" : "-translate-x-6";
+  let revealClass = "";
+
+  if (bioState === "hidden") {
+    revealClass = `opacity-0 ${hiddenDirection}`;
+  } else if (bioState === "shown") {
+    revealClass = "translate-x-0 opacity-100 transition-all duration-700 ease-out";
+  }
+
+  return (
+    <div className="max-w-2xl overflow-hidden">
+      <div ref={bioRef} className={`will-change-transform ${revealClass}`}>
+        <div className="space-y-4">
+          {partner.profile.map((paragraph, i) => (
+            <p
+              key={i}
+              className="text-base leading-relaxed text-muted-foreground md:text-lg"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StackedPartners({
   partners,
   heading,
@@ -391,7 +427,7 @@ function StackedPartners({
           <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{heading}</h2>
         </div>
       ) : null}
-      {partners.map((partner) => (
+      {partners.map((partner, i) => (
         <section
           key={partner.id}
           aria-labelledby={`${partner.id}-name`}
@@ -410,18 +446,7 @@ function StackedPartners({
               </h3>
               <p className="eyebrow mt-2">{partner.role}</p>
             </div>
-            <div className="max-w-2xl">
-              <div className="space-y-4">
-                {partner.profile.map((paragraph, i) => (
-                  <p
-                    key={i}
-                    className="reveal-on-scroll text-base leading-relaxed text-muted-foreground md:text-lg"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
+            <MobilePartnerBiography partner={partner} index={i} />
           </div>
         </section>
       ))}
