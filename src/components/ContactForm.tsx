@@ -1,26 +1,34 @@
-import { useState, type FormEvent } from "react";
-import { useContent } from "@/i18n/locale";
+import { useRef, useState, type FormEvent } from "react";
+import { useContent, useLocale } from "@/i18n/locale";
+import { sendContactMessage } from "@/lib/send-contact-message";
 
 type Errors = Partial<Record<"name" | "email" | "subject" | "message" | "privacy", string>>;
+
+/** idle → sending → sent (message delivered) or error (delivery refused). */
+type Status = "idle" | "sending" | "sent" | "error";
 
 const inputClass =
   "mt-2 h-12 w-full rounded-sm border border-input bg-card px-4 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
 
 export function ContactForm() {
   const c = useContent();
+  const { locale } = useLocale();
   const f = c.contact.form;
+  const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const next: Errors = {};
 
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
     const subject = String(data.get("subject") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
+    const company = String(data.get("company") ?? "");
     const privacy = data.get("privacy");
 
     if (!name) next.name = f.errors.name;
@@ -30,8 +38,28 @@ export function ContactForm() {
     if (!privacy) next.privacy = f.errors.privacy;
 
     setErrors(next);
-    setSubmitted(Object.keys(next).length === 0);
+    if (Object.keys(next).length > 0) {
+      setStatus("idle");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const result = await sendContactMessage({
+        data: { name, email, phone, subject, message, locale, company },
+      });
+      if (result.ok) {
+        formRef.current?.reset();
+        setStatus("sent");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
+
+  const sending = status === "sending";
 
   return (
     <div className="rounded-sm border border-hairline bg-card p-6 md:p-10">
@@ -47,7 +75,7 @@ export function ContactForm() {
         ))}
       </p>
 
-      <form noValidate onSubmit={handleSubmit} className="mt-8 grid gap-6">
+      <form ref={formRef} noValidate onSubmit={handleSubmit} className="mt-8 grid gap-6">
         <div className="grid gap-6 sm:grid-cols-2">
           <Field id="name" label={f.name.label} error={errors.name} required>
             <input
@@ -112,6 +140,13 @@ export function ContactForm() {
           />
         </Field>
 
+        {/* Honeypot: hidden from people, tempting to bots. A filled value makes
+            the server drop the submission silently. */}
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="company">Company</label>
+          <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+        </div>
+
         <div>
           <label htmlFor="privacy" className="flex items-start gap-3 text-sm leading-relaxed">
             <input
@@ -137,16 +172,29 @@ export function ContactForm() {
 
         <button
           type="submit"
-          className="inline-flex h-14 w-full items-center justify-center rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent sm:w-auto sm:justify-self-start"
+          disabled={sending}
+          className="inline-flex h-14 w-full items-center justify-center rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:justify-self-start"
         >
-          {f.submit}
+          {sending ? f.sending : f.submit}
         </button>
 
         <div aria-live="polite">
-          {submitted ? (
+          {status === "sent" ? (
             <div className="rounded-sm border-l-2 border-accent bg-secondary p-5">
               <p className="text-sm font-medium">{f.successTitle}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.successBody}</p>
+            </div>
+          ) : null}
+          {status === "error" ? (
+            <div className="rounded-sm border-l-2 border-destructive bg-secondary p-5">
+              <p className="text-sm font-medium text-destructive">{f.errorTitle}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.errorBody}</p>
+              <a
+                href={`mailto:${c.firm.email}`}
+                className="link-underline mt-3 inline-block text-sm text-accent"
+              >
+                {f.errorMailLabel}
+              </a>
             </div>
           ) : null}
         </div>

@@ -35,7 +35,7 @@ Before committing, all three must pass: `npx eslint .` (0 errors),
   `contact.tsx`; `__root.tsx` holds the layout, head tags and favicons.
 - `src/components/` — `Header`, `Footer`, `LanguageSwitcher`, `SectionLink`,
   `ContactForm`, `PartnersShowcase` (About partners sequence),
-  `PracticeAreaSlide` (Services slides). `src/components/ui/` is library code.
+  `PracticeAreaList` (Services expanding list). `src/components/ui/` is library code.
 - `src/hooks/` — `use-reveal-on-scroll.ts` (staggered reveals),
   `use-smooth-scroll.ts` (site-wide Lenis smooth scroll).
 - `public/brand/` — logo files and favicons; `public/partners/` — portraits.
@@ -53,8 +53,12 @@ Before committing, all three must pass: `npx eslint .` (0 errors),
   (never for text). Use the existing tokens, not new hex values.
 - Do not add placeholders ("XXXX", "to be confirmed", …) or invent facts about
   the firm.
-- Keep the academic disclaimer, and keep the contact form explicitly
-  non-transmitting (it validates only; nothing is sent or stored).
+- Keep the academic disclaimer. The contact form is live: it posts to the
+  server function in `src/lib/send-contact-message.ts`, which emails the
+  message through Resend. Delivery needs two Cloudflare secrets,
+  `RESEND_API_KEY` and `CONTACT_TO_EMAIL` (optional: `CONTACT_FROM_EMAIL`);
+  without them the form shows its error state. Keep the notice above the form
+  truthful about where the messages actually go.
 - Partners are listed in alphabetical order by surname: Caso, Giancaspro,
   Riviello. The name is "Giovanni Battista Riviello".
 - Scroll animations must keep content visible without JavaScript and respect

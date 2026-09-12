@@ -349,9 +349,9 @@ export const content = {
         ],
       },
       form: {
-        heading: "Modulo di contatto dimostrativo",
+        heading: "Invia un messaggio",
         notice:
-          "Questo prototipo accademico non trasmette né conserva le informazioni inserite. Per contattare lo studio, utilizza l'indirizzo email indicato sopra.",
+          "Il modulo è attivo: il messaggio viene inviato per email e la risposta arriva all'indirizzo che indichi. Trattandosi di un progetto accademico, le richieste sono recapitate alla casella del responsabile del progetto e non allo Studio Legale Caso: non inserire informazioni riservate.",
         requiredNote: "I campi contrassegnati con * sono obbligatori.",
         name: { label: "Nome", placeholder: "Il tuo nome completo" },
         email: { label: "Email", placeholder: "tu@esempio.com" },
@@ -359,17 +359,22 @@ export const content = {
         subject: { label: "Oggetto", placeholder: "Di cosa si tratta?" },
         message: { label: "Messaggio", placeholder: "Come può aiutarti lo studio?" },
         privacy:
-          "Ho compreso che questo è un modulo dimostrativo e che nessuna informazione viene trasmessa o conservata.",
-        submit: "Prova il modulo",
-        successTitle: "Dimostrazione completata",
+          "Ho letto la nota qui sopra e acconsento all'invio del messaggio per essere ricontattato.",
+        submit: "Invia messaggio",
+        sending: "Invio in corso…",
+        successTitle: "Messaggio inviato",
         successBody:
-          "Nessun messaggio è stato trasmesso. Il modulo è presente esclusivamente per mostrare il funzionamento dell'interfaccia e della validazione.",
+          "Grazie: il messaggio è stato ricevuto. La risposta arriverà all'indirizzo email che hai indicato.",
+        errorTitle: "Invio non riuscito",
+        errorBody:
+          "Non è stato possibile inviare il messaggio. Riprova tra qualche minuto oppure scrivi direttamente per email.",
+        errorMailLabel: "Scrivi via email",
         errors: {
           name: "Inserisci il tuo nome.",
           email: "Inserisci un indirizzo email valido.",
           subject: "Inserisci un oggetto.",
           message: "Inserisci un messaggio di almeno 10 caratteri.",
-          privacy: "Conferma la nota qui sopra.",
+          privacy: "Conferma il consenso per inviare il messaggio.",
         },
       },
     },
@@ -712,9 +717,9 @@ export const content = {
         ],
       },
       form: {
-        heading: "Demonstration contact form",
+        heading: "Send a message",
         notice:
-          "This academic prototype does not transmit or store submitted information. To contact the firm, use the email address shown above.",
+          "The form is live: your message is sent by email and the reply goes to the address you provide. As this is an academic project, messages reach the mailbox of the person running the project, not Studio Legale Caso — please do not include confidential information.",
         requiredNote: "Fields marked with * are required.",
         name: { label: "Name", placeholder: "Your full name" },
         email: { label: "Email", placeholder: "you@example.com" },
@@ -722,17 +727,22 @@ export const content = {
         subject: { label: "Subject", placeholder: "What is this about?" },
         message: { label: "Message", placeholder: "How can the firm help?" },
         privacy:
-          "I understand this is a demonstration form and that no information is transmitted or stored.",
-        submit: "Test the form",
-        successTitle: "Demonstration completed",
+          "I have read the notice above and consent to my message being sent so that the firm can reply.",
+        submit: "Send message",
+        sending: "Sending…",
+        successTitle: "Message sent",
         successBody:
-          "No message has been transmitted. This form is included solely to demonstrate the interface and its validation behaviour.",
+          "Thank you — your message has been received. The reply will go to the email address you provided.",
+        errorTitle: "Message not sent",
+        errorBody:
+          "The message could not be sent. Please try again in a few minutes, or write by email instead.",
+        errorMailLabel: "Write by email",
         errors: {
           name: "Please enter your name.",
           email: "Please enter a valid email address.",
           subject: "Please enter a subject.",
           message: "Please enter a message of at least 10 characters.",
-          privacy: "Please acknowledge the notice above.",
+          privacy: "Please confirm your consent so the message can be sent.",
         },
       },
     },
