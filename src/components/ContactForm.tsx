@@ -38,7 +38,7 @@ export function ContactForm() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = f.errors.email;
     if (!isValidPhone(phone)) next.phone = f.errors.phone;
     if (!subject) next.subject = f.errors.subject;
-    if (message.length < 10) next.message = f.errors.message;
+    if (!message) next.message = f.errors.message;
     if (!privacy) next.privacy = f.errors.privacy;
 
     setErrors(next);

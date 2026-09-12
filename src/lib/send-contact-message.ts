@@ -16,7 +16,7 @@ const payloadSchema = z.object({
   email: z.string().trim().email().max(200),
   phone: z.string().trim().max(60).refine(isValidPhone),
   subject: z.string().trim().min(1).max(160),
-  message: z.string().trim().min(10).max(5000),
+  message: z.string().trim().min(1).max(5000),
   locale: z.enum(["it", "en"]),
   // Honeypot: a field hidden from people but often filled in by bots.
   company: z.string().max(0).catch(""),
