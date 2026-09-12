@@ -201,6 +201,34 @@
   }
 }
 
+@utility menu-backdrop-in {
+  animation: menu-backdrop-in 260ms ease-out both;
+}
+
+@keyframes menu-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility menu-panel-in {
+  animation: menu-panel-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes menu-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Reveal-as-you-scroll (used by the partner biographies).
    Falls back to fully visible where scroll-driven animations are unsupported. */
 @utility reveal-on-scroll {
@@ -232,6 +260,13 @@
 
   /* Keep revealed text visible instead of animating it. */
   .reveal-on-scroll {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .menu-backdrop-in,
+  .menu-panel-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
