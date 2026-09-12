@@ -98,7 +98,7 @@ export function Header() {
           aria-modal="true"
           aria-label={c.ui.mobileNav}
           tabIndex={-1}
-          className="fixed inset-0 z-[60] lg:hidden"
+          className="fixed inset-0 z-[60] outline-none lg:hidden"
         >
           <button
             type="button"
@@ -111,7 +111,7 @@ export function Header() {
             className="menu-backdrop-in absolute inset-0 cursor-default bg-foreground/10 backdrop-blur-[3px] focus:outline-none"
           />
           <div
-            className="menu-panel-in absolute right-5 top-[4.75rem] w-[calc(100%-2.5rem)] max-w-sm overflow-hidden rounded-sm border border-hairline bg-background/90 shadow-[0_1.25rem_3rem_rgba(17,21,47,0.16)] backdrop-blur-md md:right-10 md:top-24 md:max-w-md"
+            className="menu-panel-in absolute right-5 top-[4.75rem] w-[calc(100%_-_2.5rem)] max-w-sm overflow-hidden rounded-sm border border-hairline bg-background/90 shadow-[0_1.25rem_3rem_rgba(17,21,47,0.16)] backdrop-blur-md md:right-10 md:top-24 md:max-w-md"
           >
             <div className="flex items-center justify-between border-b border-hairline px-5 py-4">
               <Wordmark compact />
@@ -130,7 +130,7 @@ export function Header() {
             <nav
               aria-label={c.ui.mobileNav}
               data-lenis-prevent
-              className="max-h-[calc(100dvh-6rem)] overflow-y-auto px-5 py-3"
+              className="max-h-[calc(100dvh_-_6rem)] overflow-y-auto px-5 py-3"
             >
               <ul className="flex flex-col">
                 {c.nav.items.map((item, i) => {
