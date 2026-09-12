@@ -1,10 +1,12 @@
 /**
  * Server-side configuration values (API keys, mailbox addresses).
  *
- * On Cloudflare Workers secrets arrive as the `env` argument of the worker's
- * `fetch`, not on `process.env`, so `src/server.ts` hands them to us here on
- * every request. Locally there is no such argument and we fall back to the
- * Node environment, which is what `RESEND_API_KEY=... npm run dev` sets.
+ * On the deployed worker these come from `process.env`, which Cloudflare fills
+ * from the project's secrets (`nodejs_compat` is on). Only secrets survive a
+ * deploy: plain-text variables set in the dashboard are wiped by the next
+ * build, so both `RESEND_API_KEY` and `CONTACT_TO_EMAIL` are stored as secrets.
+ * `setRuntimeEnv` covers runtimes that pass the bindings to the worker's
+ * `fetch` instead. Locally, `RESEND_API_KEY=... npm run dev` is enough.
  */
 let runtimeEnv: Record<string, unknown> = {};
 
@@ -12,16 +14,6 @@ export function setRuntimeEnv(env: unknown): void {
   if (env && typeof env === "object") {
     runtimeEnv = env as Record<string, unknown>;
   }
-}
-
-/** Temporary diagnostics: reports which names are visible, never their values. */
-export function describeEnvSources(): Record<string, unknown> {
-  return {
-    runtimeKeys: Object.keys(runtimeEnv),
-    processKeys: Object.keys(globalThis.process?.env ?? {}).filter(
-      (k) => k.startsWith("RESEND") || k.startsWith("CONTACT"),
-    ),
-  };
 }
 
 export function readEnv(key: string): string | undefined {
