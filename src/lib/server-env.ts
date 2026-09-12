@@ -14,6 +14,16 @@ export function setRuntimeEnv(env: unknown): void {
   }
 }
 
+/** Temporary diagnostics: reports which names are visible, never their values. */
+export function describeEnvSources(): Record<string, unknown> {
+  return {
+    runtimeKeys: Object.keys(runtimeEnv),
+    processKeys: Object.keys(globalThis.process?.env ?? {}).filter(
+      (k) => k.startsWith("RESEND") || k.startsWith("CONTACT"),
+    ),
+  };
+}
+
 export function readEnv(key: string): string | undefined {
   const fromRuntime = runtimeEnv[key];
   if (typeof fromRuntime === "string" && fromRuntime.trim()) return fromRuntime.trim();

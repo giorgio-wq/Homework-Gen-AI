@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP } from "@tanstack/react-start/server";
 import { z } from "zod";
-import { readEnv } from "@/lib/server-env";
+import { describeEnvSources, readEnv } from "@/lib/server-env";
 
 /**
  * Contact form delivery.
@@ -22,7 +22,9 @@ const payloadSchema = z.object({
 });
 
 export type ContactPayload = z.input<typeof payloadSchema>;
-export type ContactResult = { ok: true } | { ok: false; reason: "invalid" | "failed" };
+export type ContactResult =
+  | { ok: true }
+  | { ok: false; reason: "invalid" | "failed"; debug?: string };
 
 const DEFAULT_FROM = "Studio Legale Caso <onboarding@resend.dev>";
 
@@ -59,7 +61,11 @@ export const sendContactMessage = createServerFn({ method: "POST" })
     const to = readEnv("CONTACT_TO_EMAIL");
     if (!apiKey || !to) {
       console.error("Contact form: RESEND_API_KEY or CONTACT_TO_EMAIL is not configured.");
-      return { ok: false, reason: "failed" };
+      return {
+        ok: false,
+        reason: "failed",
+        debug: JSON.stringify({ stage: "env", ...describeEnvSources() }),
+      };
     }
 
     const body = [
@@ -89,8 +95,13 @@ export const sendContactMessage = createServerFn({ method: "POST" })
       });
 
       if (!response.ok) {
-        console.error(`Contact form: Resend replied ${response.status} ${await response.text()}`);
-        return { ok: false, reason: "failed" };
+        const detail = await response.text();
+        console.error(`Contact form: Resend replied ${response.status} ${detail}`);
+        return {
+          ok: false,
+          reason: "failed",
+          debug: JSON.stringify({ stage: "resend", status: response.status, detail }),
+        };
       }
     } catch (error) {
       console.error("Contact form: could not reach Resend.", error);
