@@ -19,6 +19,9 @@ export function Header() {
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
+    const focusFrame = window.requestAnimationFrame(() => {
+      panelRef.current?.focus();
+    });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
@@ -27,6 +30,7 @@ export function Header() {
     };
     window.addEventListener("keydown", onKey);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
@@ -85,58 +89,74 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile navigation — rendered outside the blurred header, which would
-        otherwise clip this fixed panel to the header's height */}
+      {/* Mobile navigation — compact floating panel with a soft backdrop */}
       {open && (
         <div
           id="mobile-nav"
           ref={panelRef}
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[60] flex flex-col bg-background lg:hidden"
+          aria-label={c.ui.mobileNav}
+          tabIndex={-1}
+          className="fixed inset-0 z-[60] outline-none lg:hidden"
         >
-          <div className="container-editorial flex h-16 items-center justify-between border-b border-hairline">
-            <Wordmark compact />
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                triggerRef.current?.focus();
-              }}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline"
-            >
-              <X className="h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">{c.nav.closeMenu}</span>
-            </button>
-          </div>
-          <nav
-            aria-label={c.ui.mobileNav}
-            className="container-editorial flex-1 overflow-y-auto py-6"
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-label={c.nav.closeMenu}
+            onClick={() => {
+              setOpen(false);
+              triggerRef.current?.focus();
+            }}
+            className="menu-backdrop-in absolute inset-0 cursor-default bg-foreground/10 backdrop-blur-[3px] focus:outline-none"
+          />
+          <div
+            className="menu-panel-in absolute right-5 top-[4.75rem] w-[calc(100%_-_2.5rem)] max-w-sm overflow-hidden rounded-sm border border-hairline bg-background/90 shadow-[0_1.25rem_3rem_rgba(17,21,47,0.16)] backdrop-blur-md md:right-10 md:top-24 md:max-w-md"
           >
-            <ul className="flex flex-col">
-              {c.nav.items.map((item, i) => {
-                const active = pathname === item.to;
-                return (
-                  <li key={item.to} className="border-b border-hairline">
-                    <Link
-                      to={item.to}
-                      aria-current={active ? "page" : undefined}
-                      className="flex items-baseline gap-4 py-5"
-                    >
-                      <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
-                      <span
-                        className={`font-display text-3xl ${
-                          active ? "text-accent" : "text-foreground"
-                        }`}
+            <div className="flex items-center justify-between border-b border-hairline px-5 py-4">
+              <Wordmark compact />
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  triggerRef.current?.focus();
+                }}
+                className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+                <span className="sr-only">{c.nav.closeMenu}</span>
+              </button>
+            </div>
+            <nav
+              aria-label={c.ui.mobileNav}
+              data-lenis-prevent
+              className="max-h-[calc(100dvh_-_6rem)] overflow-y-auto px-5 py-3"
+            >
+              <ul className="flex flex-col">
+                {c.nav.items.map((item, i) => {
+                  const active = pathname === item.to;
+                  return (
+                    <li key={item.to} className="border-b border-hairline">
+                      <Link
+                        to={item.to}
+                        aria-current={active ? "page" : undefined}
+                        className="flex items-baseline gap-4 py-4"
                       >
-                        {item.label}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+                        <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                        <span
+                          className={`font-display text-3xl ${
+                            active ? "text-accent" : "text-foreground"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
         </div>
       )}
     </>

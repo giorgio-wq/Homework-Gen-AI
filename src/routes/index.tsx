@@ -111,7 +111,7 @@ function Home() {
       </section>
 
       {/* Firm introduction */}
-      <section className="container-editorial grid gap-12 py-20 md:grid-cols-12 md:py-28">
+      <section className="container-editorial grid gap-12 pt-20 pb-12 md:grid-cols-12 md:pt-28 md:pb-16">
         <div className="md:col-span-5">
           <p className="section-label">{intro.eyebrow}</p>
           <dl className="mt-8">
@@ -135,14 +135,14 @@ function Home() {
 
       {/* Client groups */}
       <section className="border-t border-hairline bg-secondary/50">
-        <div className="container-editorial py-20 md:py-28">
+        <div className="container-editorial py-12 md:py-16">
           <h2 className="max-w-3xl text-[2rem] leading-[1.08] sm:text-5xl">{clients.heading}</h2>
-          {/* Editorial index: each entry carries its own hairline rule instead of
-              sitting in a filled cell, so an odd number of entries simply leaves
-              white space rather than an empty box. Entries appear in sequence. */}
+          {/* Each entry carries its own hairline rule instead of sitting in a
+              filled cell, so an odd number of entries simply leaves white space
+              rather than an empty box. Entries appear in sequence. */}
           <ul
             ref={clientsRef}
-            className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14"
+            className="mt-10 grid gap-x-10 gap-y-12 sm:grid-cols-2 md:mt-12 lg:grid-cols-3 lg:gap-x-14"
           >
             {clients.items.map((item, i) => {
               const reveal = revealItem(clientsState, i, { stagger: 350 });
@@ -152,10 +152,7 @@ function Home() {
                   className={`border-t border-hairline pt-6 ${reveal.className}`}
                   style={reveal.style}
                 >
-                  <span className="font-display text-base text-accent md:text-lg">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-3 text-2xl leading-tight md:text-3xl">{item.title}</h3>
+                  <h3 className="text-2xl leading-tight md:text-3xl">{item.title}</h3>
                   <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
                     {item.note}
                   </p>
@@ -167,7 +164,7 @@ function Home() {
       </section>
 
       {/* Services preview */}
-      <section className="container-editorial py-20 md:py-28">
+      <section className="container-editorial pt-12 pb-20 md:pt-16 md:pb-28">
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
           <h2 className="min-w-0 max-w-2xl text-[2rem] leading-[1.08] sm:text-5xl">
             {servicesPreview.heading}
