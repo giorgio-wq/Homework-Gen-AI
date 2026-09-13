@@ -31,6 +31,24 @@ export function jumpTo(target: number | HTMLElement, offset = 0) {
 }
 
 /**
+ * Move the page smoothly to `target`, using the site's Lenis instance when it
+ * is ready and the browser's native smooth scrolling as a fallback.
+ */
+export function smoothTo(target: number | HTMLElement, offset = 0) {
+  if (typeof window === "undefined") return;
+
+  if (lenis) {
+    lenis.scrollTo(target, { force: true, offset });
+    return;
+  }
+
+  const y =
+    typeof target === "number" ? target : target.getBoundingClientRect().top + window.scrollY;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: y + offset, behavior: reducedMotion ? "auto" : "smooth" });
+}
+
+/**
  * Site-wide smooth ("inertia") scrolling via Lenis.
  *
  * Runs only on the client, and is skipped for visitors who prefer reduced

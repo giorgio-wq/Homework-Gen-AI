@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
 import { ContactForm } from "@/components/ContactForm";
+import { smoothTo } from "@/hooks/use-smooth-scroll";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -49,6 +50,13 @@ function Contact() {
             <ContactForm />
             <a
               href="#contact-details"
+              onClick={(event) => {
+                const target = document.getElementById("contact-details");
+                if (!target) return;
+                event.preventDefault();
+                smoothTo(target);
+                window.history.pushState(null, "", "#contact-details");
+              }}
               className="group mt-5 inline-flex items-center gap-3 text-sm text-accent"
             >
               <span className="link-underline">{details.infoLinkLabel}</span>
