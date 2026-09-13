@@ -145,23 +145,6 @@ function Contact() {
               aria-hidden="true"
             />
           </a>
-
-          <nav aria-label={c.ui.relatedPages} className="mt-10">
-            <h3 className="eyebrow">{links.heading}</h3>
-            <ul className="mt-4 space-y-3">
-              {links.items.map((item) => (
-                <li key={item.to}>
-                  <Link to={item.to} className="group inline-flex items-center gap-3 text-sm">
-                    <span className="link-underline">{item.label}</span>
-                    <ArrowRight
-                      className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
         </div>
 
         {/* Google Maps embed (no API key needed). It shows the Altamura location
@@ -187,6 +170,23 @@ function Contact() {
             {map.linkLabel}
           </a>
         </div>
+
+        <nav aria-label={c.ui.relatedPages} className="lg:col-span-2">
+          <h3 className="eyebrow">{links.heading}</h3>
+          <ul className="mt-4 space-y-3">
+            {links.items.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className="group inline-flex items-center gap-3 text-sm">
+                  <span className="link-underline">{item.label}</span>
+                  <ArrowRight
+                    className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </section>
     </>
   );
