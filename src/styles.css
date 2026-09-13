@@ -229,6 +229,22 @@
   }
 }
 
+/* Home practice-area carousel: the bar fills over one interval and its end
+   advances the slide (duration set inline by the component). */
+@utility carousel-progress {
+  transform-origin: left;
+  animation: carousel-progress linear forwards;
+}
+
+@keyframes carousel-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Reveal-as-you-scroll (used by the partner biographies).
    Falls back to fully visible where scroll-driven animations are unsupported. */
 @utility reveal-on-scroll {

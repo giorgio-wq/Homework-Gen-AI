@@ -125,6 +125,13 @@ export const content = {
       servicesPreview: {
         heading: "Competenze legali integrate.",
         link: { label: "Scopri le principali aree di attività", to: "/services" as const },
+        carousel: {
+          label: "Aree di attività",
+          previous: "Area precedente",
+          next: "Area successiva",
+          slide: "Area",
+          of: "di",
+        },
       },
       approach: {
         eyebrow: "Il nostro metodo",
@@ -506,6 +513,13 @@ export const content = {
       servicesPreview: {
         heading: "An integrated legal practice.",
         link: { label: "Explore the main areas of practice", to: "/services" as const },
+        carousel: {
+          label: "Practice areas",
+          previous: "Previous area",
+          next: "Next area",
+          slide: "Area",
+          of: "of",
+        },
       },
       approach: {
         eyebrow: "Our approach",
@@ -591,8 +605,7 @@ export const content = {
         id: "banking",
         number: "01",
         title: "Banking Law",
-        summary:
-          "Advice and representation in banking, credit and financial matters.",
+        summary: "Advice and representation in banking, credit and financial matters.",
         detail:
           "The firm assists banks and financial institutions as well as private individuals and businesses in matters involving banking and credit relationships. Its work includes advice, negotiation, pre-litigation assistance and representation in related court proceedings.",
         image: "",

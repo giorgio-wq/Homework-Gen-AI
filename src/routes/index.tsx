@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
 import { CTASection } from "@/components/CTASection";
-import { ServicePreview } from "@/components/ServicePreview";
+import { PracticeAreaCarousel } from "@/components/PracticeAreaCarousel";
 import { PartnerCard } from "@/components/PartnerCard";
 import { SectionLink } from "@/components/SectionLink";
 import { revealItem, useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
@@ -31,10 +31,8 @@ export const Route = createFileRoute("/")({
 function Home() {
   const c = useContent();
   const { hero, intro, clients, servicesPreview, approach, team, finalCta } = c.home;
-  // Client groups rise in one by one (~0.35s apart); practice areas drop in
-  // like a roller blind, a little quicker since there are seven of them.
+  // Client groups rise in one by one (~0.35s apart).
   const [clientsRef, clientsState] = useRevealOnScroll<HTMLUListElement>();
-  const [areasRef, areasState] = useRevealOnScroll<HTMLDivElement>();
 
   return (
     <>
@@ -178,17 +176,8 @@ function Home() {
             {servicesPreview.link.label}
           </SectionLink>
         </div>
-        {/* Practice areas cascade down one after another. */}
-        <div ref={areasRef} className="mt-12">
-          {c.practiceAreas.map((area, i) => {
-            const reveal = revealItem(areasState, i, { stagger: 220, from: "above" });
-            return (
-              <div key={area.id} className={reveal.className} style={reveal.style}>
-                <ServicePreview area={area} />
-              </div>
-            );
-          })}
-          <div className="border-t border-hairline" />
+        <div className="mt-12">
+          <PracticeAreaCarousel areas={c.practiceAreas} labels={servicesPreview.carousel} />
         </div>
       </section>
 
