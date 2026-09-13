@@ -140,8 +140,8 @@ export const content = {
       },
       finalCta: {
         heading: "Iniziamo un confronto.",
-        body: "Per fissare un appuntamento o richiedere informazioni, contatta Studio Legale Caso tramite email.",
-        ctaLabel: "Scrivi allo studio",
+        body: "Per appuntamenti e informazioni, contatta lo studio.",
+        ctaLabel: "Contatta lo studio",
       },
     },
 
@@ -200,8 +200,8 @@ export const content = {
       listHint: "Clicca su un’area per leggere la descrizione completa.",
       finalCta: {
         heading: "Parlaci delle tue esigenze legali.",
-        body: "Contatta Studio Legale Caso per fissare un appuntamento o richiedere ulteriori informazioni.",
-        ctaLabel: "Scrivi allo studio",
+        body: "Per appuntamenti e informazioni, contatta lo studio.",
+        ctaLabel: "Contatta lo studio",
       },
     },
 
@@ -340,7 +340,7 @@ export const content = {
         phone: { label: "Tel. / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Ricevimento", value: "Esclusivamente su appuntamento" },
-        ctaLabel: "Scrivi allo studio",
+        ctaLabel: "Contatta lo studio",
       },
       map: {
         label: "Sede di Altamura",
@@ -520,8 +520,8 @@ export const content = {
       },
       finalCta: {
         heading: "Start a conversation.",
-        body: "To arrange an appointment or request information, contact Studio Legale Caso by email.",
-        ctaLabel: "Email the firm",
+        body: "For appointments and information, contact the firm.",
+        ctaLabel: "Contact the firm",
       },
     },
 
@@ -580,8 +580,8 @@ export const content = {
       listHint: "Click an area to read its full description.",
       finalCta: {
         heading: "Discuss your legal needs with us.",
-        body: "Contact Studio Legale Caso to arrange an appointment or request further information.",
-        ctaLabel: "Email the firm",
+        body: "For appointments and information, contact the firm.",
+        ctaLabel: "Contact the firm",
       },
     },
 
@@ -721,7 +721,7 @@ export const content = {
         phone: { label: "Telephone / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Appointments", value: "By appointment only" },
-        ctaLabel: "Email the firm",
+        ctaLabel: "Contact the firm",
       },
       map: {
         label: "Altamura location",

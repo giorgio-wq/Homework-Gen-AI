@@ -82,7 +82,7 @@ function About() {
         heading={c.home.finalCta.heading}
         body={c.home.finalCta.body}
         ctaLabel={c.home.finalCta.ctaLabel}
-        ctaHref={`mailto:${c.firm.email}`}
+        ctaHref="/contact"
       />
     </>
   );

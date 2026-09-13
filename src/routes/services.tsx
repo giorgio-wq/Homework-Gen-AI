@@ -43,7 +43,7 @@ function Services() {
         heading={finalCta.heading}
         body={finalCta.body}
         ctaLabel={finalCta.ctaLabel}
-        ctaHref={`mailto:${c.firm.email}`}
+        ctaHref="/contact"
       />
     </>
   );

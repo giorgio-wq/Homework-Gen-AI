@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
-/** Closing call to action. `ctaHref` is an external target (currently a mailto:). */
+/** Closing call to action. `ctaHref` may be an internal route or an external target. */
 export function CTASection({
   heading,
   body,
