@@ -6,8 +6,8 @@ type Area = { id: string; title: string; summary: string; detail: string };
 
 /**
  * Practice areas as an expanding list: every area shows its name and a one-line
- * summary, and opening one reveals the full description. One at a time — opening
- * an area closes the previous one, so the page stays short.
+ * summary, and opening one reveals the full description. Areas are independent,
+ * so visitors can keep several descriptions open, including all seven at once.
  *
  * The whole header row is clickable, but the markup stays a proper heading +
  * button (the accordion pattern): the button's ::after overlay stretches across
@@ -16,14 +16,14 @@ type Area = { id: string; title: string; summary: string; detail: string };
  * closed, so it is still indexed and searchable.
  */
 export function PracticeAreaList({ areas }: { areas: readonly Area[] }) {
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set());
   const [listRef, revealState] = useRevealOnScroll<HTMLUListElement>();
   const baseId = useId();
 
   return (
     <ul ref={listRef} className="border-t border-hairline">
       {areas.map((area, i) => {
-        const isOpen = openId === area.id;
+        const isOpen = openIds.has(area.id);
         const reveal = revealItem(revealState, i, { stagger: 220, from: "above" });
         const panelId = `${baseId}-${area.id}`;
         const headingId = `${panelId}-heading`;
@@ -39,7 +39,14 @@ export function PracticeAreaList({ areas }: { areas: readonly Area[] }) {
                 <button
                   id={headingId}
                   type="button"
-                  onClick={() => setOpenId(isOpen ? null : area.id)}
+                  onClick={() =>
+                    setOpenIds((current) => {
+                      const next = new Set(current);
+                      if (next.has(area.id)) next.delete(area.id);
+                      else next.add(area.id);
+                      return next;
+                    })
+                  }
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   className={`text-left text-2xl leading-tight transition-colors after:absolute after:inset-0 after:z-10 md:text-3xl ${
