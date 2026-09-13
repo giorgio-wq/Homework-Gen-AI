@@ -48,6 +48,12 @@ export function Footer() {
               <li key={location.name} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <span>{location.name}</span>
                 <a
+                  href={`tel:+39${location.phone.replace(/\s/g, "")}`}
+                  className="link-underline text-accent"
+                >
+                  {location.phone}
+                </a>
+                <a
                   href={mapsUrl(location.mapQuery)}
                   target="_blank"
                   rel="noreferrer"
@@ -57,19 +63,6 @@ export function Footer() {
                 </a>
               </li>
             ))}
-            <li className="pt-2">
-              {c.contact.details.phone.numbers.map((number, i) => (
-                <span key={number}>
-                  {i > 0 ? <span> / </span> : null}
-                  <a
-                    href={`tel:+39${number.replace(/\s/g, "")}`}
-                    className="link-underline text-accent"
-                  >
-                    {number}
-                  </a>
-                </span>
-              ))}
-            </li>
             <li>
               <a href={`mailto:${c.firm.email}`} className="link-underline text-accent">
                 {c.firm.email}

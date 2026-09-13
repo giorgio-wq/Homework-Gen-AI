@@ -90,6 +90,15 @@ function Contact() {
                     </span>
                   ))}
                 </address>
+                <div className="mt-3">
+                  <span className="eyebrow block">{details.phone.label}</span>
+                  <a
+                    href={`tel:+39${location.phone.replace(/\s/g, "")}`}
+                    className="link-underline mt-1 inline-block text-sm text-accent"
+                  >
+                    {location.phone}
+                  </a>
+                </div>
                 <a
                   href={mapsUrl(location.mapQuery)}
                   target="_blank"
@@ -104,23 +113,6 @@ function Contact() {
 
           {/* Contact methods */}
           <dl className="mt-2">
-            <div className="border-t border-hairline py-5">
-              <dt className="eyebrow">{details.phone.label}</dt>
-              <dd className="mt-2 text-base">
-                {details.phone.numbers.map((number, i) => (
-                  <span key={number}>
-                    {i > 0 ? <span className="text-muted-foreground"> / </span> : null}
-                    {/* Italian landline: the leading 0 is kept after the +39 code */}
-                    <a
-                      href={`tel:+39${number.replace(/\s/g, "")}`}
-                      className="link-underline text-accent"
-                    >
-                      {number}
-                    </a>
-                  </span>
-                ))}
-              </dd>
-            </div>
             <div className="border-t border-hairline py-5">
               <dt className="eyebrow">{details.email.label}</dt>
               <dd className="mt-2 text-base">
