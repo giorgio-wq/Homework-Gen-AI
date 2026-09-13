@@ -80,8 +80,8 @@ export const content = {
       },
       hero: {
         eyebrow: "Studio legale · Dal 1990 · Italia",
-        headlineLead: "Competenza legale.",
-        headlineAccent: "Direzione chiara.",
+        headlineLead: "Competenza e professionalità",
+        headlineAccent: "nel settore legale.",
         paragraph:
           "Dal 1990, lo Studio Legale Caso assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici. Lo studio opera nella consulenza, nella negoziazione e nel contenzioso in materia civile, societaria, bancaria, assicurativa, tributaria e amministrativa.",
         primaryCta: { label: "Scopri le competenze", to: "/services" as const },
@@ -298,7 +298,7 @@ export const content = {
         image: "/partners/girolamo-giancaspro.webp",
         profile: [
           "Girolamo Giancaspro esercita la professione forense dal 1996. Laureato in Giurisprudenza presso l'Università di Bari, è iscritto all'Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo per clienti privati e pubblici.",
-          "Accanto all'attività professionale, è stato componente del Consiglio dell'Ordine degli Avvocati di Bari nel quadriennio 2019–2022, coordinando il gruppo dedicato alla pratica forense. È inoltre indicato tra i componenti del Consiglio Distrettuale di Disciplina di Bari per il quadriennio 2023–2026.",
+          "Accanto all'attività professionale, è stato componente del Consiglio dell'Ordine degli Avvocati di Bari nel quadriennio 2019–2022, coordinando il gruppo dedicato alla pratica forense. Attualmente è componente del Consiglio Distrettuale di Disciplina degli Avvocati di Bari.",
         ],
       },
       {
@@ -471,8 +471,8 @@ export const content = {
       },
       hero: {
         eyebrow: "Law firm · Established 1990 · Italy",
-        headlineLead: "Legal expertise.",
-        headlineAccent: "Clear direction.",
+        headlineLead: "Expertise and professionalism",
+        headlineAccent: "in the legal field.",
         paragraph:
           "Since 1990, Studio Legale Caso has advised private individuals, businesses, insurance companies, banks and financial institutions, and public bodies throughout Italy. The firm provides advisory, negotiation and litigation support across civil, corporate, banking, insurance, tax and administrative matters.",
         primaryCta: { label: "Explore our services", to: "/services" as const },
@@ -689,7 +689,7 @@ export const content = {
         image: "/partners/girolamo-giancaspro.webp",
         profile: [
           "Girolamo Giancaspro has practised law since 1996. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice covers civil, tax and administrative law for private and public clients.",
-          "Alongside his professional work, he served on the Council of the Bari Bar Association for the 2019–2022 term, coordinating the group dedicated to legal traineeship. He is also listed among the members of the Bari District Disciplinary Council for the 2023–2026 term.",
+          "Alongside his professional work, he served on the Council of the Bari Bar Association for the 2019–2022 term, coordinating the group dedicated to legal traineeship. He is currently a member of the Bari District Disciplinary Council for Lawyers.",
         ],
       },
       {
