@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
 import { PageHero } from "@/components/PageHero";
@@ -125,6 +125,17 @@ function Contact() {
               ))}
             </ul>
           </nav>
+
+          <a
+            href="#contact-form"
+            className="group mt-8 inline-flex items-center gap-3 text-sm text-accent"
+          >
+            <span className="link-underline">{details.formLinkLabel}</span>
+            <ArrowDown
+              className="h-4 w-4 transition-transform group-hover:translate-y-1"
+              aria-hidden="true"
+            />
+          </a>
         </div>
 
         {/* Google Maps embed (no API key needed). It shows the Altamura location
@@ -136,7 +147,7 @@ function Contact() {
             src={`https://maps.google.com/maps?q=${encodeURIComponent(
               details.locations[0].mapQuery,
             )}&z=16&output=embed`}
-            className="mt-3 aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/5]"
+            className="mt-3 aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/3]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
@@ -153,7 +164,7 @@ function Contact() {
       </section>
 
       {/* Send a message — full-width box below */}
-      <section className="border-t border-hairline bg-secondary/40">
+      <section id="contact-form" className="scroll-mt-24 border-t border-hairline bg-secondary/40">
         <div className="container-editorial py-16 md:py-24">
           <div className="mx-auto max-w-3xl">
             <ContactForm />

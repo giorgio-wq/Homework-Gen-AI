@@ -340,7 +340,8 @@ export const content = {
         phone: { label: "Tel. / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Ricevimento", value: "Esclusivamente su appuntamento" },
-        ctaLabel: "Contatta lo studio",
+        formLinkLabel: "Scorri per inviare un messaggio",
+        ctaLabel: "Scrivici via email",
       },
       map: {
         label: "Sede di Altamura",
@@ -721,7 +722,8 @@ export const content = {
         phone: { label: "Telephone / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Appointments", value: "By appointment only" },
-        ctaLabel: "Contact the firm",
+        formLinkLabel: "Scroll to send a message",
+        ctaLabel: "Send us an email",
       },
       map: {
         label: "Altamura location",
