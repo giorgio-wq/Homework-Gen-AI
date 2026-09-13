@@ -287,7 +287,8 @@ export const content = {
         initials: "PC",
         image: "/partners/pasquale-caso.webp",
         profile: [
-          "Pasquale Caso esercita la professione forense dal 1978. Laureato in Giurisprudenza presso l'Università di Bari, è iscritto all'Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo, assistendo privati, imprese, istituzioni finanziarie, compagnie assicurative ed enti pubblici.",
+          "Pasquale Caso esercita la professione forense dal 1978. Laureato in Giurisprudenza presso l’Università di Bari, è iscritto all’Ordine degli Avvocati di Bari ed è abilitato al patrocinio dinanzi alle giurisdizioni superiori. Si occupa di diritto civile, tributario e amministrativo, assistendo privati, imprese, istituzioni finanziarie, compagnie assicurative ed enti pubblici.",
+          "Nel corso della sua attività professionale ha maturato anche una significativa esperienza nella governance bancaria. Ha ricoperto incarichi nel Consiglio di Amministrazione e la carica di vicepresidente della Banca Popolare di Puglia e Basilicata, della quale è stato presidente del Consiglio di Amministrazione dall’ottobre 2010 al settembre 2013.",
         ],
       },
       {
@@ -678,7 +679,8 @@ export const content = {
         initials: "PC",
         image: "/partners/pasquale-caso.webp",
         profile: [
-          "Pasquale Caso has practised law since 1978. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice covers civil, tax and administrative law, assisting private clients, businesses, financial institutions, insurance companies and public bodies.",
+          "Pasquale Caso has practised law since 1978. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice includes civil, tax and administrative law, advising private individuals, businesses, financial institutions, insurance companies and public bodies.",
+          "Throughout his professional career, he also gained significant experience in banking governance. He served on the Board of Directors and as Vice-Chairman of Banca Popolare di Puglia e Basilicata, before serving as Chairman of the bank’s Board of Directors from October 2010 to September 2013.",
         ],
       },
       {
