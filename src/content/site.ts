@@ -27,13 +27,13 @@ export const content = {
       shortName: "Studio Legale Caso",
       email: "info@studiolegalecaso.com",
       disclaimer:
-        "Progetto dimostrativo realizzato per finalità accademiche. Questo non è il sito ufficiale di Studio Legale Caso e non è destinato alla richiesta o alla prestazione di assistenza legale.",
+        "Progetto dimostrativo realizzato per finalità accademiche. Questo non è il sito ufficiale dello Studio Legale Caso e non è destinato alla richiesta o alla prestazione di assistenza legale.",
     },
 
     siteMeta: {
       title: "Studio Legale Caso",
       description:
-        "Prototipo accademico realizzato per Studio Legale Caso. Non è il sito ufficiale dello studio e non deve essere utilizzato per richiedere assistenza legale.",
+        "Prototipo accademico realizzato per lo Studio Legale Caso. Non è il sito ufficiale dello studio e non deve essere utilizzato per richiedere assistenza legale.",
       robots: "noindex, nofollow",
     },
 
@@ -83,14 +83,14 @@ export const content = {
         headlineLead: "Competenza legale.",
         headlineAccent: "Direzione chiara.",
         paragraph:
-          "Dal 1990, Studio Legale Caso assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici. Lo studio opera nella consulenza, nella negoziazione e nel contenzioso in materia civile, societaria, bancaria, assicurativa, tributaria e amministrativa.",
+          "Dal 1990, lo Studio Legale Caso assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici. Lo studio opera nella consulenza, nella negoziazione e nel contenzioso in materia civile, societaria, bancaria, assicurativa, tributaria e amministrativa.",
         primaryCta: { label: "Scopri le competenze", to: "/services" as const },
         secondaryCta: { label: "Conosci lo studio", to: "/about" as const },
       },
       intro: {
         eyebrow: "Lo studio",
         heading: "Esperienza e professionalità al servizio dei clienti.",
-        body: "Fondato ad Altamura e oggi presente in tre sedi in Puglia, Studio Legale Caso unisce un'esperienza consolidata a un metodo diretto e rigoroso. I suoi avvocati operano insieme a un team di professionisti e collaboratori, offrendo indicazioni chiare durante ogni fase dell'incarico.",
+        body: "Fondato ad Altamura e oggi presente in tre sedi in Puglia, lo Studio Legale Caso unisce un'esperienza consolidata a un metodo diretto e rigoroso. I suoi avvocati operano insieme a un team di professionisti e collaboratori, offrendo indicazioni chiare durante ogni fase dell'incarico.",
         facts: [
           { label: "Fondazione", value: "1990" },
           { label: "Sedi", value: "Altamura · Gravina in Puglia · Santeramo in Colle" },
@@ -142,7 +142,7 @@ export const content = {
       team: {
         eyebrow: "Professionisti",
         heading: "Avvocati di esperienza, affiancati da un team di professionisti e collaboratori.",
-        body: "Studio Legale Caso riunisce avvocati di esperienza e un team di professionisti e collaboratori. Lo studio opera come un gruppo coordinato nelle diverse aree di attività.",
+        body: "Lo Studio Legale Caso riunisce avvocati di esperienza e un team di professionisti e collaboratori. Lo studio opera come un gruppo coordinato nelle diverse aree di attività.",
         cta: { label: "Conosci i professionisti", to: "/about" as const },
       },
       finalCta: {
@@ -160,18 +160,18 @@ export const content = {
         eyebrow: "Lo studio",
         headline: "Una storia costruita sull'esperienza e sulla continuità.",
         paragraph:
-          "Fondato nel 1990, Studio Legale Caso è cresciuto attraverso la collaborazione di professionisti accomunati da un metodo rigoroso, diretto e orientato alle esigenze del cliente.",
+          "Fondato nel 1990, lo Studio Legale Caso è cresciuto attraverso la collaborazione di professionisti accomunati da un metodo rigoroso, diretto e orientato alle esigenze del cliente.",
       },
       history: {
         heading: "Dalla fondazione a oggi.",
         body: [
-          "Studio Legale Caso nasce ad Altamura nel 1990 per iniziativa di Raffaele Caso insieme al figlio Pasquale Caso. Nel 1995 entrano nello studio Giovanni Battista Riviello e Girolamo Giancaspro. Nel 2016 lo studio assume l'attuale struttura associativa.",
+          "Lo Studio Legale Caso nasce ad Altamura nel 1990 per iniziativa di Raffaele Caso insieme al figlio Pasquale Caso. Nel 1995 entrano nello studio Giovanni Battista Riviello e Girolamo Giancaspro. Nel 2016 lo studio assume l'attuale struttura associativa.",
           "Oggi lo studio opera attraverso le sedi di Altamura, Gravina in Puglia e Santeramo in Colle, assistendo clienti privati e pubblici su tutto il territorio nazionale.",
         ],
         timeline: [
           {
             year: "1990",
-            text: "Raffaele e Pasquale Caso fondano Studio Legale Caso ad Altamura.",
+            text: "Raffaele e Pasquale Caso fondano lo Studio Legale Caso ad Altamura.",
           },
           {
             year: "1995",
@@ -202,7 +202,7 @@ export const content = {
         eyebrow: "Competenze",
         headline: "Assistenza legale integrata.",
         paragraph:
-          "Studio Legale Caso opera nella consulenza, nella negoziazione e nel contenzioso in ambiti che spesso si intersecano tra loro. Lo studio assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici.",
+          "Lo Studio Legale Caso opera nella consulenza, nella negoziazione e nel contenzioso in ambiti che spesso si intersecano tra loro. Lo studio assiste su tutto il territorio nazionale privati, imprese, compagnie assicurative, banche e istituzioni finanziarie ed enti pubblici.",
       },
       listHint: "Clicca su un’area per leggere la descrizione completa.",
       finalCta: {
@@ -228,7 +228,7 @@ export const content = {
         title: "Diritto societario",
         summary: "Assistenza alle imprese nelle questioni societarie e nel relativo contenzioso.",
         detail:
-          "Studio Legale Caso affianca le imprese nelle questioni riguardanti i rapporti societari, le operazioni aziendali e i contratti collegati alla loro attività. L'assistenza si estende dalla consulenza e negoziazione alla gestione del contenzioso.",
+          "Lo Studio Legale Caso affianca le imprese nelle questioni riguardanti i rapporti societari, le operazioni aziendali e i contratti collegati alla loro attività. L'assistenza si estende dalla consulenza e negoziazione alla gestione del contenzioso.",
         image: "",
       },
       {
@@ -246,7 +246,7 @@ export const content = {
         title: "Espropriazioni per pubblica utilità",
         summary: "Assistenza nei procedimenti espropriativi e nelle controversie che ne derivano.",
         detail:
-          "Studio Legale Caso assiste enti pubblici e soggetti privati nelle questioni relative alle espropriazioni per pubblica utilità. Lo studio offre supporto nelle diverse fasi del procedimento e nelle negoziazioni o controversie a esso collegate.",
+          "Lo Studio Legale Caso assiste enti pubblici e soggetti privati nelle questioni relative alle espropriazioni per pubblica utilità. Lo studio offre supporto nelle diverse fasi del procedimento e nelle negoziazioni o controversie a esso collegate.",
         image: "",
       },
       {
@@ -265,7 +265,7 @@ export const content = {
         title: "Diritto tributario",
         summary: "Consulenza e rappresentanza nelle questioni e controversie tributarie.",
         detail:
-          "Studio Legale Caso assiste clienti privati e pubblici nell'interpretazione e nella gestione delle questioni tributarie, nei rapporti con le autorità competenti e nel contenzioso. L'attività comprende consulenza, negoziazione e rappresentanza nei procedimenti.",
+          "Lo Studio Legale Caso assiste clienti privati e pubblici nell'interpretazione e nella gestione delle questioni tributarie, nei rapporti con le autorità competenti e nel contenzioso. L'attività comprende consulenza, negoziazione e rappresentanza nei procedimenti.",
         image: "",
       },
       {
