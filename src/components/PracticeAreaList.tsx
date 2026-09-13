@@ -26,6 +26,7 @@ export function PracticeAreaList({ areas }: { areas: readonly Area[] }) {
         const isOpen = openId === area.id;
         const reveal = revealItem(revealState, i, { stagger: 220, from: "above" });
         const panelId = `${baseId}-${area.id}`;
+        const headingId = `${panelId}-heading`;
         return (
           <li
             key={area.id}
@@ -36,6 +37,7 @@ export function PracticeAreaList({ areas }: { areas: readonly Area[] }) {
             <div className="group relative py-7 pr-16 md:py-9 md:pr-20">
               <h2>
                 <button
+                  id={headingId}
                   type="button"
                   onClick={() => setOpenId(isOpen ? null : area.id)}
                   aria-expanded={isOpen}
@@ -64,6 +66,8 @@ export function PracticeAreaList({ areas }: { areas: readonly Area[] }) {
 
             <div
               id={panelId}
+              role="region"
+              aria-labelledby={headingId}
               aria-hidden={!isOpen}
               className={`grid transition-all duration-500 ease-out ${
                 isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"

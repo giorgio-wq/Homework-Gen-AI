@@ -10,12 +10,15 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: c.about.meta.title },
-      { name: "description", content: c.about.meta.description },
+      { name: "description", content: c.siteMeta.description },
+      { name: "robots", content: c.siteMeta.robots },
       { property: "og:title", content: c.about.meta.title },
-      { property: "og:description", content: c.about.meta.description },
+      { property: "og:description", content: c.siteMeta.description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/about" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: c.about.meta.title },
+      { name: "twitter:description", content: c.siteMeta.description },
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),

@@ -1,40 +1,119 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useContent } from "@/i18n/locale";
 import { Wordmark } from "@/components/Wordmark";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+    (element) => !element.hasAttribute("hidden") && element.getAttribute("aria-hidden") !== "true",
+  );
+}
+
 export function Header() {
   const c = useContent();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      const previous = previousFocusRef.current;
+      previousFocusRef.current = null;
+      if (previous) {
+        window.requestAnimationFrame(() => {
+          if (document.contains(previous)) previous.focus();
+        });
+      }
+      return;
+    }
+
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : triggerRef.current;
+
+    const bodyOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const focusFrame = window.requestAnimationFrame(() => {
-      panelRef.current?.focus();
+
+    // Inert the page behind the dialog for both keyboard and assistive
+    // technology users. The dialog itself is rendered outside these elements.
+    const backgroundElements = Array.from(
+      document.querySelectorAll<HTMLElement>("header, main, footer, [data-skip-link]"),
+    );
+    const previousBackgroundState = backgroundElements.map((element) => ({
+      element,
+      inert: element.hasAttribute("inert"),
+      ariaHidden: element.getAttribute("aria-hidden"),
+    }));
+    backgroundElements.forEach((element) => {
+      element.setAttribute("inert", "");
+      element.setAttribute("aria-hidden", "true");
     });
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      const panel = panelRef.current;
+      const first = panel ? getFocusableElements(panel)[0] : undefined;
+      (closeButtonRef.current ?? first ?? panel)?.focus();
+    });
+
     const onKey = (e: KeyboardEvent) => {
+      const panel = panelRef.current;
+      if (!panel) return;
+
       if (e.key === "Escape") {
-        setOpen(false);
-        triggerRef.current?.focus();
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+      const focusable = getFocusableElements(panel);
+      if (focusable.length === 0) {
+        e.preventDefault();
+        panel.focus();
+        return;
+      }
+
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      const active = document.activeElement;
+      if (!panel.contains(active)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      } else if (e.shiftKey && (active === first || active === panel)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || active === panel)) {
+        e.preventDefault();
+        first.focus();
       }
     };
     window.addEventListener("keydown", onKey);
+
     return () => {
       window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = "";
+      document.body.style.overflow = bodyOverflow;
       window.removeEventListener("keydown", onKey);
+      previousBackgroundState.forEach(({ element, inert, ariaHidden }) => {
+        if (inert) element.setAttribute("inert", "");
+        else element.removeAttribute("inert");
+        if (ariaHidden === null) element.removeAttribute("aria-hidden");
+        else element.setAttribute("aria-hidden", ariaHidden);
+      });
     };
-  }, [open]);
+  }, [closeMenu, open]);
 
   return (
     <>
@@ -104,10 +183,7 @@ export function Header() {
             type="button"
             tabIndex={-1}
             aria-label={c.nav.closeMenu}
-            onClick={() => {
-              setOpen(false);
-              triggerRef.current?.focus();
-            }}
+            onClick={closeMenu}
             className="menu-backdrop-in absolute inset-0 cursor-default bg-foreground/10 backdrop-blur-[3px] focus:outline-none"
           />
           <div className="menu-panel-in absolute right-5 top-[4.75rem] w-[calc(100%_-_2.5rem)] max-w-sm overflow-hidden rounded-sm border border-hairline bg-background/90 shadow-[0_1.25rem_3rem_rgba(17,21,47,0.16)] backdrop-blur-md md:right-10 md:top-24 md:max-w-md">
@@ -115,10 +191,8 @@ export function Header() {
               <Wordmark compact />
               <button
                 type="button"
-                onClick={() => {
-                  setOpen(false);
-                  triggerRef.current?.focus();
-                }}
+                ref={closeButtonRef}
+                onClick={closeMenu}
                 className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-hairline"
               >
                 <X className="h-5 w-5" aria-hidden="true" />

@@ -1,21 +1,30 @@
+import { useContent } from "@/i18n/locale";
+
 type Partner = { id: string; name: string; role: string; initials: string; image: string };
 
 /**
  * Home-page professional card: portrait, name and role only — biographies are
- * shown on the About page and are not duplicated here.
- *
- * Portrait placeholder — no stock or generated portraits. Set `image` on the
- * partner (in src/content/site.ts) to a file in public/ once photos exist.
+ * shown on the About page and are not duplicated here. The fallback keeps the
+ * card usable if an image is temporarily unavailable.
  */
 function Portrait({ image, initials, name }: { image: string; initials: string; name: string }) {
+  const c = useContent();
   return (
     <div
       role={image ? undefined : "img"}
-      aria-label={image ? undefined : `Portrait placeholder for ${name}`}
+      aria-label={image ? undefined : `${c.ui.portraitPlaceholder} ${name}`}
       className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-sm bg-secondary"
     >
       {image ? (
-        <img src={image} alt={name} className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={image}
+          alt={name}
+          width={900}
+          height={1125}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       ) : (
         <>
           <div

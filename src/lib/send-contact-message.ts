@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP } from "@tanstack/react-start/server";
 import { z } from "zod";
+import { getContent } from "@/content/site";
 import { isValidPhone } from "@/lib/phone";
 import { readEnv } from "@/lib/server-env";
 
@@ -17,9 +18,12 @@ const payloadSchema = z.object({
   phone: z.string().trim().max(60).refine(isValidPhone),
   subject: z.string().trim().min(1).max(160),
   message: z.string().trim().min(1).max(5000),
-  locale: z.enum(["it", "en"]),
+  // The client sends the active language. Unknown or missing values use the
+  // canonical Italian fallback rather than reaching the email template.
+  locale: z.enum(["it", "en"]).catch("it"),
   // Honeypot: a field hidden from people but often filled in by bots.
-  company: z.string().max(0).catch(""),
+  // Keep a submitted value intact so the check below can actually detect it.
+  company: z.string().max(200).default(""),
 });
 
 export type ContactPayload = z.input<typeof payloadSchema>;
@@ -63,12 +67,14 @@ export const sendContactMessage = createServerFn({ method: "POST" })
       return { ok: false, reason: "failed" };
     }
 
+    const emailCopy = getContent(form.locale).contact.form;
+    const labels = emailCopy.emailLabels;
     const body = [
-      `Nome: ${form.name}`,
-      `Email: ${form.email}`,
-      `Telefono: ${form.phone || "—"}`,
-      `Oggetto: ${form.subject}`,
-      `Lingua del sito: ${form.locale}`,
+      `${labels.name}: ${form.name}`,
+      `${labels.email}: ${form.email}`,
+      `${labels.phone}: ${form.phone || "—"}`,
+      `${labels.subject}: ${form.subject}`,
+      `${labels.siteLanguage}: ${form.locale}`,
       "",
       form.message,
     ].join("\n");
@@ -84,7 +90,7 @@ export const sendContactMessage = createServerFn({ method: "POST" })
           from: readEnv("CONTACT_FROM_EMAIL") ?? DEFAULT_FROM,
           to: [to],
           reply_to: form.email,
-          subject: `[Sito] ${form.subject}`,
+          subject: `[${emailCopy.emailSubjectPrefix}] ${form.subject}`,
           text: body,
         }),
       });

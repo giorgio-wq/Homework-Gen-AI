@@ -13,12 +13,15 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: c.home.meta.title },
-      { name: "description", content: c.home.meta.description },
+      { name: "description", content: c.siteMeta.description },
+      { name: "robots", content: c.siteMeta.robots },
       { property: "og:title", content: c.home.meta.title },
-      { property: "og:description", content: c.home.meta.description },
+      { property: "og:description", content: c.siteMeta.description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: c.home.meta.title },
+      { name: "twitter:description", content: c.siteMeta.description },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -78,9 +81,10 @@ function Home() {
             {/* Logo mark — sits directly on the rule */}
             <img
               src="/brand/studio-legale-caso-logo-mark.webp"
-              alt="Studio Legale Caso – Associazione Professionale"
+              alt={c.firm.name}
               width={955}
               height={568}
+              decoding="async"
               className="fade-up mx-auto h-auto w-full max-w-sm lg:col-start-2 lg:row-start-1 lg:mx-0 lg:w-[28rem] lg:max-w-none lg:self-end xl:w-[34rem]"
             />
 
@@ -97,6 +101,7 @@ function Home() {
               aria-hidden="true"
               width={955}
               height={72}
+              decoding="async"
               className="mx-auto h-auto w-full max-w-sm lg:col-start-2 lg:row-start-3 lg:mx-0 lg:w-[28rem] lg:max-w-none lg:self-start xl:w-[34rem]"
             />
 

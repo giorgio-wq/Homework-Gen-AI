@@ -7,7 +7,7 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <Link
       to="/"
-      aria-label={`${c.firm.name} — home`}
+      aria-label={`${c.firm.name} — ${c.ui.homeLink}`}
       className="group inline-flex items-baseline gap-2 text-foreground"
     >
       <span

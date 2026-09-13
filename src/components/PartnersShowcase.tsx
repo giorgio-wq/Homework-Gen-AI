@@ -78,14 +78,23 @@ function Portrait({
   name: string;
   className?: string;
 }) {
+  const c = useContent();
   return (
     <div
       role={image ? undefined : "img"}
-      aria-label={image ? undefined : `Portrait placeholder for ${name}`}
+      aria-label={image ? undefined : `${c.ui.portraitPlaceholder} ${name}`}
       className={`relative flex items-center justify-center overflow-hidden rounded-sm bg-secondary ${className}`}
     >
       {image ? (
-        <img src={image} alt={name} className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={image}
+          alt={name}
+          width={900}
+          height={1125}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       ) : (
         <>
           <div

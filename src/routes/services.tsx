@@ -9,12 +9,15 @@ export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: c.services.meta.title },
-      { name: "description", content: c.services.meta.description },
+      { name: "description", content: c.siteMeta.description },
+      { name: "robots", content: c.siteMeta.robots },
       { property: "og:title", content: c.services.meta.title },
-      { property: "og:description", content: c.services.meta.description },
+      { property: "og:description", content: c.siteMeta.description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/services" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: c.services.meta.title },
+      { name: "twitter:description", content: c.siteMeta.description },
     ],
     links: [{ rel: "canonical", href: "/services" }],
   }),

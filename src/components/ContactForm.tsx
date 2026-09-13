@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent, type ReactNode } from "react";
 import { useContent, useLocale } from "@/i18n/locale";
 import { isValidPhone } from "@/lib/phone";
 import { sendContactMessage } from "@/lib/send-contact-message";
@@ -44,6 +44,11 @@ export function ContactForm() {
     setErrors(next);
     if (Object.keys(next).length > 0) {
       setStatus("idle");
+      // Wait for the error messages/aria-invalid attributes to render, then
+      // move the keyboard focus to the first invalid control.
+      window.requestAnimationFrame(() => {
+        formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      });
       return;
     }
 
@@ -79,7 +84,13 @@ export function ContactForm() {
         ))}
       </p>
 
-      <form ref={formRef} noValidate onSubmit={handleSubmit} className="mt-8 grid gap-6">
+      <form
+        ref={formRef}
+        noValidate
+        onSubmit={handleSubmit}
+        aria-busy={sending}
+        className="mt-8 grid gap-6"
+      >
         <div className="grid gap-6 sm:grid-cols-2">
           <Field id="name" label={f.name.label} error={errors.name} required>
             <input
@@ -88,8 +99,9 @@ export function ContactForm() {
               type="text"
               autoComplete="name"
               placeholder={f.name.placeholder}
+              required
               aria-required="true"
-              aria-invalid={!!errors.name}
+              aria-invalid={errors.name ? "true" : undefined}
               aria-describedby={errors.name ? "name-error" : undefined}
               className={inputClass}
             />
@@ -101,8 +113,9 @@ export function ContactForm() {
               type="email"
               autoComplete="email"
               placeholder={f.email.placeholder}
+              required
               aria-required="true"
-              aria-invalid={!!errors.email}
+              aria-invalid={errors.email ? "true" : undefined}
               aria-describedby={errors.email ? "email-error" : undefined}
               className={inputClass}
             />
@@ -115,7 +128,7 @@ export function ContactForm() {
               inputMode="tel"
               autoComplete="tel"
               placeholder={f.phone.placeholder}
-              aria-invalid={!!errors.phone}
+              aria-invalid={errors.phone ? "true" : undefined}
               aria-describedby={errors.phone ? "phone-error" : undefined}
               className={inputClass}
             />
@@ -126,8 +139,9 @@ export function ContactForm() {
               name="subject"
               type="text"
               placeholder={f.subject.placeholder}
+              required
               aria-required="true"
-              aria-invalid={!!errors.subject}
+              aria-invalid={errors.subject ? "true" : undefined}
               aria-describedby={errors.subject ? "subject-error" : undefined}
               className={inputClass}
             />
@@ -140,8 +154,9 @@ export function ContactForm() {
             name="message"
             rows={6}
             placeholder={f.message.placeholder}
+            required
             aria-required="true"
-            aria-invalid={!!errors.message}
+            aria-invalid={errors.message ? "true" : undefined}
             aria-describedby={errors.message ? "message-error" : undefined}
             className="mt-2 w-full rounded-sm border border-input bg-card p-4 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent"
           />
@@ -160,8 +175,9 @@ export function ContactForm() {
               id="privacy"
               name="privacy"
               type="checkbox"
+              required
               aria-required="true"
-              aria-invalid={!!errors.privacy}
+              aria-invalid={errors.privacy ? "true" : undefined}
               aria-describedby={errors.privacy ? "privacy-error" : undefined}
               className="mt-1 h-5 w-5 shrink-0 accent-[var(--accent)]"
             />
@@ -171,7 +187,7 @@ export function ContactForm() {
             </span>
           </label>
           {errors.privacy ? (
-            <p id="privacy-error" className="mt-2 text-sm text-destructive">
+            <p id="privacy-error" role="alert" className="mt-2 text-sm text-destructive">
               {errors.privacy}
             </p>
           ) : null}
@@ -185,15 +201,15 @@ export function ContactForm() {
           {sending ? f.sending : f.submit}
         </button>
 
-        <div aria-live="polite">
+        <div aria-live="polite" aria-atomic="true">
           {status === "sent" ? (
-            <div className="rounded-sm border-l-2 border-accent bg-secondary p-5">
+            <div role="status" className="rounded-sm border-l-2 border-accent bg-secondary p-5">
               <p className="text-sm font-medium">{f.successTitle}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.successBody}</p>
             </div>
           ) : null}
           {status === "error" ? (
-            <div className="rounded-sm border-l-2 border-destructive bg-secondary p-5">
+            <div role="alert" className="rounded-sm border-l-2 border-destructive bg-secondary p-5">
               <p className="text-sm font-medium text-destructive">{f.errorTitle}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.errorBody}</p>
               <a
@@ -233,7 +249,7 @@ function Field({
   label: string;
   error?: string | undefined;
   required?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div>
@@ -243,7 +259,7 @@ function Field({
       </label>
       {children}
       {error ? (
-        <p id={`${id}-error`} className="mt-2 text-sm text-destructive">
+        <p id={`${id}-error`} role="alert" className="mt-2 text-sm text-destructive">
           {error}
         </p>
       ) : null}

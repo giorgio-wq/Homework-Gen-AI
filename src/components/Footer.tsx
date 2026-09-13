@@ -15,9 +15,12 @@ export function Footer() {
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">{c.footer.tagline}</p>
           <img
             src="/brand/studio-legale-caso-logo.webp"
-            alt="Studio Legale Caso – Associazione Professionale"
+            alt=""
+            aria-hidden="true"
             width={955}
             height={667}
+            loading="lazy"
+            decoding="async"
             className="mt-6 h-auto w-40"
           />
         </div>

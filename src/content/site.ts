@@ -4,15 +4,16 @@
  * All editable business copy lives here, keyed by locale. The site ships with
  * Italian ("it", the default) and English ("en"). The chosen locale is provided
  * at runtime through the LocaleProvider (see src/i18n/locale.tsx); components
- * read it with the `useContent()` hook, while route `head()` meta uses the
- * default-locale `c` export.
+ * read it with the `useContent()` hook. Route `head()` metadata uses the
+ * default locale for the server render and is synchronized to the selected
+ * locale on the client.
  *
  * Editorial rules baked into this file:
  *   - Home is a concise overview; About expands on history/approach/people;
  *     Services carries the full practice-area descriptions; Contact carries
  *     locations and contact methods. No complete paragraph is repeated.
- *   - No placeholders, no invented facts, no team headcount, no telephone
- *     number (omitted until one is supplied).
+ *   - No placeholders or invented facts. The team is described generally, and
+ *     the published contact details are kept exactly as supplied.
  *
  * Both locale objects MUST keep the same shape and the same route `to` values.
  */
@@ -27,6 +28,13 @@ export const content = {
       email: "info@studiolegalecaso.com",
       disclaimer:
         "Progetto dimostrativo realizzato per finalità accademiche. Questo non è il sito ufficiale di Studio Legale Caso e non è destinato alla richiesta o alla prestazione di assistenza legale.",
+    },
+
+    siteMeta: {
+      title: "Studio Legale Caso",
+      description:
+        "Prototipo accademico realizzato per Studio Legale Caso. Non è il sito ufficiale dello studio e non deve essere utilizzato per richiedere assistenza legale.",
+      robots: "noindex, nofollow",
     },
 
     nav: {
@@ -48,6 +56,11 @@ export const content = {
       mobileNav: "Navigazione mobile",
       footerNav: "Navigazione a piè di pagina",
       relatedPages: "Pagine correlate",
+      homeLink: "Vai alla home",
+      changeLanguage: "Cambia lingua",
+      languageMenu: "Lingua",
+      confidentialWarning: "Non inserire informazioni riservate.",
+      portraitPlaceholder: "Segnaposto per il ritratto di",
       notFound: {
         heading: "Pagina non trovata",
         body: "La pagina che stai cercando non esiste o è stata spostata.",
@@ -64,8 +77,6 @@ export const content = {
     home: {
       meta: {
         title: "Studio Legale Caso — Studio legale dal 1990, Altamura",
-        description:
-          "Dal 1990 Studio Legale Caso assiste privati, imprese, compagnie assicurative, banche ed enti pubblici su tutto il territorio nazionale, con sedi ad Altamura, Gravina in Puglia e Santeramo in Colle.",
       },
       hero: {
         eyebrow: "Studio legale · Dal 1990 · Italia",
@@ -113,7 +124,7 @@ export const content = {
       },
       servicesPreview: {
         heading: "Competenze legali integrate.",
-        link: { label: "Vedi tutte le competenze", to: "/services" as const },
+        link: { label: "Scopri le principali aree di attività", to: "/services" as const },
       },
       approach: {
         eyebrow: "Il nostro metodo",
@@ -123,8 +134,8 @@ export const content = {
       },
       team: {
         eyebrow: "Professionisti",
-        heading: "Avvocati di esperienza, affiancati da un team di collaboratori.",
-        body: "Studio Legale Caso riunisce tre avvocati di esperienza e un team di professionisti e collaboratori. Lo studio opera come un gruppo coordinato nelle diverse aree di attività.",
+        heading: "Avvocati di esperienza, affiancati da un team di professionisti e collaboratori.",
+        body: "Studio Legale Caso riunisce avvocati di esperienza e un team di professionisti e collaboratori. Lo studio opera come un gruppo coordinato nelle diverse aree di attività.",
         cta: { label: "Conosci i professionisti", to: "/about" as const },
       },
       finalCta: {
@@ -137,8 +148,6 @@ export const content = {
     about: {
       meta: {
         title: "Lo studio — Studio Legale Caso",
-        description:
-          "La storia di Studio Legale Caso dalla fondazione nel 1990, il metodo di lavoro e i profili dei tre avvocati dello studio.",
       },
       hero: {
         eyebrow: "Lo studio",
@@ -181,8 +190,6 @@ export const content = {
     services: {
       meta: {
         title: "Competenze — Studio Legale Caso",
-        description:
-          "Diritto bancario, societario, assicurativo, tributario, urbanistica, espropriazioni per pubblica utilità e contrattualistica: le aree di attività di Studio Legale Caso.",
       },
       hero: {
         eyebrow: "Competenze",
@@ -302,8 +309,6 @@ export const content = {
     contact: {
       meta: {
         title: "Contatti — Studio Legale Caso",
-        description:
-          "Sedi di Studio Legale Caso ad Altamura, Gravina in Puglia e Santeramo in Colle. Contatta lo studio via email per fissare un appuntamento.",
       },
       hero: {
         eyebrow: "Contatti",
@@ -359,7 +364,7 @@ export const content = {
         subject: { label: "Oggetto", placeholder: "Di cosa si tratta?" },
         message: { label: "Messaggio", placeholder: "Come può aiutarti lo studio?" },
         privacy:
-          "Ho letto la nota qui sopra e acconsento all'invio del messaggio per essere ricontattato.",
+          "Ho letto l’avviso sopra e acconsento all’invio del messaggio alla casella del progetto per poter essere ricontattato in merito alla mia richiesta.",
         submit: "Invia messaggio",
         sending: "Invio in corso…",
         successTitle: "Messaggio inviato",
@@ -377,6 +382,14 @@ export const content = {
           message: "Inserisci un messaggio.",
           privacy: "Conferma il consenso per inviare il messaggio.",
         },
+        emailLabels: {
+          name: "Nome",
+          email: "Email",
+          phone: "Telefono",
+          subject: "Oggetto",
+          siteLanguage: "Lingua del sito",
+        },
+        emailSubjectPrefix: "Sito",
       },
     },
 
@@ -395,6 +408,13 @@ export const content = {
       email: "info@studiolegalecaso.com",
       disclaimer:
         "Academic demonstration project. This is not the official website of Studio Legale Caso and is not intended for requesting or providing legal assistance.",
+    },
+
+    siteMeta: {
+      title: "Studio Legale Caso",
+      description:
+        "Academic website prototype created for Studio Legale Caso. This is not the firm’s official website and must not be used to request legal assistance.",
+      robots: "noindex, nofollow",
     },
 
     nav: {
@@ -416,6 +436,11 @@ export const content = {
       mobileNav: "Mobile navigation",
       footerNav: "Footer navigation",
       relatedPages: "Related pages",
+      homeLink: "Go to home",
+      changeLanguage: "Change language",
+      languageMenu: "Language",
+      confidentialWarning: "Do not include confidential information.",
+      portraitPlaceholder: "Portrait placeholder for",
       notFound: {
         heading: "Page not found",
         body: "The page you are looking for does not exist or has been moved.",
@@ -432,8 +457,6 @@ export const content = {
     home: {
       meta: {
         title: "Studio Legale Caso — Law Firm since 1990, Altamura",
-        description:
-          "Since 1990 Studio Legale Caso has advised private individuals, businesses, insurers, banks and public bodies throughout Italy, from its locations in Altamura, Gravina in Puglia and Santeramo in Colle.",
       },
       hero: {
         eyebrow: "Law firm · Established 1990 · Italy",
@@ -447,7 +470,7 @@ export const content = {
       intro: {
         eyebrow: "The firm",
         heading: "Experience and professionalism in the service of our clients.",
-        body: "Founded in Altamura and now present in three locations in Puglia, Studio Legale Caso combines established experience with a direct and rigorous approach. Its lawyers work with a wider team of legal professionals and collaborators, providing clear guidance throughout each matter.",
+        body: "Founded in Altamura and now present in three locations in Puglia, Studio Legale Caso combines established experience with a direct and rigorous approach. Its lawyers work with a team of professionals and collaborators, providing clear guidance throughout each matter.",
         facts: [
           { label: "Established", value: "1990" },
           { label: "Locations", value: "Altamura · Gravina in Puglia · Santeramo in Colle" },
@@ -471,7 +494,7 @@ export const content = {
           },
           {
             title: "Banks and financial institutions",
-            note: "Advice and representation in banking, credit and related matters.",
+            note: "Advice and representation in banking and credit matters.",
           },
           {
             title: "Public bodies",
@@ -481,7 +504,7 @@ export const content = {
       },
       servicesPreview: {
         heading: "An integrated legal practice.",
-        link: { label: "View all services", to: "/services" as const },
+        link: { label: "Explore the main areas of practice", to: "/services" as const },
       },
       approach: {
         eyebrow: "Our approach",
@@ -491,8 +514,8 @@ export const content = {
       },
       team: {
         eyebrow: "Professionals",
-        heading: "Experienced lawyers, supported by a wider team.",
-        body: "Studio Legale Caso brings together three experienced lawyers and a team of legal professionals and collaborators. The firm works as a coordinated group across its different areas of practice.",
+        heading: "Experienced lawyers, supported by a team of professionals and collaborators.",
+        body: "Studio Legale Caso brings together experienced lawyers and a team of professionals and collaborators. The firm works as a coordinated group across its different areas of practice.",
         cta: { label: "Meet the professionals", to: "/about" as const },
       },
       finalCta: {
@@ -505,11 +528,9 @@ export const content = {
     about: {
       meta: {
         title: "About Us — Studio Legale Caso",
-        description:
-          "The history of Studio Legale Caso since its foundation in 1990, the firm's approach and the profiles of its three lawyers.",
       },
       hero: {
-        eyebrow: "About us",
+        eyebrow: "About Us",
         headline: "A practice shaped by experience and continuity.",
         paragraph:
           "Founded in 1990, Studio Legale Caso has developed through the collaboration of professionals who share a rigorous, direct and client-focused approach.",
@@ -517,7 +538,7 @@ export const content = {
       history: {
         heading: "From its foundation to today.",
         body: [
-          "Studio Legale Caso was founded in Altamura in 1990 by Raffaele Caso together with his son Pasquale Caso. Giovanni Battista Riviello and Girolamo Giancaspro joined the firm in 1995. In 2016, the practice evolved into its current partnership structure.",
+          "Studio Legale Caso was founded in Altamura in 1990 by Raffaele Caso together with his son Pasquale Caso. Giovanni Battista Riviello and Girolamo Giancaspro joined the firm in 1995. In 2016, the firm adopted its current partnership structure.",
           "Today, the firm operates through locations in Altamura, Gravina in Puglia and Santeramo in Colle, assisting private and public clients throughout Italy.",
         ],
         timeline: [
@@ -529,7 +550,7 @@ export const content = {
             year: "1995",
             text: "Giovanni Battista Riviello and Girolamo Giancaspro join the firm.",
           },
-          { year: "2016", text: "The practice assumes its current partnership structure." },
+          { year: "2016", text: "In 2016, the firm adopted its current partnership structure." },
           {
             year: "Today",
             text: "The firm operates through three locations and assists clients throughout Italy.",
@@ -541,7 +562,7 @@ export const content = {
         body: "Each matter is examined in its legal and practical context. The firm identifies the available options, explains their implications and supports the client through advisory work, negotiation and litigation. A direct relationship with the professionals handling the matter ensures continuity, clarity and close attention throughout the assignment.",
       },
       team: {
-        heading: "A coordinated team of legal professionals and collaborators.",
+        heading: "A coordinated team of professionals and collaborators.",
         scrollHint: "Scroll to meet the professionals",
       },
     },
@@ -549,8 +570,6 @@ export const content = {
     services: {
       meta: {
         title: "Services — Studio Legale Caso",
-        description:
-          "Banking, corporate, insurance and tax law, urban planning, expropriation for public utility and contract law: the practice areas of Studio Legale Caso.",
       },
       hero: {
         eyebrow: "Services",
@@ -572,7 +591,7 @@ export const content = {
         number: "01",
         title: "Banking Law",
         summary:
-          "Advice and representation in banking relationships, credit and financial services.",
+          "Advice and representation in banking, credit and financial matters.",
         detail:
           "The firm assists banks and financial institutions as well as private individuals and businesses in matters involving banking and credit relationships. Its work includes advice, negotiation, pre-litigation assistance and representation in related court proceedings.",
         image: "",
@@ -642,7 +661,7 @@ export const content = {
         initials: "PC",
         image: "/partners/pasquale-caso.webp",
         profile: [
-          "Pasquale Caso has practised law since 1978. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law, assisting private clients, businesses, financial institutions, insurance companies and public bodies.",
+          "Pasquale Caso has practised law since 1978. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice covers civil, tax and administrative law, assisting private clients, businesses, financial institutions, insurance companies and public bodies.",
         ],
       },
       {
@@ -652,8 +671,8 @@ export const content = {
         initials: "GG",
         image: "/partners/girolamo-giancaspro.webp",
         profile: [
-          "Girolamo Giancaspro has practised law since 1996. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law for private and public-sector clients.",
-          "Alongside his work for clients, he served as a member of the Council of the Bari Bar Association for the 2019–2022 term, coordinating its work on legal traineeship matters. He is also listed as a member of the Bari District Disciplinary Council for the 2023–2026 term.",
+          "Girolamo Giancaspro has practised law since 1996. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice covers civil, tax and administrative law for private and public clients.",
+          "Alongside his professional work, he served on the Council of the Bari Bar Association for the 2019–2022 term, coordinating the group dedicated to legal traineeship. He is also listed among the members of the Bari District Disciplinary Council for the 2023–2026 term.",
         ],
       },
       {
@@ -663,7 +682,7 @@ export const content = {
         initials: "GR",
         image: "/partners/giovanni-battista-riviello.webp",
         profile: [
-          "Giovanni Battista Riviello has practised law since 1996. He graduated in Law from the University of Bari, is a member of the Bari Bar and is qualified to appear before Italy's higher courts. His practice covers civil, tax and administrative law, combining advisory work, negotiation and representation in litigation for private and public clients.",
+          "Giovanni Battista Riviello has practised law since 1996. He graduated in Law from the University of Bari, is registered with the Bari Bar Association and is admitted to practise before Italy’s higher courts. His practice covers civil, tax and administrative law, combining advisory work, negotiation and representation in litigation for private and public clients.",
         ],
       },
     ],
@@ -671,8 +690,6 @@ export const content = {
     contact: {
       meta: {
         title: "Contact — Studio Legale Caso",
-        description:
-          "Studio Legale Caso locations in Altamura, Gravina in Puglia and Santeramo in Colle. Contact the firm by email to arrange an appointment.",
       },
       hero: {
         eyebrow: "Contact",
@@ -687,17 +704,17 @@ export const content = {
         locations: [
           {
             name: "Altamura",
-            lines: ["Via Giuseppe Giusti 16", "70022 Altamura (BA), Italy"],
+            lines: ["Via Giuseppe Giusti 16", "70022 Altamura (BA)"],
             mapQuery: "Via Giuseppe Giusti 16, 70022 Altamura BA, Italy",
           },
           {
             name: "Gravina in Puglia",
-            lines: ["Corso Aldo Moro 138", "Gravina in Puglia (BA), Italy"],
+            lines: ["Corso Aldo Moro 138", "Gravina in Puglia (BA)"],
             mapQuery: "Corso Aldo Moro 138, Gravina in Puglia BA, Italy",
           },
           {
             name: "Santeramo in Colle",
-            lines: ["Via Avellino 3", "Santeramo in Colle (BA), Italy"],
+            lines: ["Via Avellino 3", "Santeramo in Colle (BA)"],
             mapQuery: "Via Avellino 3, Santeramo in Colle BA, Italy",
           },
         ],
@@ -728,7 +745,7 @@ export const content = {
         subject: { label: "Subject", placeholder: "What is this about?" },
         message: { label: "Message", placeholder: "How can the firm help?" },
         privacy:
-          "I have read the notice above and consent to my message being sent so that the firm can reply.",
+          "I have read the notice above and consent to my message being sent to the project mailbox so that I can be contacted about my enquiry.",
         submit: "Send message",
         sending: "Sending…",
         successTitle: "Message sent",
@@ -746,6 +763,14 @@ export const content = {
           message: "Please enter a message.",
           privacy: "Please confirm your consent so the message can be sent.",
         },
+        emailLabels: {
+          name: "Name",
+          email: "Email",
+          phone: "Telephone",
+          subject: "Subject",
+          siteLanguage: "Site language",
+        },
+        emailSubjectPrefix: "Website",
       },
     },
 
