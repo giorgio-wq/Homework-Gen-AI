@@ -32,6 +32,7 @@ export function Footer() {
               <li key={item.to}>
                 <Link
                   to={item.to}
+                  resetScroll
                   className="link-underline text-sm text-muted-foreground hover:text-foreground"
                 >
                   {item.label}

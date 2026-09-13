@@ -60,6 +60,7 @@ function Home() {
             <div className="fade-up mb-12 flex flex-col gap-3 sm:flex-row lg:col-start-1 lg:row-start-3 lg:mb-0 lg:self-start lg:pt-10">
               <Link
                 to={hero.primaryCta.to}
+                resetScroll
                 className="group inline-flex h-14 items-center justify-center gap-3 rounded-sm bg-primary px-7 text-sm text-primary-foreground transition-colors hover:bg-accent"
               >
                 {hero.primaryCta.label}
@@ -70,6 +71,7 @@ function Home() {
               </Link>
               <Link
                 to={hero.secondaryCta.to}
+                resetScroll
                 className="inline-flex h-14 items-center justify-center rounded-sm border border-hairline px-7 text-sm transition-colors hover:border-foreground"
               >
                 {hero.secondaryCta.label}

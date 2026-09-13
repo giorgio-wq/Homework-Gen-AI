@@ -131,6 +131,7 @@ export function Header() {
                   <li key={item.to}>
                     <Link
                       to={item.to}
+                      resetScroll
                       aria-current={active ? "page" : undefined}
                       className={`relative py-2 text-base font-semibold transition-colors hover:text-foreground ${
                         active ? "text-foreground" : "text-muted-foreground"
@@ -211,6 +212,7 @@ export function Header() {
                     <li key={item.to} className="border-b border-hairline">
                       <Link
                         to={item.to}
+                        resetScroll
                         aria-current={active ? "page" : undefined}
                         className="flex items-baseline gap-4 py-4"
                       >

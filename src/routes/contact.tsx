@@ -168,7 +168,11 @@ function Contact() {
           <ul className="mt-4 space-y-3">
             {links.items.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="group inline-flex items-center gap-3 text-sm">
+                <Link
+                  to={item.to}
+                  resetScroll
+                  className="group inline-flex items-center gap-3 text-sm"
+                >
                   <span className="link-underline">{item.label}</span>
                   <ArrowRight
                     className="h-4 w-4 text-accent transition-transform group-hover:translate-x-1"

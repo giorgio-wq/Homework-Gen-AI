@@ -24,6 +24,7 @@ export function SectionLink({
   return (
     <Link
       to={to}
+      resetScroll={!hash}
       {...(hash ? { hash } : {})}
       className={`group inline-flex items-center gap-3 border-b border-foreground/25 pb-1.5 text-base font-medium text-foreground transition-colors hover:border-accent hover:text-accent md:text-lg ${className}`}
     >
