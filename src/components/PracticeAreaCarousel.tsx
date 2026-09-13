@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-type Area = { id: string; title: string; summary: string };
+type Area = { id: string; title: string; detail: string };
 
 type Labels = {
   label: string;
@@ -11,8 +11,11 @@ type Labels = {
   of: string;
 };
 
-/** How long each area stays in focus before the carousel moves on. */
-const INTERVAL_MS = 5000;
+/**
+ * How long each area stays in focus before the carousel moves on — long enough
+ * to read a full two-to-three sentence description.
+ */
+const INTERVAL_MS = 9000;
 
 /** Minimum horizontal travel, in pixels, for a drag to count as a swipe. */
 const SWIPE_PX = 50;
@@ -31,8 +34,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
  * Home page practice areas as a "coverflow" carousel: the active area sits in
- * the centre at full size, its two neighbours peek in at the sides smaller,
- * blurred and faded, and the whole row slides along every few seconds.
+ * the centre at full size with its full description, its two neighbours peek
+ * in at the sides smaller, blurred and faded, and the whole row slides along
+ * every few seconds.
  *
  * The progress bar is the timer: its CSS animation lasts one interval and the
  * carousel advances when it ends, so pausing the animation (hover, keyboard
@@ -152,7 +156,7 @@ export function PracticeAreaCarousel({
                 <span aria-hidden="true" className="block h-1 w-12 bg-accent" />
                 <h3 className="mt-6 text-3xl leading-tight md:text-5xl">{area.title}</h3>
                 <p className="mt-auto max-w-lg pt-8 text-base leading-relaxed text-muted-foreground md:text-lg">
-                  {area.summary}
+                  {area.detail}
                 </p>
               </article>
             </div>
