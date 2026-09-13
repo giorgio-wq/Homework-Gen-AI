@@ -364,10 +364,10 @@ export const content = {
       form: {
         heading: "Invia un messaggio",
         notice:
-          "Il modulo è attivo: il messaggio viene inviato per email e la risposta arriva all'indirizzo che indichi. Trattandosi di un progetto accademico, le richieste sono recapitate alla casella del responsabile del progetto e non allo Studio Legale Caso: non inserire informazioni riservate.",
+          "Trattandosi di un progetto accademico, i messaggi arrivano alla casella del responsabile del progetto, non allo Studio Legale Caso — non inserire informazioni riservate.",
         requiredNote: "I campi contrassegnati con * sono obbligatori.",
         name: { label: "Nome", placeholder: "Il tuo nome completo" },
-        email: { label: "Email", placeholder: "tu@esempio.com" },
+        email: { label: "La tua email", placeholder: "tu@esempio.com" },
         phone: { label: "Telefono (facoltativo)", placeholder: "+39 000 000 0000" },
         subject: { label: "Oggetto", placeholder: "Di cosa si tratta?" },
         message: { label: "Messaggio", placeholder: "Come può aiutarti lo studio?" },
@@ -752,10 +752,10 @@ export const content = {
       form: {
         heading: "Send a message",
         notice:
-          "The form is live: your message is sent by email and the reply goes to the address you provide. As this is an academic project, messages reach the mailbox of the person running the project, not Studio Legale Caso — please do not include confidential information.",
+          "As this is an academic project, messages reach the mailbox of the person running the project, not Studio Legale Caso — please do not include confidential information.",
         requiredNote: "Fields marked with * are required.",
         name: { label: "Name", placeholder: "Your full name" },
-        email: { label: "Email", placeholder: "you@example.com" },
+        email: { label: "Your email", placeholder: "you@example.com" },
         phone: { label: "Telephone (optional)", placeholder: "+39 000 000 0000" },
         subject: { label: "Subject", placeholder: "What is this about?" },
         message: { label: "Message", placeholder: "How can the firm help?" },
