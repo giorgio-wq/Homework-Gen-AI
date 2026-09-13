@@ -72,7 +72,7 @@ function Contact() {
       {/* Firm details + map, below the introductory section */}
       <section
         id="contact-details"
-        className="scroll-mt-24 container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16"
+        className="scroll-mt-24 container-editorial grid gap-12 pt-16 pb-8 md:pt-24 md:pb-12 lg:grid-cols-2 lg:items-start lg:gap-16"
       >
         <div>
           <h2 className="text-2xl md:text-3xl">{details.heading}</h2>
