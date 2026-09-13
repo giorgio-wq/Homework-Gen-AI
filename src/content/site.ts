@@ -340,6 +340,7 @@ export const content = {
         phone: { label: "Tel. / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Ricevimento", value: "Esclusivamente su appuntamento" },
+        infoLinkLabel: "Scorri per sedi e recapiti",
         ctaLabel: "Scrivici via email",
       },
       map: {
@@ -721,6 +722,7 @@ export const content = {
         phone: { label: "Telephone / Fax", numbers: ["080 3141746", "080 3145525"] },
         email: { label: "Email" },
         appointments: { label: "Appointments", value: "By appointment only" },
+        infoLinkLabel: "Scroll for locations and contact details",
         ctaLabel: "Send us an email",
       },
       map: {

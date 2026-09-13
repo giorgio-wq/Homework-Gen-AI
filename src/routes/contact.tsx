@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
 import { ContactForm } from "@/components/ContactForm";
@@ -47,12 +47,25 @@ function Contact() {
           </div>
           <div id="contact-form" className="fade-up">
             <ContactForm />
+            <a
+              href="#contact-details"
+              className="group mt-5 inline-flex items-center gap-3 text-sm text-accent"
+            >
+              <span className="link-underline">{details.infoLinkLabel}</span>
+              <ArrowDown
+                className="h-4 w-4 transition-transform group-hover:translate-y-1"
+                aria-hidden="true"
+              />
+            </a>
           </div>
         </div>
       </section>
 
       {/* Firm details + map, below the introductory section */}
-      <section className="container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16">
+      <section
+        id="contact-details"
+        className="scroll-mt-24 container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16"
+      >
         <div>
           <h2 className="text-2xl md:text-3xl">{details.heading}</h2>
 
