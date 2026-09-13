@@ -8,7 +8,7 @@ export function Footer() {
   const mapsUrl = (query: string) =>
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   return (
-    <footer className="mt-24 border-t border-hairline bg-secondary/60">
+    <footer className="border-t border-hairline bg-secondary/60">
       <div className="container-editorial grid gap-10 py-14 md:grid-cols-3 md:py-16">
         <div>
           <Wordmark />
