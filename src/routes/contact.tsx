@@ -147,7 +147,7 @@ function Contact() {
             src={`https://maps.google.com/maps?q=${encodeURIComponent(
               details.locations[0].mapQuery,
             )}&z=16&output=embed`}
-            className="mt-3 aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/3]"
+            className="mt-3 aspect-[16/11] w-full rounded-sm border border-hairline lg:aspect-[4/5]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
