@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { c } from "@/content/site";
 import { useContent } from "@/i18n/locale";
-import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 
 export const Route = createFileRoute("/contact")({
@@ -33,9 +32,26 @@ function Contact() {
 
   return (
     <>
-      <PageHero eyebrow={hero.eyebrow} headline={hero.headline} paragraph={hero.paragraph} />
+      <section className="border-b border-hairline">
+        <div className="container-editorial grid gap-12 py-16 md:gap-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-28">
+          <div>
+            <p className="eyebrow fade-up">{hero.eyebrow}</p>
+            <h1 className="fade-up mt-5 max-w-4xl break-words text-[2rem] leading-[1.05] sm:text-6xl lg:text-7xl">
+              {hero.headline}
+            </h1>
+            {hero.paragraph ? (
+              <p className="fade-up mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                {hero.paragraph}
+              </p>
+            ) : null}
+          </div>
+          <div id="contact-form" className="fade-up">
+            <ContactForm />
+          </div>
+        </div>
+      </section>
 
-      {/* Firm details + map, side by side (map drops below the details on mobile) */}
+      {/* Firm details + map, below the introductory section */}
       <section className="container-editorial grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-start lg:gap-16">
         <div>
           <h2 className="text-2xl md:text-3xl">{details.heading}</h2>
@@ -125,17 +141,6 @@ function Contact() {
               ))}
             </ul>
           </nav>
-
-          <a
-            href="#contact-form"
-            className="group mt-8 inline-flex items-center gap-3 text-sm text-accent"
-          >
-            <span className="link-underline">{details.formLinkLabel}</span>
-            <ArrowDown
-              className="h-4 w-4 transition-transform group-hover:translate-y-1"
-              aria-hidden="true"
-            />
-          </a>
         </div>
 
         {/* Google Maps embed (no API key needed). It shows the Altamura location
@@ -160,15 +165,6 @@ function Contact() {
           >
             {map.linkLabel}
           </a>
-        </div>
-      </section>
-
-      {/* Send a message — full-width box below */}
-      <section id="contact-form" className="scroll-mt-24 border-t border-hairline bg-secondary/40">
-        <div className="container-editorial py-16 md:py-24">
-          <div className="mx-auto max-w-3xl">
-            <ContactForm />
-          </div>
         </div>
       </section>
     </>
