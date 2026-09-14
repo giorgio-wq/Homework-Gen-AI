@@ -136,11 +136,7 @@ export function Header() {
                       aria-current={active ? "page" : undefined}
                       className={
                         isContact
-                          ? `inline-flex items-center rounded-sm px-4 py-2 text-base font-semibold transition-colors ${
-                              active
-                                ? "bg-accent text-accent-foreground"
-                                : "border border-accent text-accent"
-                            } hover:bg-accent hover:text-accent-foreground`
+                          ? "inline-flex items-center rounded-sm bg-accent px-4 py-2 text-base font-semibold text-accent-foreground transition-colors hover:bg-primary"
                           : `relative py-2 text-base font-semibold transition-colors hover:text-foreground ${
                               active ? "text-foreground" : "text-muted-foreground"
                             }`
@@ -227,13 +223,25 @@ export function Header() {
                         resetScroll
                         aria-current={active ? "page" : undefined}
                         className={`flex items-baseline gap-4 py-4 ${
-                          isContact ? "text-accent" : ""
+                          isContact
+                            ? "my-2 rounded-sm bg-accent px-4 text-accent-foreground transition-colors hover:bg-primary"
+                            : ""
                         }`}
                       >
-                        <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                        <span
+                          className={`eyebrow ${
+                            isContact ? "text-accent-foreground" : ""
+                          }`}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
                         <span
                           className={`font-display text-3xl ${
-                            isContact || active ? "text-accent" : "text-foreground"
+                            isContact
+                              ? "text-accent-foreground"
+                              : active
+                                ? "text-accent"
+                                : "text-foreground"
                           }`}
                         >
                           {item.label}
