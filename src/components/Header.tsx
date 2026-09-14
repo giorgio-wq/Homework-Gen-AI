@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { useContent } from "@/i18n/locale";
 import { Wordmark } from "@/components/Wordmark";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -217,35 +217,40 @@ export function Header() {
                   const active = pathname === item.to;
                   const isContact = item.to === "/contact";
                   return (
-                    <li key={item.to} className="border-b border-hairline">
+                    <li
+                      key={item.to}
+                      className={isContact ? "pb-2 pt-5" : "border-b border-hairline"}
+                    >
                       <Link
                         to={item.to}
                         resetScroll
                         aria-current={active ? "page" : undefined}
-                        className={`flex items-baseline gap-4 py-4 ${
+                        className={
                           isContact
-                            ? "my-2 rounded-sm border border-hairline bg-secondary px-4 text-secondary-foreground shadow-sm transition-colors hover:bg-secondary/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
-                            : ""
-                        }`}
+                            ? "group flex h-16 items-center justify-between gap-4 rounded-sm bg-primary px-5 text-primary-foreground transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                            : "flex items-baseline gap-4 py-4"
+                        }
                       >
-                        <span
-                          className={`eyebrow ${
-                            isContact ? "text-secondary-foreground" : ""
-                          }`}
-                        >
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span
-                          className={`font-display text-3xl ${
-                            isContact
-                              ? "text-secondary-foreground"
-                              : active
-                                ? "text-accent"
-                                : "text-foreground"
-                          }`}
-                        >
-                          {item.label}
-                        </span>
+                        {isContact ? (
+                          <>
+                            <span className="font-display text-2xl">{item.label}</span>
+                            <ArrowRight
+                              className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                              aria-hidden="true"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                            <span
+                              className={`font-display text-3xl ${
+                                active ? "text-accent" : "text-foreground"
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                          </>
+                        )}
                       </Link>
                     </li>
                   );
