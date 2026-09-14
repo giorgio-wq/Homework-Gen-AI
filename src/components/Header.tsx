@@ -228,7 +228,9 @@ export function Header() {
                         className={
                           isContact
                             ? "group flex h-16 items-center justify-between gap-4 rounded-sm bg-primary px-5 text-primary-foreground transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                            : "flex items-baseline gap-4 py-4"
+                            : `relative flex items-baseline gap-4 py-4 motion-safe:transition-[padding] motion-safe:duration-300 ${
+                                active ? "pl-4" : ""
+                              }`
                         }
                       >
                         {isContact ? (
@@ -241,7 +243,15 @@ export function Header() {
                           </>
                         ) : (
                           <>
-                            <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                            {active && (
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-y-3 left-0 w-[3px] bg-accent"
+                              />
+                            )}
+                            <span className={`eyebrow ${active ? "text-accent" : ""}`}>
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
                             <span
                               className={`font-display text-3xl ${
                                 active ? "text-accent" : "text-foreground"
