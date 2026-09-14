@@ -224,13 +224,13 @@ export function Header() {
                         aria-current={active ? "page" : undefined}
                         className={`flex items-baseline gap-4 py-4 ${
                           isContact
-                            ? "my-2 rounded-sm bg-accent px-4 text-accent-foreground transition-colors hover:bg-primary"
+                            ? "my-2 rounded-sm border border-hairline bg-secondary px-4 text-secondary-foreground shadow-sm transition-colors hover:bg-secondary/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
                             : ""
                         }`}
                       >
                         <span
                           className={`eyebrow ${
-                            isContact ? "text-accent-foreground" : ""
+                            isContact ? "text-secondary-foreground" : ""
                           }`}
                         >
                           {String(i + 1).padStart(2, "0")}
@@ -238,7 +238,7 @@ export function Header() {
                         <span
                           className={`font-display text-3xl ${
                             isContact
-                              ? "text-accent-foreground"
+                              ? "text-secondary-foreground"
                               : active
                                 ? "text-accent"
                                 : "text-foreground"
