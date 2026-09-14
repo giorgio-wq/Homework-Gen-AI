@@ -127,23 +127,34 @@ export function Header() {
             <ul className="flex items-center gap-8">
               {c.nav.items.map((item) => {
                 const active = pathname === item.to;
+                const isContact = item.to === "/contact";
                 return (
                   <li key={item.to}>
                     <Link
                       to={item.to}
                       resetScroll
                       aria-current={active ? "page" : undefined}
-                      className={`relative py-2 text-base font-semibold transition-colors hover:text-foreground ${
-                        active ? "text-foreground" : "text-muted-foreground"
-                      }`}
+                      className={
+                        isContact
+                          ? `inline-flex items-center rounded-sm px-4 py-2 text-base font-semibold transition-colors ${
+                              active
+                                ? "bg-accent text-accent-foreground"
+                                : "border border-accent text-accent"
+                            } hover:bg-accent hover:text-accent-foreground`
+                          : `relative py-2 text-base font-semibold transition-colors hover:text-foreground ${
+                              active ? "text-foreground" : "text-muted-foreground"
+                            }`
+                      }
                     >
                       {item.label}
-                      <span
-                        aria-hidden="true"
-                        className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent transition-transform duration-300 ${
-                          active ? "scale-x-100" : "scale-x-0"
-                        }`}
-                      />
+                      {!isContact && (
+                        <span
+                          aria-hidden="true"
+                          className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent transition-transform duration-300 ${
+                            active ? "scale-x-100" : "scale-x-0"
+                          }`}
+                        />
+                      )}
                     </Link>
                   </li>
                 );
@@ -208,18 +219,21 @@ export function Header() {
               <ul className="flex flex-col">
                 {c.nav.items.map((item, i) => {
                   const active = pathname === item.to;
+                  const isContact = item.to === "/contact";
                   return (
                     <li key={item.to} className="border-b border-hairline">
                       <Link
                         to={item.to}
                         resetScroll
                         aria-current={active ? "page" : undefined}
-                        className="flex items-baseline gap-4 py-4"
+                        className={`flex items-baseline gap-4 py-4 ${
+                          isContact ? "text-accent" : ""
+                        }`}
                       >
                         <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
                         <span
                           className={`font-display text-3xl ${
-                            active ? "text-accent" : "text-foreground"
+                            isContact || active ? "text-accent" : "text-foreground"
                           }`}
                         >
                           {item.label}
